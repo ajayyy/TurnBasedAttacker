@@ -16,9 +16,10 @@ public class Player : MonoBehaviour {
 
 	void Start () {
         spriteRenderer = GetComponent<SpriteRenderer>();
-	}
-	
-	void Update () {
+
+    }
+
+    void Update () {
         //shothand for GameController.instance
         GameController gameController = GameController.instance;
 
@@ -49,4 +50,9 @@ public class Player : MonoBehaviour {
             }
         }
     }
+
+    void OnCollisionEnter2D(Collision2D collision) {
+        print("test");
+    }
+
 }

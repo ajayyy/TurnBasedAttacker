@@ -15,6 +15,11 @@ public class GameController : MonoBehaviour {
     ///</summary>
     public int turnPlayerNum = 0;
 
+    /// <summary>
+    /// Time of last movment (to make a delay of when you can move again
+    /// </summary>
+    public float lastMove;
+
 	void Start () {
         if(instance == null) {
             GameController.instance = this;
@@ -27,4 +32,14 @@ public class GameController : MonoBehaviour {
 	void Update () {
 		
 	}
+
+    public void NextTurn() {
+        turnPlayerNum++;
+        if(turnPlayerNum >= players.Length) {
+            turnNum++;
+            turnPlayerNum = 0;
+        }
+
+        lastMove = Time.time;
+    }
 }

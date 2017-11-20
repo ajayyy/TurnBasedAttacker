@@ -18,7 +18,7 @@ public class Player : MonoBehaviour {
         GameController gameController = GameController.instance;
 
         //if it is this player's turn
-        if(gameController.turnPlayerNum == playerNum) {
+        if(gameController.turnPlayerNum == playerNum && Time.time - gameController.lastMove >= 0.1f) {
 
             bool moved = false;
 
@@ -37,7 +37,7 @@ public class Player : MonoBehaviour {
             }
 
             if (moved) {
-                gameController.turnPlayerNum++;
+                gameController.NextTurn();
             }
         }
     }

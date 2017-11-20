@@ -14,9 +14,14 @@ public class Player : MonoBehaviour {
 
     SpriteRenderer spriteRenderer;
 
+    PlayerMovementAnimation playerMovementAnimation;
+    Animator animator;
+
 	void Start () {
         spriteRenderer = GetComponent<SpriteRenderer>();
 
+        playerMovementAnimation = GetComponent<PlayerMovementAnimation>();
+        animator = GetComponent<Animator>();
     }
 
     void Update () {
@@ -24,29 +29,30 @@ public class Player : MonoBehaviour {
         GameController gameController = GameController.instance;
 
         //if it is this player's turn
-        if(gameController.turnPlayerNum == playerNum && Time.time - gameController.lastMove >= 0.01f) {
+        if(gameController.turnPlayerNum == playerNum && Time.time - gameController.lastMove >= 0.01f && animator.GetCurrentAnimatorStateInfo(0).IsName("idle")) {
 
             spriteRenderer.color = highlightColor;
 
             bool moved = false;
 
             if (Input.GetKeyDown(KeyCode.D)) {
-                transform.Translate(new Vector3(1, 0));
+                playerMovementAnimation.direction = 0;
                 moved = true;
             } else if (Input.GetKeyDown(KeyCode.A)) {
-                transform.Translate(new Vector3(-1, 0));
+                playerMovementAnimation.direction = 180;
                 moved = true;
             } else if (Input.GetKeyDown(KeyCode.W)) {
-                transform.Translate(new Vector3(0, 1));
+                playerMovementAnimation.direction = 90;
                 moved = true;
             } else if (Input.GetKeyDown(KeyCode.S)) {
-                transform.Translate(new Vector3(0, -1));
+                playerMovementAnimation.direction = 270;
                 moved = true;
             }
 
             if (moved) {
                 gameController.NextTurn();
                 spriteRenderer.color = idleColor;
+                animator.SetTrigger("move");
             }
         }
     }

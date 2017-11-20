@@ -7,11 +7,14 @@ using UnityEngine;
 /// </summary>
 public class PlayerMovementAnimation : MonoBehaviour {
 
-    bool animating = false; //is this currently supposed to be animating
-
+    //variables adjusted by animator
+    public bool animating = false; //is this currently supposed to be animating
     public float offsetAmount = 0; // this amount is changed by the animator
-
     public float direction = 0; // direction in angles of where the object should move based on the offset
+
+    //local variables
+    Vector3 startPosition;
+    bool started = false; //has animating already started or is it the first time
 
 	void Start () {
 		
@@ -19,7 +22,18 @@ public class PlayerMovementAnimation : MonoBehaviour {
 	
 	void Update () {
         if (animating) {
+            if(!started) {
+                started = true;
+                startPosition = transform.position;
+            }
+
+            transform.position = startPosition + MathHelper.DegreeToVector3(direction) * offsetAmount;
 
         }
 	}
+
+    public void OnAnimationEnded() {
+        //when the animation ends, set the started to false to make this the new position
+        started = false;
+    }
 }

@@ -6,14 +6,14 @@ public class GameController : MonoBehaviour {
 
     public static GameController instance = null;
 
-    GameObject[] players = new GameObject[0];
+    public GameObject[] players = new GameObject[0];
 
-    int turnNum = 0;
+    public int turnNum = 0;
 
     ///<summary>
     /// What player's turn is it
     ///</summary>
-    int playerTurn = 0;
+    public int turnPlayerNum = 0;
 
 	void Start () {
         if(instance == null) {

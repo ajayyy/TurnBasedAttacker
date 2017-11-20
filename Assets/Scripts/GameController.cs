@@ -20,7 +20,7 @@ public class GameController : MonoBehaviour {
     /// </summary>
     public float lastMove;
 
-	void Start () {
+    void Start () {
         if(instance == null) {
             GameController.instance = this;
         }else {

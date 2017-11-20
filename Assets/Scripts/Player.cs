@@ -9,8 +9,13 @@ public class Player : MonoBehaviour {
     /// </summary>
     public float playerNum = 0;
 
+    Color highlightColor = new Color(100, 0, 0);
+    Color idleColor = new Color(0, 0, 0);
+
+    SpriteRenderer spriteRenderer;
+
 	void Start () {
-		
+        spriteRenderer = GetComponent<SpriteRenderer>();
 	}
 	
 	void Update () {
@@ -18,7 +23,9 @@ public class Player : MonoBehaviour {
         GameController gameController = GameController.instance;
 
         //if it is this player's turn
-        if(gameController.turnPlayerNum == playerNum && Time.time - gameController.lastMove >= 0.1f) {
+        if(gameController.turnPlayerNum == playerNum && Time.time - gameController.lastMove >= 0.01f) {
+
+            spriteRenderer.color = highlightColor;
 
             bool moved = false;
 
@@ -38,6 +45,7 @@ public class Player : MonoBehaviour {
 
             if (moved) {
                 gameController.NextTurn();
+                spriteRenderer.color = idleColor;
             }
         }
     }

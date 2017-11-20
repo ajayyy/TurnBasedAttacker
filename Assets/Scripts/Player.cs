@@ -51,8 +51,16 @@ public class Player : MonoBehaviour {
         }
     }
 
-    void OnTriggerEnter2D(Collider2D collision) {
-        print("test");
+    void OnTriggerEnter2D(Collider2D collider) {
+        if (collider.tag.Equals("Pickup")) {
+            switch (collider.GetComponent<Pickup>().type) {
+                case 0:
+                    //TODO display some marker on the player that it can now shoot a projectile
+                    break;
+            }
+
+            Destroy(collider.gameObject);
+        }
     }
 
 }

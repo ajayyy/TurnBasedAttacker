@@ -24,16 +24,16 @@
      borderopacity="1.0"
      inkscape:pageopacity="0.0"
      inkscape:pageshadow="2"
-     inkscape:zoom="0.35"
-     inkscape:cx="375"
-     inkscape:cy="520"
+     inkscape:zoom="0.7"
+     inkscape:cx="607.47448"
+     inkscape:cy="393.3333"
      inkscape:document-units="px"
      inkscape:current-layer="layer1"
      showgrid="false"
      inkscape:window-width="1366"
      inkscape:window-height="708"
-     inkscape:window-x="-4"
-     inkscape:window-y="-4"
+     inkscape:window-x="1276"
+     inkscape:window-y="803"
      inkscape:window-maximized="1" />
   <metadata
      id="metadata7">
@@ -50,5 +50,35 @@
   <g
      inkscape:label="Layer 1"
      inkscape:groupmode="layer"
-     id="layer1" />
+     id="layer1">
+    <rect
+       style="fill:#000000;fill-opacity:1;stroke:none"
+       id="rect2989"
+       width="709.12708"
+       height="676.80219"
+       x="24.243662"
+       y="145.24519" />
+    <rect
+       style="fill:#ffffff;fill-opacity:1;stroke:none"
+       id="rect2987"
+       width="77.14286"
+       height="77.14286"
+       x="222.85715"
+       y="403.79074"
+       ry="0"
+       inkscape:export-filename="C:\Users\Ajay\Documents\Unity Projects\Final Project\Assets\Sprites\player.png"
+       inkscape:export-xdpi="116.66672"
+       inkscape:export-ydpi="116.66672" />
+    <rect
+       inkscape:export-ydpi="116.66672"
+       inkscape:export-xdpi="116.66672"
+       inkscape:export-filename="C:\Users\Ajay\Documents\Unity Projects\Final Project\Assets\Sprites\pickup.png"
+       ry="0"
+       y="705.21967"
+       x="222.85715"
+       height="38.571499"
+       width="38.571499"
+       id="rect3759"
+       style="fill:#ffffff;fill-opacity:1;stroke:none" />
+  </g>
 </svg>

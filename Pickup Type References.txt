@@ -1,0 +1,3 @@
+Pickup type references
+
+0: projectile

@@ -24,16 +24,16 @@
      borderopacity="1.0"
      inkscape:pageopacity="0.0"
      inkscape:pageshadow="2"
-     inkscape:zoom="0.7"
-     inkscape:cx="607.47448"
-     inkscape:cy="393.3333"
+     inkscape:zoom="0.98994949"
+     inkscape:cx="684.06691"
+     inkscape:cy="489.32378"
      inkscape:document-units="px"
      inkscape:current-layer="layer1"
      showgrid="false"
      inkscape:window-width="1366"
      inkscape:window-height="708"
-     inkscape:window-x="1276"
-     inkscape:window-y="803"
+     inkscape:window-x="-4"
+     inkscape:window-y="-4"
      inkscape:window-maximized="1" />
   <metadata
      id="metadata7">
@@ -80,5 +80,20 @@
        width="38.571499"
        id="rect3759"
        style="fill:#ffffff;fill-opacity:1;stroke:none" />
+    <path
+       sodipodi:type="arc"
+       style="fill:#ffffff;fill-opacity:1;stroke:none"
+       id="path2985"
+       sodipodi:cx="479.31738"
+       sodipodi:cy="598.29858"
+       sodipodi:rx="26.769043"
+       sodipodi:ry="26.769043"
+       d="m 453.46047,591.37025 a 26.769043,26.769043 0 1 1 -0.91213,6.92833"
+       sodipodi:start="3.403392"
+       sodipodi:end="9.424778"
+       sodipodi:open="true"
+       inkscape:export-filename="C:\Users\Ajay\Documents\Unity Projects\Final Project\Assets\Sprites\projectile.png"
+       inkscape:export-xdpi="84.031433"
+       inkscape:export-ydpi="84.031433" />
   </g>
 </svg>

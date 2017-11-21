@@ -35,5 +35,8 @@ public class PlayerMovementAnimation : MonoBehaviour {
     public void OnAnimationEnded() {
         //when the animation ends, set the started to false to make this the new position
         started = false;
+
+        //round the positions incase it didn't reach a full number for some reason
+        transform.position = new Vector3(Mathf.Round(transform.position.x), Mathf.Round(transform.position.y));
     }
 }

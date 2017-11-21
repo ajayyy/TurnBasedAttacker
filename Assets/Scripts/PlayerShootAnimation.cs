@@ -2,10 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-/// <summary>
-/// Class used by the animator to allow the animation to move based on local position and to be able to move in any direction needed
-/// </summary>
-public class PlayerMovementAnimation : MonoBehaviour {
+public class PlayerShootAnimation : MonoBehaviour {
 
     //variables adjusted by animator
     public bool animating = false; //is this currently supposed to be animating
@@ -13,26 +10,27 @@ public class PlayerMovementAnimation : MonoBehaviour {
 
     //variables set by Player class
     public float direction = 0; // direction in angles of where the object should move based on the offset
+    public Vector3 target = Vector3.zero;
 
     //local variables
     Vector3 startPosition;
     bool started = false; //has animating already started or is it the first time
 
-	void Start () {
+    void Start () {
 		
 	}
 	
 	void Update () {
         if (animating) {
-            if(!started) {
+            if (!started) {
                 started = true;
                 startPosition = transform.position;
             }
 
-            transform.position = startPosition + MathHelper.DegreeToVector3(direction) * offsetAmount;
+            transform.position = startPosition + MathHelper.DegreeToVector3(direction) * offsetAmount * Vector3.Distance(target, startPosition);
 
         }
-	}
+    }
 
     public void OnAnimationEnded() {
         //when the animation ends, set the started to false to make this the new position

@@ -15,14 +15,22 @@ public class Player : MonoBehaviour {
     SpriteRenderer spriteRenderer;
 
     PlayerMovementAnimation playerMovementAnimation;
+    PlayerShootAnimation playerShootAnimation;
     Animator animator;
 
+    public GameObject projectile;
+
     bool doneTurn = false; //if true, and the animation state is idle, then go to next turn
+
+    //info on what the player is holding
+    int pickup = 0;
+    bool holding = false; //true when holding
 
 	void Start () {
         spriteRenderer = GetComponent<SpriteRenderer>();
 
         playerMovementAnimation = GetComponent<PlayerMovementAnimation>();
+        playerShootAnimation = projectile.GetComponent<PlayerShootAnimation>();
         animator = GetComponent<Animator>();
     }
 
@@ -40,24 +48,46 @@ public class Player : MonoBehaviour {
                 spriteRenderer.color = highlightColor;
 
                 bool moved = false;
+                int movementType = 0; // if moved, then what type of move was it (atually moving, firing a projectile, etc.)
+                //0 is move, 1 is fire
 
+                //movement
                 if (Input.GetKeyDown(KeyCode.D)) {
                     playerMovementAnimation.direction = 0;
                     moved = true;
+                    movementType = 0;
                 } else if (Input.GetKeyDown(KeyCode.A)) {
                     playerMovementAnimation.direction = 180;
                     moved = true;
+                    movementType = 0;
                 } else if (Input.GetKeyDown(KeyCode.W)) {
                     playerMovementAnimation.direction = 90;
                     moved = true;
+                    movementType = 0;
                 } else if (Input.GetKeyDown(KeyCode.S)) {
                     playerMovementAnimation.direction = 270;
                     moved = true;
+                    movementType = 0;
+                }
+
+                //projectiles
+                if (Input.GetKeyDown(KeyCode.E)) {
+                    playerShootAnimation.direction = 0;
+                    moved = true;
+                    movementType = 1;
                 }
 
                 if (moved) {
-                    animator.SetTrigger("move");
-                    doneTurn = true;
+                    switch (movementType) {
+                        case 0:
+                            animator.SetTrigger("move");
+                            doneTurn = true; //once the animation becomes idle again, the doneTurn if statement will be triggered, and the next turn will start
+                            break;
+                        case 1:
+                            projectile.GetComponent<Animator>().SetTrigger("move");
+                            doneTurn = true;
+                            break;
+                    }
                 }
             }
 
@@ -70,6 +100,8 @@ public class Player : MonoBehaviour {
             switch (collider.GetComponent<Pickup>().type) {
                 case 0:
                     //TODO display some marker on the player that it can now shoot a projectile
+                    pickup = 0;
+                    holding = true;
                     break;
             }
 

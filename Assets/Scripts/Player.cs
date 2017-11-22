@@ -69,6 +69,7 @@ public class Player : MonoBehaviour {
                 if (Input.GetKeyDown(KeyCode.E)) {
                     //disable it, they activated it by mistake
                     shootMode = false;
+                    holding = false;
                 }
 
                 if (chosen) {
@@ -119,8 +120,7 @@ public class Player : MonoBehaviour {
                 }
 
                 //projectiles
-                if (Input.GetKeyDown(KeyCode.E)) {
-
+                if (Input.GetKeyDown(KeyCode.E) && holding && pickup == 0) {
                     shootMode = true;
                 }
 

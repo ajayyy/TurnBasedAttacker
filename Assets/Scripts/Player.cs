@@ -14,8 +14,7 @@ public class Player : MonoBehaviour {
 
     SpriteRenderer spriteRenderer;
 
-    PlayerMovementAnimation playerMovementAnimation;
-    PlayerShootAnimation playerShootAnimation;
+    AnimationScript playerAnimation;
     Animator animator;
 
     public GameObject projectile;
@@ -29,8 +28,7 @@ public class Player : MonoBehaviour {
 	void Start () {
         spriteRenderer = GetComponent<SpriteRenderer>();
 
-        playerMovementAnimation = GetComponent<PlayerMovementAnimation>();
-        playerShootAnimation = projectile.GetComponent<PlayerShootAnimation>();
+        playerAnimation = GetComponent<AnimationScript>();
         animator = GetComponent<Animator>();
     }
 
@@ -53,26 +51,31 @@ public class Player : MonoBehaviour {
 
                 //movement
                 if (Input.GetKeyDown(KeyCode.D)) {
-                    playerMovementAnimation.direction = 0;
+                    playerAnimation.direction = 0;
+                    playerAnimation.type = 0;
                     moved = true;
                     movementType = 0;
                 } else if (Input.GetKeyDown(KeyCode.A)) {
-                    playerMovementAnimation.direction = 180;
+                    playerAnimation.direction = 180;
+                    playerAnimation.type = 0;
                     moved = true;
                     movementType = 0;
                 } else if (Input.GetKeyDown(KeyCode.W)) {
-                    playerMovementAnimation.direction = 90;
+                    playerAnimation.direction = 90;
+                    playerAnimation.type = 0;
                     moved = true;
                     movementType = 0;
                 } else if (Input.GetKeyDown(KeyCode.S)) {
-                    playerMovementAnimation.direction = 270;
+                    playerAnimation.direction = 270;
+                    playerAnimation.type = 0;
                     moved = true;
                     movementType = 0;
                 }
 
                 //projectiles
                 if (Input.GetKeyDown(KeyCode.E)) {
-                    playerShootAnimation.direction = 0;
+                    projectile.GetComponent<AnimationScript>().direction = 0;
+                    projectile.transform.position = transform.position;
                     moved = true;
                     movementType = 1;
                 }

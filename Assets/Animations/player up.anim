@@ -21,28 +21,6 @@ AnimationClip:
       m_Curve:
       - serializedVersion: 2
         time: 0
-        value: 0
-        inSlope: 0
-        outSlope: 0
-        tangentMode: 136
-      - serializedVersion: 2
-        time: 0.25
-        value: 1
-        inSlope: 0
-        outSlope: 0
-        tangentMode: 136
-      m_PreInfinity: 2
-      m_PostInfinity: 2
-      m_RotationOrder: 4
-    attribute: offsetAmount
-    path: 
-    classID: 114
-    script: {fileID: 11500000, guid: e50bced6143ca2d4ebbe8fdd26cb65dd, type: 3}
-  - curve:
-      serializedVersion: 2
-      m_Curve:
-      - serializedVersion: 2
-        time: 0
         value: 1
         inSlope: Infinity
         outSlope: Infinity
@@ -59,7 +37,29 @@ AnimationClip:
     attribute: animating
     path: 
     classID: 114
-    script: {fileID: 11500000, guid: e50bced6143ca2d4ebbe8fdd26cb65dd, type: 3}
+    script: {fileID: 11500000, guid: 72315373f25255c41b81f22b2a0ccfd4, type: 3}
+  - curve:
+      serializedVersion: 2
+      m_Curve:
+      - serializedVersion: 2
+        time: 0
+        value: 0
+        inSlope: 0
+        outSlope: 0
+        tangentMode: 136
+      - serializedVersion: 2
+        time: 0.25
+        value: 1
+        inSlope: 0
+        outSlope: 0
+        tangentMode: 136
+      m_PreInfinity: 2
+      m_PostInfinity: 2
+      m_RotationOrder: 4
+    attribute: offsetAmount
+    path: 
+    classID: 114
+    script: {fileID: 11500000, guid: 72315373f25255c41b81f22b2a0ccfd4, type: 3}
   m_PPtrCurves: []
   m_SampleRate: 60
   m_WrapMode: 0
@@ -70,15 +70,15 @@ AnimationClip:
     genericBindings:
     - serializedVersion: 2
       path: 0
-      attribute: 877030522
-      script: {fileID: 11500000, guid: e50bced6143ca2d4ebbe8fdd26cb65dd, type: 3}
+      attribute: 3985968441
+      script: {fileID: 11500000, guid: 72315373f25255c41b81f22b2a0ccfd4, type: 3}
       typeID: 114
       customType: 0
       isPPtrCurve: 0
     - serializedVersion: 2
       path: 0
-      attribute: 3985968441
-      script: {fileID: 11500000, guid: e50bced6143ca2d4ebbe8fdd26cb65dd, type: 3}
+      attribute: 877030522
+      script: {fileID: 11500000, guid: 72315373f25255c41b81f22b2a0ccfd4, type: 3}
       typeID: 114
       customType: 0
       isPPtrCurve: 0
@@ -109,28 +109,6 @@ AnimationClip:
       m_Curve:
       - serializedVersion: 2
         time: 0
-        value: 0
-        inSlope: 0
-        outSlope: 0
-        tangentMode: 136
-      - serializedVersion: 2
-        time: 0.25
-        value: 1
-        inSlope: 0
-        outSlope: 0
-        tangentMode: 136
-      m_PreInfinity: 2
-      m_PostInfinity: 2
-      m_RotationOrder: 4
-    attribute: offsetAmount
-    path: 
-    classID: 114
-    script: {fileID: 11500000, guid: e50bced6143ca2d4ebbe8fdd26cb65dd, type: 3}
-  - curve:
-      serializedVersion: 2
-      m_Curve:
-      - serializedVersion: 2
-        time: 0
         value: 1
         inSlope: Infinity
         outSlope: Infinity
@@ -147,7 +125,29 @@ AnimationClip:
     attribute: animating
     path: 
     classID: 114
-    script: {fileID: 11500000, guid: e50bced6143ca2d4ebbe8fdd26cb65dd, type: 3}
+    script: {fileID: 11500000, guid: 72315373f25255c41b81f22b2a0ccfd4, type: 3}
+  - curve:
+      serializedVersion: 2
+      m_Curve:
+      - serializedVersion: 2
+        time: 0
+        value: 0
+        inSlope: 0
+        outSlope: 0
+        tangentMode: 136
+      - serializedVersion: 2
+        time: 0.25
+        value: 1
+        inSlope: 0
+        outSlope: 0
+        tangentMode: 136
+      m_PreInfinity: 2
+      m_PostInfinity: 2
+      m_RotationOrder: 4
+    attribute: offsetAmount
+    path: 
+    classID: 114
+    script: {fileID: 11500000, guid: 72315373f25255c41b81f22b2a0ccfd4, type: 3}
   m_EulerEditorCurves: []
   m_HasGenericRootTransform: 0
   m_HasMotionFloatCurves: 0

@@ -228,10 +228,10 @@ GameObject:
   - component: {fileID: 283524162}
   - component: {fileID: 283524161}
   - component: {fileID: 283524160}
+  - component: {fileID: 283524156}
   - component: {fileID: 283524159}
   - component: {fileID: 283524158}
   - component: {fileID: 283524157}
-  - component: {fileID: 283524156}
   m_Layer: 0
   m_Name: Player 2
   m_TagString: Player
@@ -247,12 +247,16 @@ MonoBehaviour:
   m_GameObject: {fileID: 283524155}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e50bced6143ca2d4ebbe8fdd26cb65dd, type: 3}
+  m_Script: {fileID: 11500000, guid: 72315373f25255c41b81f22b2a0ccfd4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   animating: 0
   offsetAmount: 0
   direction: 0
+  target: {x: 0, y: 0, z: 0}
+  type: 0
+  startPosition: {x: 0, y: 0, z: 0}
+  started: 0
 --- !u!50 &283524157
 Rigidbody2D:
   serializedVersion: 4
@@ -482,11 +486,10 @@ GameObject:
   - component: {fileID: 1602668342}
   - component: {fileID: 1602668341}
   - component: {fileID: 1602668343}
+  - component: {fileID: 1602668347}
   - component: {fileID: 1602668344}
   - component: {fileID: 1602668346}
   - component: {fileID: 1602668345}
-  - component: {fileID: 1602668347}
-  - component: {fileID: 1602668348}
   m_Layer: 0
   m_Name: Player
   m_TagString: Player
@@ -632,27 +635,16 @@ MonoBehaviour:
   m_GameObject: {fileID: 1602668340}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e50bced6143ca2d4ebbe8fdd26cb65dd, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  animating: 0
-  offsetAmount: 0
-  direction: 0
---- !u!114 &1602668348
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 1602668340}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 5771455580631e24295fc7e25e40ca00, type: 3}
+  m_Script: {fileID: 11500000, guid: 72315373f25255c41b81f22b2a0ccfd4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   animating: 0
   offsetAmount: 0
   direction: 0
   target: {x: 0, y: 0, z: 0}
+  type: 0
+  startPosition: {x: 0, y: 0, z: 0}
+  started: 0
 --- !u!1 &1642714877
 GameObject:
   m_ObjectHideFlags: 0
@@ -662,8 +654,8 @@ GameObject:
   m_Component:
   - component: {fileID: 1642714879}
   - component: {fileID: 1642714878}
-  - component: {fileID: 1642714880}
   - component: {fileID: 1642714881}
+  - component: {fileID: 1642714880}
   m_Layer: 0
   m_Name: Projectile
   m_TagString: Untagged
@@ -751,13 +743,16 @@ MonoBehaviour:
   m_GameObject: {fileID: 1642714877}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 5771455580631e24295fc7e25e40ca00, type: 3}
+  m_Script: {fileID: 11500000, guid: 72315373f25255c41b81f22b2a0ccfd4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   animating: 0
   offsetAmount: 0
-  direction: 0
+  direction: 1
   target: {x: 0, y: 0, z: 0}
+  type: 1
+  startPosition: {x: 0, y: 0, z: 0}
+  started: 0
 --- !u!1 &1968514526
 GameObject:
   m_ObjectHideFlags: 0

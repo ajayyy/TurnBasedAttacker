@@ -10,6 +10,7 @@ public class Player : MonoBehaviour {
     public float playerNum = 0;
 
     Color highlightColor = new Color(100, 0, 0);
+    Color shootColor = new Color(0, 0, 100);
     Color idleColor = new Color(0, 0, 0);
 
     SpriteRenderer spriteRenderer;
@@ -24,6 +25,9 @@ public class Player : MonoBehaviour {
     //info on what the player is holding
     int pickup = 0;
     bool holding = false; //true when holding
+
+    //if true, waiting for input for the direction
+    bool shootMode = false;
 
 	void Start () {
         spriteRenderer = GetComponent<SpriteRenderer>();
@@ -42,7 +46,48 @@ public class Player : MonoBehaviour {
                 gameController.NextTurn();
                 spriteRenderer.color = idleColor;
                 doneTurn = false;
-            }else {
+            } else if (shootMode) {
+                spriteRenderer.color = shootColor;
+
+                bool chosen = false; //was a direction chosen
+                float direction = 0; //the direction chosen in angles
+
+                if (Input.GetKeyDown(KeyCode.D)) {
+                    chosen = true;
+                    direction = 0;
+                } else if (Input.GetKeyDown(KeyCode.A)) {
+                    chosen = true;
+                    direction = 180;
+                } else if (Input.GetKeyDown(KeyCode.W)) {
+                    chosen = true;
+                    direction = 90;
+                } else if (Input.GetKeyDown(KeyCode.S)) {
+                    chosen = true;
+                    direction = 270;
+                }
+
+                if (Input.GetKeyDown(KeyCode.E)) {
+                    //disable it, they activated it by mistake
+                    shootMode = false;
+                }
+
+                if (chosen) {
+                    //find other player
+                    RaycastHit2D otherPlayer = Physics2D.Raycast(transform.position + MathHelper.DegreeToVector3(direction), MathHelper.DegreeToVector2(direction));
+
+                    if(otherPlayer.collider != null) {
+                        projectile.GetComponent<AnimationScript>().direction = direction;
+                        projectile.GetComponent<AnimationScript>().target = otherPlayer.collider.transform.position;
+                        projectile.transform.position = transform.position;
+
+                        projectile.GetComponent<Animator>().SetTrigger("move");
+                        doneTurn = true;
+                        shootMode = false;
+                    }
+
+                }
+
+            } else {
                 spriteRenderer.color = highlightColor;
 
                 bool moved = false;
@@ -74,10 +119,8 @@ public class Player : MonoBehaviour {
 
                 //projectiles
                 if (Input.GetKeyDown(KeyCode.E)) {
-                    projectile.GetComponent<AnimationScript>().direction = 0;
-                    projectile.transform.position = transform.position;
-                    moved = true;
-                    movementType = 1;
+
+                    shootMode = true;
                 }
 
                 if (moved) {

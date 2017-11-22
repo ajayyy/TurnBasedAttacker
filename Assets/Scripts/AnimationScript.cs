@@ -48,5 +48,9 @@ public class AnimationScript : MonoBehaviour {
 
         //round the positions incase it didn't reach a full number for some reason
         transform.position = new Vector3(Mathf.Round(transform.position.x), Mathf.Round(transform.position.y));
+
+        if (type == 1) {
+            gameObject.SetActive(false);
+        }
     }
 }

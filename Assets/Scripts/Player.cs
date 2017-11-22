@@ -79,6 +79,7 @@ public class Player : MonoBehaviour {
                         projectile.GetComponent<AnimationScript>().direction = direction;
                         projectile.GetComponent<AnimationScript>().target = otherPlayer.collider.transform.position;
                         projectile.transform.position = transform.position;
+                        projectile.SetActive(true);
 
                         projectile.GetComponent<Animator>().SetTrigger("move");
                         doneTurn = true;

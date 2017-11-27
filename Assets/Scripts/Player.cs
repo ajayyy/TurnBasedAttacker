@@ -69,7 +69,6 @@ public class Player : MonoBehaviour {
                 if (Input.GetKeyDown(KeyCode.E)) {
                     //disable it, they activated it by mistake
                     shootMode = false;
-                    holding = false;
                 }
 
                 if (chosen) {
@@ -85,6 +84,7 @@ public class Player : MonoBehaviour {
                         projectile.GetComponent<Animator>().SetTrigger("move");
                         doneTurn = true;
                         shootMode = false;
+                        holding = false;
                     }
 
                 }

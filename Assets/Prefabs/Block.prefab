@@ -21,6 +21,7 @@ GameObject:
   - component: {fileID: 4073750600155494}
   - component: {fileID: 212789089468380248}
   - component: {fileID: 95446681020144806}
+  - component: {fileID: 114862381318265200}
   m_Layer: 0
   m_Name: Block
   m_TagString: Untagged
@@ -34,8 +35,8 @@ Transform:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1395128456515326}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: -3, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
@@ -58,6 +59,22 @@ Animator:
   m_WarningMessage: 
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
+--- !u!114 &114862381318265200
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1395128456515326}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 72315373f25255c41b81f22b2a0ccfd4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  animating: 0
+  offsetAmount: 0
+  direction: 0
+  target: {x: 0, y: 0, z: 0}
+  type: 0
 --- !u!212 &212789089468380248
 SpriteRenderer:
   m_ObjectHideFlags: 1
@@ -89,7 +106,7 @@ SpriteRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: 0
+  m_SortingOrder: -1
   m_Sprite: {fileID: 21300000, guid: b7141274f4010a148896e14949b1726d, type: 3}
   m_Color: {r: 0.5441177, g: 0.5441177, b: 0.5441177, a: 1}
   m_FlipX: 0

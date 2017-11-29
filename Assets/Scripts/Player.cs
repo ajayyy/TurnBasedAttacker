@@ -122,7 +122,8 @@ public class Player : MonoBehaviour {
                     RaycastHit2D otherPlayer = Physics2D.Raycast(transform.position + MathHelper.DegreeToVector3(direction), MathHelper.DegreeToVector2(direction));
 
                     GameObject newBlock = Instantiate(gameController.block);
-                    newBlock.transform.position = transform.position + MathHelper.DegreeToVector3(direction);
+                    newBlock.GetComponent<AnimationScript>().direction = direction;
+                    newBlock.transform.position = transform.position;
 
                     doneTurn = true;
                     blockMode = false;

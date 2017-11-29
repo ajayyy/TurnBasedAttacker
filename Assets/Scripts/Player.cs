@@ -29,7 +29,10 @@ public class Player : MonoBehaviour {
     //if true, waiting for input for the direction
     bool shootMode = false;
 
-	void Start () {
+    //if true, wait for input from the mouse
+    bool blockMode = false;
+
+    void Start () {
         spriteRenderer = GetComponent<SpriteRenderer>();
 
         playerAnimation = GetComponent<AnimationScript>();
@@ -75,7 +78,7 @@ public class Player : MonoBehaviour {
                     //find other player
                     RaycastHit2D otherPlayer = Physics2D.Raycast(transform.position + MathHelper.DegreeToVector3(direction), MathHelper.DegreeToVector2(direction));
 
-                    if(otherPlayer.collider != null) {
+                    if (otherPlayer.collider != null) {
                         projectile.GetComponent<AnimationScript>().direction = direction;
                         projectile.GetComponent<AnimationScript>().target = otherPlayer.collider.transform.position;
                         projectile.transform.position = transform.position;
@@ -87,6 +90,43 @@ public class Player : MonoBehaviour {
                         holding = false;
                     }
 
+                }
+
+            } else if (blockMode) {
+                spriteRenderer.color = shootColor;
+
+                bool chosen = false; //was a direction chosen
+                float direction = 0; //the direction chosen in angles
+
+                if (Input.GetKeyDown(KeyCode.D)) {
+                    chosen = true;
+                    direction = 0;
+                } else if (Input.GetKeyDown(KeyCode.A)) {
+                    chosen = true;
+                    direction = 180;
+                } else if (Input.GetKeyDown(KeyCode.W)) {
+                    chosen = true;
+                    direction = 90;
+                } else if (Input.GetKeyDown(KeyCode.S)) {
+                    chosen = true;
+                    direction = 270;
+                }
+
+                if (Input.GetKeyDown(KeyCode.E)) {
+                    //disable it, they activated it by mistake
+                    blockMode = false;
+                }
+
+                if (chosen) {
+                    //find other player
+                    RaycastHit2D otherPlayer = Physics2D.Raycast(transform.position + MathHelper.DegreeToVector3(direction), MathHelper.DegreeToVector2(direction));
+
+                    GameObject newBlock = Instantiate(gameController.block);
+                    newBlock.transform.position = transform.position + MathHelper.DegreeToVector3(direction);
+
+                    doneTurn = true;
+                    blockMode = false;
+                    holding = false;
                 }
 
             } else {
@@ -124,6 +164,11 @@ public class Player : MonoBehaviour {
                     shootMode = true;
                 }
 
+                //place block
+                if (Input.GetKeyDown(KeyCode.E) && holding && pickup == 1) {
+                    blockMode = true;
+                }
+
                 if (moved) {
                     switch (movementType) {
                         case 0:
@@ -147,10 +192,11 @@ public class Player : MonoBehaviour {
             switch (collider.GetComponent<Pickup>().type) {
                 case 0:
                     //TODO display some marker on the player that it can now shoot a projectile
-                    pickup = 0;
-                    holding = true;
                     break;
             }
+
+            pickup = collider.GetComponent<Pickup>().type;
+            holding = true;
 
             Destroy(collider.gameObject);
         }

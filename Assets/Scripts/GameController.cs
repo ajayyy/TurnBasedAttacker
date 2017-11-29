@@ -20,6 +20,10 @@ public class GameController : MonoBehaviour {
     /// </summary>
     public float lastMove;
 
+    //prefabs for player class
+    //the block prefab
+    public GameObject block;
+
     void Start () {
         if(instance == null) {
             GameController.instance = this;

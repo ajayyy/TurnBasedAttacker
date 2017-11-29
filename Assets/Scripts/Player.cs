@@ -134,30 +134,24 @@ public class Player : MonoBehaviour {
                 spriteRenderer.color = highlightColor;
 
                 bool moved = false;
-                int movementType = 0; // if moved, then what type of move was it (atually moving, firing a projectile, etc.)
-                //0 is move, 1 is fire
 
                 //movement
                 if (Input.GetKeyDown(KeyCode.D)) {
                     playerAnimation.direction = 0;
                     playerAnimation.type = 0;
                     moved = true;
-                    movementType = 0;
                 } else if (Input.GetKeyDown(KeyCode.A)) {
                     playerAnimation.direction = 180;
                     playerAnimation.type = 0;
                     moved = true;
-                    movementType = 0;
                 } else if (Input.GetKeyDown(KeyCode.W)) {
                     playerAnimation.direction = 90;
                     playerAnimation.type = 0;
                     moved = true;
-                    movementType = 0;
                 } else if (Input.GetKeyDown(KeyCode.S)) {
                     playerAnimation.direction = 270;
                     playerAnimation.type = 0;
                     moved = true;
-                    movementType = 0;
                 }
 
                 //projectiles
@@ -171,16 +165,14 @@ public class Player : MonoBehaviour {
                 }
 
                 if (moved) {
-                    switch (movementType) {
-                        case 0:
-                            animator.SetTrigger("move");
-                            doneTurn = true; //once the animation becomes idle again, the doneTurn if statement will be triggered, and the next turn will start
-                            break;
-                        case 1:
-                            projectile.GetComponent<Animator>().SetTrigger("move");
-                            doneTurn = true;
-                            break;
+                    //check if there is something in the way
+                    RaycastHit2D otherObject = Physics2D.Raycast(transform.position + MathHelper.DegreeToVector3(playerAnimation.direction), MathHelper.DegreeToVector2(playerAnimation.direction));
+
+                    if(otherObject.collider == null || otherObject.transform.position != transform.position + MathHelper.DegreeToVector3(playerAnimation.direction) || otherObject.collider.tag.Equals("Pickup")) {
+                        animator.SetTrigger("move");
+                        doneTurn = true; //once the animation becomes idle again, the doneTurn if statement will be triggered, and the next turn will start
                     }
+
                 }
             }
 

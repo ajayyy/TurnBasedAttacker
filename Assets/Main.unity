@@ -329,6 +329,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   playerNum: 1
+  selected: 1
   projectile: {fileID: 1642714877}
 --- !u!212 &283524161
 SpriteRenderer:
@@ -496,6 +497,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   playerNum: 0
+  selected: 0
   projectile: {fileID: 1642714877}
 --- !u!212 &463885485
 SpriteRenderer:
@@ -729,6 +731,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   playerNum: 0
+  selected: 1
   projectile: {fileID: 1642714877}
 --- !u!61 &1602668344
 BoxCollider2D:
@@ -1025,6 +1028,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   playerNum: 1
+  selected: 0
   projectile: {fileID: 1642714877}
 --- !u!212 &1717661773
 SpriteRenderer:

@@ -10,7 +10,7 @@ public class Player : MonoBehaviour {
     public float playerNum = 0;
 
     //true when selected by player, remains true when it is not this player's turn
-    bool selected = false;
+    public bool selected = false; //public so it's default can be chosen in the editor
 
     Color highlightColor = new Color(100, 0, 0);
     Color shootColor = new Color(0, 0, 100);
@@ -184,7 +184,6 @@ public class Player : MonoBehaviour {
     }
 
     void OnMouseDown() {
-        print("ASDjkhsadjkasdhjkahsdkjhKJASDHKJSAD");
         selected = true;
         
         foreach(GameObject playerObject in GameController.instance.players) {

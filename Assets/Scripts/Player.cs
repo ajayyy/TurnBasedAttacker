@@ -14,7 +14,7 @@ public class Player : MonoBehaviour {
 
     Color highlightColor = new Color(100, 0, 0);
     Color shootColor = new Color(0, 0, 100);
-    Color idleColor = new Color(0, 0, 0);
+    public Color idleColor = new Color(0, 0, 0);
 
     SpriteRenderer spriteRenderer;
 
@@ -37,6 +37,7 @@ public class Player : MonoBehaviour {
 
     void Start () {
         spriteRenderer = GetComponent<SpriteRenderer>();
+        spriteRenderer.color = idleColor;
 
         playerAnimation = GetComponent<AnimationScript>();
         animator = GetComponent<Animator>();

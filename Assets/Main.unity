@@ -330,6 +330,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   playerNum: 1
   selected: 1
+  idleColor: {r: 0.85294116, g: 0.44204155, b: 0.068987906, a: 1}
   projectile: {fileID: 1642714877}
 --- !u!212 &283524161
 SpriteRenderer:
@@ -498,6 +499,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   playerNum: 0
   selected: 0
+  idleColor: {r: 0.20663925, g: 0.7205882, b: 0.6567877, a: 1}
   projectile: {fileID: 1642714877}
 --- !u!212 &463885485
 SpriteRenderer:
@@ -732,6 +734,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   playerNum: 0
   selected: 1
+  idleColor: {r: 0.20663925, g: 0.7205882, b: 0.6567877, a: 1}
   projectile: {fileID: 1642714877}
 --- !u!61 &1602668344
 BoxCollider2D:
@@ -1029,6 +1032,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   playerNum: 1
   selected: 0
+  idleColor: {r: 0.85294116, g: 0.44204155, b: 0.068987906, a: 1}
   projectile: {fileID: 1642714877}
 --- !u!212 &1717661773
 SpriteRenderer:

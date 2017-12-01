@@ -6,7 +6,10 @@ public class GameController : MonoBehaviour {
 
     public static GameController instance = null;
 
+    //contains all players, including if a player has multiple characters on screen
     public GameObject[] players = new GameObject[0];
+
+    public float personAmount = 0; // Amount of actual people playing/turns to go through. Because the players array now includes more than one player per person
 
     public int turnNum = 0;
 
@@ -39,7 +42,7 @@ public class GameController : MonoBehaviour {
 
     public void NextTurn() {
         turnPlayerNum++;
-        if(turnPlayerNum >= players.Length) {
+        if(turnPlayerNum >= personAmount) {
             turnNum++;
             turnPlayerNum = 0;
         }

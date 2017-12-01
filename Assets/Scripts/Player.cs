@@ -9,6 +9,9 @@ public class Player : MonoBehaviour {
     /// </summary>
     public float playerNum = 0;
 
+    //true when selected by player, remains true when it is not this player's turn
+    bool selected = false;
+
     Color highlightColor = new Color(100, 0, 0);
     Color shootColor = new Color(0, 0, 100);
     Color idleColor = new Color(0, 0, 0);
@@ -44,14 +47,14 @@ public class Player : MonoBehaviour {
         GameController gameController = GameController.instance;
 
         //if it is this player's turn
-        if(gameController.turnPlayerNum == playerNum && Time.time - gameController.lastMove >= 0.01f && animator.GetCurrentAnimatorStateInfo(0).IsName("idle")) {
+        if(gameController.turnPlayerNum == playerNum && Time.time - gameController.lastMove >= 0.01f && selected && animator.GetCurrentAnimatorStateInfo(0).IsName("idle")) {
             if (doneTurn) {
                 gameController.NextTurn();
                 spriteRenderer.color = idleColor;
                 doneTurn = false;
             } else if (shootMode) {
                 spriteRenderer.color = shootColor;
-
+                
                 bool chosen = false; //was a direction chosen
                 float direction = 0; //the direction chosen in angles
 
@@ -178,6 +181,20 @@ public class Player : MonoBehaviour {
 
         }
 
+    }
+
+    void OnMouseDown() {
+        print("ASDjkhsadjkasdhjkahsdkjhKJASDHKJSAD");
+        selected = true;
+        
+        foreach(GameObject playerObject in GameController.instance.players) {
+            Player player = playerObject.GetComponent<Player>();
+            if(player.playerNum == playerNum && player != this) {
+                //this player is part of this person's characters, they are not selected because this is now selected
+                player.selected = false;
+                player.spriteRenderer.color = player.idleColor;
+            }
+        }
     }
 
     void OnTriggerEnter2D(Collider2D collider) {

@@ -52,7 +52,28 @@ public class AnimationScript : MonoBehaviour {
 
         if (type == 1) {
             gameObject.SetActive(false);
-            Destroy(targetObject);
+            targetObject.GetComponent<Animator>().SetTrigger("dead");
         }
+    }
+
+    public void OnDeadAnimationEnded() {
+
+        Player playerScript = GetComponent<Player>();
+
+        //select another player owned by this player
+        foreach (GameObject playerObject in GameController.instance.players) {
+            Player player = playerObject.GetComponent<Player>();
+            if (player.playerNum == playerScript.playerNum && player != playerScript) {
+                player.selected = true;
+                player.spriteRenderer.color = player.highlightColor;
+
+                break;
+            }
+        }
+
+        GameController.instance.players.Remove(gameObject);
+
+        Destroy(gameObject);
+
     }
 }

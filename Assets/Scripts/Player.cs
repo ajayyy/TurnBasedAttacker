@@ -12,11 +12,11 @@ public class Player : MonoBehaviour {
     //true when selected by player, remains true when it is not this player's turn
     public bool selected = false; //public so it's default can be chosen in the editor
 
-    Color highlightColor = new Color(100, 0, 0);
+    public Color highlightColor = new Color(100, 0, 0);
     Color shootColor = new Color(0, 0, 100);
     public Color idleColor = new Color(0, 0, 0);
 
-    SpriteRenderer spriteRenderer;
+    public SpriteRenderer spriteRenderer;
 
     AnimationScript playerAnimation;
     Animator animator;

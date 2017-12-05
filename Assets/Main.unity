@@ -331,7 +331,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   playerNum: 1
   selected: 1
+  highlightColor: {r: 100, g: 0, b: 0, a: 1}
   idleColor: {r: 0.85294116, g: 0.44204155, b: 0.068987906, a: 1}
+  spriteRenderer: {fileID: 0}
   projectile: {fileID: 1642714877}
 --- !u!212 &283524161
 SpriteRenderer:
@@ -501,7 +503,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   playerNum: 0
   selected: 0
+  highlightColor: {r: 100, g: 0, b: 0, a: 1}
   idleColor: {r: 0.20663925, g: 0.7205882, b: 0.6567877, a: 1}
+  spriteRenderer: {fileID: 0}
   projectile: {fileID: 1642714877}
 --- !u!212 &463885485
 SpriteRenderer:
@@ -736,7 +740,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   playerNum: 0
   selected: 1
+  highlightColor: {r: 100, g: 0, b: 0, a: 1}
   idleColor: {r: 0.20663925, g: 0.7205882, b: 0.6567877, a: 1}
+  spriteRenderer: {fileID: 0}
   projectile: {fileID: 1642714877}
 --- !u!61 &1602668344
 BoxCollider2D:
@@ -866,7 +872,7 @@ SpriteRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: 0
+  m_SortingOrder: -1
   m_Sprite: {fileID: 21300000, guid: 6492ee6fffaed9c449b8f59a986aa9a5, type: 3}
   m_Color: {r: 1, g: 0, b: 0, a: 1}
   m_FlipX: 0
@@ -1037,7 +1043,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   playerNum: 1
   selected: 0
+  highlightColor: {r: 100, g: 0, b: 0, a: 1}
   idleColor: {r: 0.85294116, g: 0.44204155, b: 0.068987906, a: 1}
+  spriteRenderer: {fileID: 0}
   projectile: {fileID: 1642714877}
 --- !u!212 &1717661773
 SpriteRenderer:

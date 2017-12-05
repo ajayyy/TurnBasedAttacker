@@ -14,6 +14,7 @@ public class AnimationScript : MonoBehaviour {
     //variables set by Player class
     public float direction = 0; // direction in angles of where the object should move based on the offset
     public Vector3 target = Vector3.zero;
+    public GameObject targetObject; //target gameobject if it exists
     public int type = 0; //0: one unit movement, 1: move to target
 
     //local variables
@@ -51,6 +52,7 @@ public class AnimationScript : MonoBehaviour {
 
         if (type == 1) {
             gameObject.SetActive(false);
+            Destroy(targetObject);
         }
     }
 }

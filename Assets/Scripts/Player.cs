@@ -85,6 +85,7 @@ public class Player : MonoBehaviour {
                     if (otherPlayer.collider != null) {
                         projectile.GetComponent<AnimationScript>().direction = direction;
                         projectile.GetComponent<AnimationScript>().target = otherPlayer.collider.transform.position;
+                        projectile.GetComponent<AnimationScript>().targetObject = otherPlayer.collider.gameObject;
                         projectile.transform.position = transform.position;
                         projectile.SetActive(true);
 

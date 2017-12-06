@@ -53,6 +53,18 @@ public class AnimationScript : MonoBehaviour {
         if (type == 1) {
             gameObject.SetActive(false);
             targetObject.GetComponent<Animator>().SetTrigger("dead");
+
+            Player playerScript = targetObject.GetComponent<Player>();
+
+            foreach (GameObject playerObject in GameController.instance.players) {
+                Player player = playerObject.GetComponent<Player>();
+                if (player.playerNum == playerScript.playerNum) {
+                    player.selected = false;
+                    player.spriteRenderer.color = player.idleColor;
+
+                    break;
+                }
+            }
         }
     }
 

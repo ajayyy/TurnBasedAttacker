@@ -32,8 +32,11 @@ public class Player : MonoBehaviour {
     //if true, waiting for input for the direction
     bool shootMode = false;
 
-    //if true, wait for input from the mouse
+    //if true, wait for input for the direction
     bool blockMode = false;
+
+    //if true, wait for input for the direction of the spawn for the new player
+    bool spawnMode = false;
 
     void Start () {
         spriteRenderer = GetComponent<SpriteRenderer>();
@@ -135,6 +138,55 @@ public class Player : MonoBehaviour {
                     holding = false;
                 }
 
+            } else if (spawnMode) {
+                spriteRenderer.color = shootColor;
+
+                bool chosen = false; //was a direction chosen
+                float direction = 0; //the direction chosen in angles
+
+                if (Input.GetKeyDown(KeyCode.D)) {
+                    chosen = true;
+                    direction = 0;
+                } else if (Input.GetKeyDown(KeyCode.A)) {
+                    chosen = true;
+                    direction = 180;
+                } else if (Input.GetKeyDown(KeyCode.W)) {
+                    chosen = true;
+                    direction = 90;
+                } else if (Input.GetKeyDown(KeyCode.S)) {
+                    chosen = true;
+                    direction = 270;
+                }
+
+                if (Input.GetKeyDown(KeyCode.E)) {
+                    //disable it, they activated it by mistake
+                    spawnMode = false;
+                }
+
+                if (chosen) {
+                    //find other player
+                    RaycastHit2D otherPlayer = Physics2D.Raycast(transform.position + MathHelper.DegreeToVector3(direction), MathHelper.DegreeToVector2(direction));
+                    
+                    GameObject newPlayer = Instantiate(gameController.player);
+                    newPlayer.GetComponent<AnimationScript>().direction = direction;
+                    newPlayer.transform.position = transform.position;
+
+                    Player playerScript = newPlayer.GetComponent<Player>();
+                    playerScript.playerNum = playerNum;
+                    playerScript.idleColor = idleColor;
+                    playerScript.highlightColor = highlightColor;
+                    playerScript.shootColor = shootColor;
+                    playerScript.selected = false;
+
+                    playerScript.GetComponent<Animator>().SetTrigger("move");
+
+                    gameController.players.Add(newPlayer);
+
+                    doneTurn = true;
+                    spawnMode = false;
+                    holding = false;
+                }
+
             } else {
                 spriteRenderer.color = highlightColor;
 
@@ -167,6 +219,11 @@ public class Player : MonoBehaviour {
                 //place block
                 if (Input.GetKeyDown(KeyCode.E) && holding && pickup == 1) {
                     blockMode = true;
+                }
+
+                //spawn player
+                if (Input.GetKeyDown(KeyCode.E) && holding && pickup == 2) {
+                    spawnMode = true;
                 }
 
                 if (moved) {

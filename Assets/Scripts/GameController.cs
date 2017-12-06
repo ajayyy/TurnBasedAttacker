@@ -26,6 +26,8 @@ public class GameController : MonoBehaviour {
     //prefabs for player class
     //the block prefab
     public GameObject block;
+    //the player prefab
+    public GameObject player;
 
     void Start () {
         if(instance == null) {

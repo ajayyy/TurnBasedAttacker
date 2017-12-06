@@ -1,3 +1,7 @@
 Pickup type references
 
 0: projectile
+
+1: place block
+
+2: spawn player

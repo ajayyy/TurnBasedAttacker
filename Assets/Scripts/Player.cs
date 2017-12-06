@@ -21,7 +21,10 @@ public class Player : MonoBehaviour {
     AnimationScript playerAnimation;
     Animator animator;
 
-    public GameObject projectile;
+    //these are set from gamecontroller varivables, they are set in Start()
+    GameObject projectile;
+    // prefab
+    GameObject slowProjectile;
 
     bool doneTurn = false; //if true, and the animation state is idle, then go to next turn
 
@@ -38,12 +41,18 @@ public class Player : MonoBehaviour {
     //if true, wait for input for the direction of the spawn for the new player
     bool spawnMode = false;
 
+    //if true, wait for input for the direction
+    bool slowShootMode = false;
+
     void Start () {
         spriteRenderer = GetComponent<SpriteRenderer>();
         spriteRenderer.color = idleColor;
 
         playerAnimation = GetComponent<AnimationScript>();
         animator = GetComponent<Animator>();
+
+        projectile = GameController.instance.projectile;
+        slowProjectile = GameController.instance.slowProjectile;
     }
 
     void Update () {
@@ -187,6 +196,53 @@ public class Player : MonoBehaviour {
                     holding = false;
                 }
 
+            } else if (slowShootMode) {
+                spriteRenderer.color = shootColor;
+
+                bool chosen = false; //was a direction chosen
+                float direction = 0; //the direction chosen in angles
+
+                if (Input.GetKeyDown(KeyCode.D)) {
+                    chosen = true;
+                    direction = 0;
+                } else if (Input.GetKeyDown(KeyCode.A)) {
+                    chosen = true;
+                    direction = 180;
+                } else if (Input.GetKeyDown(KeyCode.W)) {
+                    chosen = true;
+                    direction = 90;
+                } else if (Input.GetKeyDown(KeyCode.S)) {
+                    chosen = true;
+                    direction = 270;
+                }
+
+                if (Input.GetKeyDown(KeyCode.E)) {
+                    //disable it, they activated it by mistake
+                    shootMode = false;
+                }
+
+                if (chosen) {
+                    //find other player
+                    RaycastHit2D otherPlayer = Physics2D.Raycast(transform.position + MathHelper.DegreeToVector3(direction), MathHelper.DegreeToVector2(direction));
+
+                    if (otherPlayer.collider != null && otherPlayer.collider.tag == "Player") {
+
+                        GameObject newProjectile = Instantiate(slowProjectile);
+
+                        SlowProjectile slowProjectileScript = newProjectile.GetComponent<SlowProjectile>();
+
+                        slowProjectileScript.direction = direction;
+                        //slowProjectileScript.lastTurnMoved = playerNum;
+                        newProjectile.transform.position = transform.position;
+
+
+                        doneTurn = true;
+                        slowShootMode = false;
+                        holding = false;
+                    }
+
+                }
+
             } else {
                 spriteRenderer.color = highlightColor;
 
@@ -224,6 +280,11 @@ public class Player : MonoBehaviour {
                 //spawn player
                 if (Input.GetKeyDown(KeyCode.E) && holding && pickup == 2) {
                     spawnMode = true;
+                }
+
+                //slow projectile
+                if (Input.GetKeyDown(KeyCode.E) && holding && pickup == 3) {
+                    slowShootMode = true;
                 }
 
                 if (moved) {

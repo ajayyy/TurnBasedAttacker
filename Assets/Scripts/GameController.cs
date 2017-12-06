@@ -23,13 +23,19 @@ public class GameController : MonoBehaviour {
     /// </summary>
     public float lastMove;
 
+    //the projectile in this scene
+    public GameObject projectile;
+
+    //the slow projectile prefab
+    public GameObject slowProjectile;
+
     //prefabs for player class
     //the block prefab
     public GameObject block;
     //the player prefab
     public GameObject player;
 
-    void Start () {
+    void Awake () {
         if(instance == null) {
             GameController.instance = this;
         }else {

@@ -72,18 +72,21 @@ public class AnimationScript : MonoBehaviour {
 
         Player playerScript = GetComponent<Player>();
 
-        //select another player owned by this player
-        foreach (GameObject playerObject in GameController.instance.players) {
-            Player player = playerObject.GetComponent<Player>();
-            if (player.playerNum == playerScript.playerNum && player != playerScript) {
-                player.selected = true;
-                player.spriteRenderer.color = player.highlightColor;
+        if(playerScript != null) {
+            //select another player owned by this player
+            foreach (GameObject playerObject in GameController.instance.players) {
+                Player player = playerObject.GetComponent<Player>();
+                if (player.playerNum == playerScript.playerNum && player != playerScript) {
+                    player.selected = true;
+                    player.spriteRenderer.color = player.highlightColor;
 
-                break;
+                    break;
+                }
             }
-        }
 
-        GameController.instance.players.Remove(gameObject);
+            GameController.instance.players.Remove(gameObject);
+
+        } //not player if null
 
         Destroy(gameObject);
 

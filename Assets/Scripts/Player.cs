@@ -218,7 +218,7 @@ public class Player : MonoBehaviour {
 
                 if (Input.GetKeyDown(KeyCode.E)) {
                     //disable it, they activated it by mistake
-                    shootMode = false;
+                    slowShootMode = false;
                 }
 
                 if (chosen) {

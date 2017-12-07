@@ -232,7 +232,7 @@ public class Player : MonoBehaviour {
                         SlowProjectile slowProjectileScript = newProjectile.GetComponent<SlowProjectile>();
 
                         slowProjectileScript.direction = direction;
-                        //slowProjectileScript.lastTurnMoved = playerNum;
+                        slowProjectileScript.lastTurnMoved = playerNum;
                         newProjectile.transform.position = transform.position;
 
 

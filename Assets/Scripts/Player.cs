@@ -7,7 +7,7 @@ public class Player : MonoBehaviour {
     /// <summary>
     /// Which player is this, used to know if it is this player's turn
     /// </summary>
-    public float playerNum = 0;
+    public int playerNum = 0;
 
     //true when selected by player, remains true when it is not this player's turn
     public bool selected = false; //public so it's default can be chosen in the editor
@@ -232,7 +232,7 @@ public class Player : MonoBehaviour {
                         SlowProjectile slowProjectileScript = newProjectile.GetComponent<SlowProjectile>();
 
                         slowProjectileScript.direction = direction;
-                        //slowProjectileScript.lastTurnMoved = playerNum; 
+                        slowProjectileScript.lastTurnMoved = playerNum;
                         newProjectile.transform.position = transform.position;
 
 

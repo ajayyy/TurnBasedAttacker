@@ -223,23 +223,23 @@ public class Player : MonoBehaviour {
 
                 if (chosen) {
                     //find other player
-                    RaycastHit2D otherPlayer = Physics2D.Raycast(transform.position + MathHelper.DegreeToVector3(direction), MathHelper.DegreeToVector2(direction));
+                    //RaycastHit2D otherPlayer = Physics2D.Raycast(transform.position + MathHelper.DegreeToVector3(direction), MathHelper.DegreeToVector2(direction));
 
-                    if (otherPlayer.collider != null && otherPlayer.collider.tag == "Player") {
+                    //if (otherPlayer.collider != null && otherPlayer.collider.tag == "Player") {
 
-                        GameObject newProjectile = Instantiate(slowProjectile);
+                    GameObject newProjectile = Instantiate(slowProjectile);
 
-                        SlowProjectile slowProjectileScript = newProjectile.GetComponent<SlowProjectile>();
+                    SlowProjectile slowProjectileScript = newProjectile.GetComponent<SlowProjectile>();
 
-                        slowProjectileScript.direction = direction;
-                        slowProjectileScript.lastTurnMoved = playerNum;
-                        newProjectile.transform.position = transform.position;
+                    slowProjectileScript.direction = direction;
+                    slowProjectileScript.lastTurnMoved = playerNum;
+                    newProjectile.transform.position = transform.position;
 
 
-                        doneTurn = true;
-                        slowShootMode = false;
-                        holding = false;
-                    }
+                    doneTurn = true;
+                    slowShootMode = false;
+                    holding = false;
+                    //}
 
                 }
 

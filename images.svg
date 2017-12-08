@@ -24,16 +24,16 @@
      borderopacity="1.0"
      inkscape:pageopacity="0.0"
      inkscape:pageshadow="2"
-     inkscape:zoom="0.98994949"
-     inkscape:cx="684.06691"
-     inkscape:cy="489.32378"
+     inkscape:zoom="1.4"
+     inkscape:cx="319.55459"
+     inkscape:cy="653.31381"
      inkscape:document-units="px"
      inkscape:current-layer="layer1"
      showgrid="false"
      inkscape:window-width="1366"
      inkscape:window-height="708"
-     inkscape:window-x="-4"
-     inkscape:window-y="-4"
+     inkscape:window-x="1276"
+     inkscape:window-y="803"
      inkscape:window-maximized="1" />
   <metadata
      id="metadata7">
@@ -95,5 +95,15 @@
        inkscape:export-filename="C:\Users\Ajay\Documents\Unity Projects\Final Project\Assets\Sprites\projectile.png"
        inkscape:export-xdpi="84.031433"
        inkscape:export-ydpi="84.031433" />
+    <rect
+       style="fill:none;stroke:#ffffff;stroke-width:3.06;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none"
+       id="rect2990"
+       width="247.14285"
+       height="247.14285"
+       x="361.42856"
+       y="228.79076"
+       inkscape:export-filename="C:\Users\Ajay\Documents\Unity Projects\Final Project\Assets\Sprites\border.png"
+       inkscape:export-xdpi="745.98724"
+       inkscape:export-ydpi="745.98724" />
   </g>
 </svg>

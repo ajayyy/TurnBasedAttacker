@@ -94,7 +94,7 @@ public class Player : MonoBehaviour {
                     //find other player
                     RaycastHit2D otherPlayer = Physics2D.Raycast(transform.position + MathHelper.DegreeToVector3(direction), MathHelper.DegreeToVector2(direction));
 
-                    if (otherPlayer.collider != null && otherPlayer.collider.tag == "Player") {
+                    if (otherPlayer.collider != null && (otherPlayer.collider.tag == "Player" || otherPlayer.collider.tag == "Block")) {
                         projectile.GetComponent<AnimationScript>().direction = direction;
                         projectile.GetComponent<AnimationScript>().target = otherPlayer.collider.transform.position;
                         projectile.GetComponent<AnimationScript>().targetObject = otherPlayer.collider.gameObject;

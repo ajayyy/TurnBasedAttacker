@@ -223,9 +223,6 @@ public class Player : MonoBehaviour {
 
                 if (chosen) {
                     //find other player
-                    //RaycastHit2D otherPlayer = Physics2D.Raycast(transform.position + MathHelper.DegreeToVector3(direction), MathHelper.DegreeToVector2(direction));
-
-                    //if (otherPlayer.collider != null && otherPlayer.collider.tag == "Player") {
 
                     GameObject newProjectile = Instantiate(slowProjectile);
 
@@ -239,7 +236,6 @@ public class Player : MonoBehaviour {
                     doneTurn = true;
                     slowShootMode = false;
                     holding = false;
-                    //}
 
                 }
 

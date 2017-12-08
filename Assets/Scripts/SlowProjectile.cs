@@ -21,13 +21,13 @@ public class SlowProjectile : MonoBehaviour {
 
     bool dead = false; //true if dying on next frame
 
-	void Start () {
+    void Start() {
         animationScript = GetComponent<AnimationScript>();
 
         animator = GetComponent<Animator>();
     }
-	
-	void FixedUpdate () {
+
+    void FixedUpdate() {
         print(animator.GetCurrentAnimatorStateInfo(0).IsName("idle"));
         if (dead && animator.GetCurrentAnimatorStateInfo(0).IsName("idle")) {
             Destroy(gameObject);
@@ -36,7 +36,7 @@ public class SlowProjectile : MonoBehaviour {
 
         GameController gameController = GameController.instance;
 
-		if(lastTurnMoved != gameController.turnPlayerNum) {
+        if (lastTurnMoved != gameController.turnPlayerNum) {
 
             lastTurnMoved = gameController.turnPlayerNum;
 
@@ -44,7 +44,7 @@ public class SlowProjectile : MonoBehaviour {
             animator.SetTrigger("move");
         }
 
-	}
+    }
 
     void OnTriggerEnter2D(Collider2D collider) {
         if (firstTurn) {
@@ -55,6 +55,10 @@ public class SlowProjectile : MonoBehaviour {
         if (collider.gameObject.tag == "Player" && lastTurnMoved != -1) {
             collider.GetComponent<Animator>().SetTrigger("dead");
 
+            dead = true;
+        }
+
+        if (collider.gameObject.tag == "Block") {
             dead = true;
         }
     }

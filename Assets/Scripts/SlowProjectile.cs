@@ -59,6 +59,8 @@ public class SlowProjectile : MonoBehaviour {
         }
 
         if (collider.gameObject.tag == "Block") {
+            collider.GetComponent<Animator>().SetTrigger("dead");
+
             dead = true;
         }
     }

@@ -26,9 +26,6 @@ public class GameController : MonoBehaviour {
     //the projectile in this scene
     public GameObject projectile;
 
-    //the slow projectile prefab
-    public GameObject slowProjectile;
-
     //prefabs for player class
     //the block prefab
     public GameObject block;

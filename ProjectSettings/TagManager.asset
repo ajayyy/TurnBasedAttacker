@@ -6,6 +6,7 @@ TagManager:
   tags:
   - Pickup
   - Block
+  - Border
   layers:
   - Default
   - TransparentFX

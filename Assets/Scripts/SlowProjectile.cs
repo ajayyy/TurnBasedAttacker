@@ -34,6 +34,14 @@ public class SlowProjectile : MonoBehaviour {
             return;
         }
 
+        //if (!animator.GetCurrentAnimatorStateInfo(0).IsName("idle")) {
+        //    RaycastHit2D otherObject = Physics2D.Raycast(transform.position, MathHelper.DegreeToVector2(direction));
+
+        //    if (otherObject.collider != null && Vector3.Distance(otherObject.point, transform.position) < 1f || otherObject.collider.tag.Equals("Border")) {
+        //        dead = true;
+        //    }
+        //}
+
         GameController gameController = GameController.instance;
 
         if (lastTurnMoved != gameController.turnPlayerNum) {
@@ -61,6 +69,11 @@ public class SlowProjectile : MonoBehaviour {
         if (collider.gameObject.tag == "Block") {
             collider.GetComponent<Animator>().SetTrigger("dead");
 
+            dead = true;
+        }
+
+        if(collider.gameObject.tag == "Border") {
+            GetComponent<Animator>().SetTrigger("dead");
             dead = true;
         }
     }

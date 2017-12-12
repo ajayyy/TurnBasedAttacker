@@ -140,7 +140,6 @@ MonoBehaviour:
   highlightColor: {r: 100, g: 0, b: 0, a: 1}
   idleColor: {r: 0.20663925, g: 0.7205882, b: 0.6567877, a: 1}
   spriteRenderer: {fileID: 0}
-  projectile: {fileID: 0}
 --- !u!212 &212464717317271092
 SpriteRenderer:
   m_ObjectHideFlags: 1
@@ -182,4 +181,4 @@ SpriteRenderer:
   m_AdaptiveModeThreshold: 0.5
   m_SpriteTileMode: 0
   m_WasSpriteAssigned: 1
-  m_MaskInteraction: 0
+  m_MaskInteraction: 1

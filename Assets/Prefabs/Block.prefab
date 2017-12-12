@@ -121,6 +121,7 @@ MonoBehaviour:
   offsetAmount: 0
   direction: 0
   target: {x: 0, y: 0, z: 0}
+  targetObject: {fileID: 0}
   type: 0
 --- !u!212 &212789089468380248
 SpriteRenderer:
@@ -163,4 +164,4 @@ SpriteRenderer:
   m_AdaptiveModeThreshold: 0.5
   m_SpriteTileMode: 0
   m_WasSpriteAssigned: 1
-  m_MaskInteraction: 0
+  m_MaskInteraction: 1

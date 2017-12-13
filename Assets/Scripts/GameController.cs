@@ -29,6 +29,9 @@ public class GameController : MonoBehaviour {
     //the slow projectile prefab
     public GameObject slowProjectile;
 
+    //the block projectile in this scene
+    public GameObject blockProjectile;
+
     //prefabs for player class
     //the block prefab
     public GameObject block;
@@ -37,7 +40,7 @@ public class GameController : MonoBehaviour {
 
     void Awake () {
         if(instance == null) {
-            GameController.instance = this;
+            instance = this;
         }else {
             Debug.LogError("Two GameControllers open in one scene");
             Destroy(this);

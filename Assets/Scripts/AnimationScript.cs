@@ -39,6 +39,9 @@ public class AnimationScript : MonoBehaviour {
                 case 1:
                     transform.position = startPosition + MathHelper.DegreeToVector3(direction) * offsetAmount * Vector3.Distance(target, startPosition);
                     break;
+                case 2:
+                    transform.position = startPosition + MathHelper.DegreeToVector3(direction) * offsetAmount * Vector3.Distance(target, startPosition);
+                    break;
             }
         }
     }
@@ -65,6 +68,14 @@ public class AnimationScript : MonoBehaviour {
                     break;
                 }
             }
+        }
+
+        if(type == 2) {
+            gameObject.SetActive(false);
+
+            GameObject newBlock = Instantiate(GameController.instance.block);
+            newBlock.GetComponent<AnimationScript>().direction = direction - 180;
+            newBlock.transform.position = new Vector3(MathHelper.cap((int) target.x, 11), MathHelper.cap((int) target.y, 11));
         }
     }
 

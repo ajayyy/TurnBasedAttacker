@@ -44,6 +44,9 @@ public class Player : MonoBehaviour {
     //if true, wait for input for the direction
     bool slowShootMode = false;
 
+    //if true, waiting for input for the direction
+    bool blockShootMode = false;
+
     void Start () {
         spriteRenderer = GetComponent<SpriteRenderer>();
         spriteRenderer.color = idleColor;
@@ -239,6 +242,53 @@ public class Player : MonoBehaviour {
 
                 }
 
+            } else if (blockShootMode) {
+                spriteRenderer.color = shootColor;
+
+                bool chosen = false; //was a direction chosen
+                float direction = 0; //the direction chosen in angles
+
+                if (Input.GetKeyDown(KeyCode.D)) {
+                    chosen = true;
+                    direction = 0;
+                } else if (Input.GetKeyDown(KeyCode.A)) {
+                    chosen = true;
+                    direction = 180;
+                } else if (Input.GetKeyDown(KeyCode.W)) {
+                    chosen = true;
+                    direction = 90;
+                } else if (Input.GetKeyDown(KeyCode.S)) {
+                    chosen = true;
+                    direction = 270;
+                }
+
+                if (Input.GetKeyDown(KeyCode.E)) {
+                    //disable it, they activated it by mistake
+                    blockShootMode = false;
+                }
+
+                if (chosen) {
+                    //find other player
+                    RaycastHit2D otherPlayer = Physics2D.Raycast(transform.position + MathHelper.DegreeToVector3(direction), MathHelper.DegreeToVector2(direction));
+
+                    if (otherPlayer.collider != null) {
+                        gameController.blockProjectile.GetComponent<AnimationScript>().direction = direction;
+                        gameController.blockProjectile.GetComponent<AnimationScript>().target = otherPlayer.collider.transform.position;
+                        if(otherPlayer.collider.gameObject.tag == "Border") {
+                            gameController.blockProjectile.GetComponent<AnimationScript>().target = otherPlayer.point;
+                        }
+                        gameController.blockProjectile.GetComponent<AnimationScript>().targetObject = otherPlayer.collider.gameObject;
+                        gameController.blockProjectile.transform.position = transform.position;
+                        gameController.blockProjectile.SetActive(true);
+
+                        gameController.blockProjectile.GetComponent<Animator>().SetTrigger("move");
+                        doneTurn = true;
+                        blockShootMode = false;
+                        holding = false;
+                    }
+
+                }
+
             } else {
                 spriteRenderer.color = highlightColor;
 
@@ -281,6 +331,11 @@ public class Player : MonoBehaviour {
                 //slow projectile
                 if (Input.GetKeyDown(KeyCode.E) && holding && pickup == 3) {
                     slowShootMode = true;
+                }
+
+                //block projectile
+                if (Input.GetKeyDown(KeyCode.E) && holding && pickup == 4) {
+                    blockShootMode = true;
                 }
 
                 if (moved) {

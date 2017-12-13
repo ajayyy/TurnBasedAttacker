@@ -5,3 +5,7 @@ Pickup type references
 1: place block
 
 2: spawn player
+
+3: slow projectile
+
+4: block projectile

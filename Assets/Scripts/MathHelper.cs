@@ -52,4 +52,18 @@ public class MathHelper : MonoBehaviour {
 		int r = x%m;
 		return r<0 ? r+m : r;
 	}
+
+    /// caps number to under or equal to cap and -cap
+	public static int cap(int x, int cap) {
+        if(x > cap) {
+            x = cap;
+        }
+
+        if(x < -cap) {
+            x = -cap;
+        }
+
+        return x;
+    }
+
 }

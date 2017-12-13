@@ -52,6 +52,7 @@ public class Player : MonoBehaviour {
         animator = GetComponent<Animator>();
 
         projectile = GameController.instance.projectile;
+        slowProjectile = GameController.instance.slowProjectile;
     }
 
     void Update () {

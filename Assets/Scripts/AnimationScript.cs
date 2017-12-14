@@ -42,6 +42,9 @@ public class AnimationScript : MonoBehaviour {
                 case 2:
                     transform.position = startPosition + MathHelper.DegreeToVector3(direction) * offsetAmount * Vector3.Distance(target, startPosition);
                     break;
+                case 3:
+                    transform.position = startPosition + MathHelper.DegreeToVector3(direction) * offsetAmount * Vector3.Distance(target, startPosition);
+                    break;
             }
         }
     }
@@ -76,6 +79,32 @@ public class AnimationScript : MonoBehaviour {
             GameObject newBlock = Instantiate(GameController.instance.block);
             newBlock.GetComponent<AnimationScript>().direction = direction - 180;
             newBlock.transform.position = new Vector3(MathHelper.cap((int) target.x, 11), MathHelper.cap((int) target.y, 11));
+        }
+
+        if (type == 3) {
+            gameObject.SetActive(false);
+
+            Player playerScript = targetObject.GetComponent<Player>();
+
+            playerScript.stunned = true;
+            playerScript.turnStunned = GameController.instance.turnNum;
+
+            if(GameController.instance.turnPlayerNum > playerScript.playerNum) {
+                playerScript.turnStunned++;
+            }
+
+            if (playerScript.selected) {
+                foreach (GameObject playerObject in GameController.instance.players) {
+                    Player player = playerObject.GetComponent<Player>();
+                    if (player.playerNum == playerScript.playerNum) {
+                        player.selected = false;
+                        player.spriteRenderer.color = player.idleColor;
+
+                        break;
+                    }
+                }
+            }
+
         }
     }
 

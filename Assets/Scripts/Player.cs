@@ -12,6 +12,11 @@ public class Player : MonoBehaviour {
     //true when selected by player, remains true when it is not this player's turn
     public bool selected = false; //public so it's default can be chosen in the editor
 
+    //if stunned they cannot move for 3 turns
+    public bool stunned = false;
+    //turn the stun started on
+    public int turnStunned = 0;
+
     public Color highlightColor = new Color(100, 0, 0);
     Color shootColor = new Color(0, 0, 100);
     public Color idleColor = new Color(0, 0, 0);
@@ -47,6 +52,9 @@ public class Player : MonoBehaviour {
     //if true, waiting for input for the direction
     bool blockShootMode = false;
 
+    //if true, waiting for input for the direction
+    bool stunShootMode = false;
+
     void Start () {
         spriteRenderer = GetComponent<SpriteRenderer>();
         spriteRenderer.color = idleColor;
@@ -62,8 +70,12 @@ public class Player : MonoBehaviour {
         //shothand for GameController.instance
         GameController gameController = GameController.instance;
 
+        if(stunned && gameController.turnNum - 3 >= turnStunned) {
+            stunned = false;
+        }
+
         //if it is this player's turn
-        if(gameController.turnPlayerNum == playerNum && Time.time - gameController.lastMove >= 0.01f && selected && animator.GetCurrentAnimatorStateInfo(0).IsName("idle")) {
+        if(gameController.turnPlayerNum == playerNum && Time.time - gameController.lastMove >= 0.01f && selected && animator.GetCurrentAnimatorStateInfo(0).IsName("idle") && !stunned) {
             if (doneTurn) {
                 gameController.NextTurn();
                 spriteRenderer.color = idleColor;
@@ -289,6 +301,53 @@ public class Player : MonoBehaviour {
 
                 }
 
+            } else if (stunShootMode) {
+                spriteRenderer.color = shootColor;
+
+                bool chosen = false; //was a direction chosen
+                float direction = 0; //the direction chosen in angles
+
+                if (Input.GetKeyDown(KeyCode.D)) {
+                    chosen = true;
+                    direction = 0;
+                } else if (Input.GetKeyDown(KeyCode.A)) {
+                    chosen = true;
+                    direction = 180;
+                } else if (Input.GetKeyDown(KeyCode.W)) {
+                    chosen = true;
+                    direction = 90;
+                } else if (Input.GetKeyDown(KeyCode.S)) {
+                    chosen = true;
+                    direction = 270;
+                }
+
+                if (Input.GetKeyDown(KeyCode.E)) {
+                    //disable it, they activated it by mistake
+                    stunShootMode = false;
+                }
+
+                if (chosen) {
+                    //find other player
+                    RaycastHit2D otherPlayer = Physics2D.Raycast(transform.position + MathHelper.DegreeToVector3(direction), MathHelper.DegreeToVector2(direction));
+
+                    if (otherPlayer.collider != null && otherPlayer.collider.gameObject.tag == "Player") {
+                        gameController.stunProjectile.GetComponent<AnimationScript>().direction = direction;
+                        gameController.stunProjectile.GetComponent<AnimationScript>().target = otherPlayer.collider.transform.position;
+                        if (otherPlayer.collider.gameObject.tag == "Border") {
+                            gameController.stunProjectile.GetComponent<AnimationScript>().target = otherPlayer.point;
+                        }
+                        gameController.stunProjectile.GetComponent<AnimationScript>().targetObject = otherPlayer.collider.gameObject;
+                        gameController.stunProjectile.transform.position = transform.position;
+                        gameController.stunProjectile.SetActive(true);
+
+                        gameController.stunProjectile.GetComponent<Animator>().SetTrigger("move");
+                        doneTurn = true;
+                        stunShootMode = false;
+                        holding = false;
+                    }
+
+                }
+
             } else {
                 spriteRenderer.color = highlightColor;
 
@@ -336,6 +395,11 @@ public class Player : MonoBehaviour {
                 //block projectile
                 if (Input.GetKeyDown(KeyCode.E) && holding && pickup == 4) {
                     blockShootMode = true;
+                }
+
+                //stun projectile
+                if (Input.GetKeyDown(KeyCode.E) && holding && pickup == 5) {
+                    stunShootMode = true;
                 }
 
                 if (moved) {

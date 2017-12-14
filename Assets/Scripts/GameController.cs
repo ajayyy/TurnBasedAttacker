@@ -32,6 +32,9 @@ public class GameController : MonoBehaviour {
     //the block projectile in this scene
     public GameObject blockProjectile;
 
+    //the stun projectile in this scene
+    public GameObject stunProjectile;
+
     //prefabs for player class
     //the block prefab
     public GameObject block;

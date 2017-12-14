@@ -9,3 +9,5 @@ Pickup type references
 3: slow projectile
 
 4: block projectile
+
+5: stun projectile

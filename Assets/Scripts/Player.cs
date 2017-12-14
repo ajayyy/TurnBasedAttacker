@@ -16,6 +16,8 @@ public class Player : MonoBehaviour {
     public bool stunned = false;
     //turn the stun started on
     public int turnStunned = 0;
+    //the gameobject that will hold the color placed over the player when stunned to be able to destroy it
+    public GameObject stunnedColor;
 
     public Color highlightColor = new Color(100, 0, 0);
     Color shootColor = new Color(0, 0, 100);
@@ -72,6 +74,7 @@ public class Player : MonoBehaviour {
 
         if(stunned && gameController.turnNum - 3 >= turnStunned) {
             stunned = false;
+            Destroy(stunnedColor);
         }
 
         //if it is this player's turn

@@ -35,6 +35,9 @@ public class GameController : MonoBehaviour {
     //the stun projectile in this scene
     public GameObject stunProjectile;
 
+    //the stun color prefab that will go over the player when stunned
+    public GameObject stunColor;
+
     //prefabs for player class
     //the block prefab
     public GameObject block;

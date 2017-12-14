@@ -93,6 +93,9 @@ public class AnimationScript : MonoBehaviour {
                 playerScript.turnStunned++;
             }
 
+            playerScript.stunnedColor = Instantiate(GameController.instance.stunColor);
+            playerScript.stunnedColor.transform.position = targetObject.transform.position;
+
             if (playerScript.selected) {
                 foreach (GameObject playerObject in GameController.instance.players) {
                     Player player = playerObject.GetComponent<Player>();

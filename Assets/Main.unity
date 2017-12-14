@@ -523,6 +523,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   playerNum: 1
   selected: 1
+  stunned: 0
+  turnStunned: 0
   highlightColor: {r: 100, g: 0, b: 0, a: 1}
   idleColor: {r: 0.85294116, g: 0.44204155, b: 0.068987906, a: 1}
   spriteRenderer: {fileID: 0}
@@ -825,6 +827,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   playerNum: 0
   selected: 0
+  stunned: 0
+  turnStunned: 0
   highlightColor: {r: 100, g: 0, b: 0, a: 1}
   idleColor: {r: 0.20663925, g: 0.7205882, b: 0.6567877, a: 1}
   spriteRenderer: {fileID: 0}
@@ -1330,7 +1334,7 @@ SpriteRenderer:
   m_SortingLayer: 0
   m_SortingOrder: -1
   m_Sprite: {fileID: 21300000, guid: 6492ee6fffaed9c449b8f59a986aa9a5, type: 3}
-  m_Color: {r: 0.54509807, g: 0.54509807, b: 0.54509807, a: 1}
+  m_Color: {r: 0.078341275, g: 0.20556542, b: 0.50735295, a: 1}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
@@ -1659,6 +1663,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   playerNum: 1
   selected: 0
+  stunned: 0
+  turnStunned: 0
   highlightColor: {r: 100, g: 0, b: 0, a: 1}
   idleColor: {r: 0.85294116, g: 0.44204155, b: 0.068987906, a: 1}
   spriteRenderer: {fileID: 0}
@@ -1889,6 +1895,7 @@ MonoBehaviour:
     type: 2}
   blockProjectile: {fileID: 2138889500}
   stunProjectile: {fileID: 1345992995}
+  stunColor: {fileID: 1929535383444582, guid: 1681e5d77c93409489836bfff336a44a, type: 2}
   block: {fileID: 1395128456515326, guid: 644dd1d989f0565498e7e957f69139a2, type: 2}
   player: {fileID: 1050427508699204, guid: bdc8de70e8f753841bfaa755a154bb2d, type: 2}
 --- !u!4 &1968514528

@@ -44,12 +44,32 @@ public class GameController : MonoBehaviour {
     //the player prefab
     public GameObject player;
 
+    //gameobject holding all player statuses
+    public GameObject sidebar;
+    //prefab for the player status
+    public GameObject playerStatus;
+
     void Awake () {
         if(instance == null) {
             instance = this;
         }else {
             Debug.LogError("Two GameControllers open in one scene");
             Destroy(this);
+        }
+
+        List<int> completedPlayers = new List<int>();
+        foreach(GameObject player in players) {
+            Player playerScript = player.GetComponent<Player>();
+
+            if (!completedPlayers.Contains(playerScript.playerNum)) {
+                GameObject newPlayerStatus = Instantiate(playerStatus);
+                newPlayerStatus.transform.parent = sidebar.transform;
+                newPlayerStatus.transform.localPosition = new Vector3(0, - (completedPlayers.Count * 1.3f));
+                newPlayerStatus.GetComponent<SpriteRenderer>().color = playerScript.idleColor;
+
+                completedPlayers.Add(playerScript.playerNum);
+            }
+
         }
 	}
 	

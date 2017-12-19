@@ -120,7 +120,7 @@ GameObject:
   - component: {fileID: 100736490}
   - component: {fileID: 100736489}
   m_Layer: 0
-  m_Name: Pickup
+  m_Name: ProjectilePickup
   m_TagString: Pickup
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -229,7 +229,6 @@ GameObject:
   - component: {fileID: 110739400}
   - component: {fileID: 110739399}
   - component: {fileID: 110739398}
-  - component: {fileID: 110739397}
   m_Layer: 0
   m_Name: BlockProjectilePickup
   m_TagString: Pickup
@@ -237,26 +236,6 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!50 &110739397
-Rigidbody2D:
-  serializedVersion: 4
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 110739396}
-  m_BodyType: 0
-  m_Simulated: 1
-  m_UseFullKinematicContacts: 0
-  m_UseAutoMass: 0
-  m_Mass: 1
-  m_LinearDrag: 0
-  m_AngularDrag: 0.05
-  m_GravityScale: 0
-  m_Material: {fileID: 0}
-  m_Interpolate: 0
-  m_SleepingMode: 1
-  m_CollisionDetection: 0
-  m_Constraints: 0
 --- !u!61 &110739398
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -595,7 +574,6 @@ GameObject:
   - component: {fileID: 431090063}
   - component: {fileID: 431090062}
   - component: {fileID: 431090061}
-  - component: {fileID: 431090060}
   m_Layer: 0
   m_Name: SlowProjectilePickup
   m_TagString: Pickup
@@ -603,26 +581,6 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!50 &431090060
-Rigidbody2D:
-  serializedVersion: 4
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 431090059}
-  m_BodyType: 0
-  m_Simulated: 1
-  m_UseFullKinematicContacts: 0
-  m_UseAutoMass: 0
-  m_Mass: 1
-  m_LinearDrag: 0
-  m_AngularDrag: 0.05
-  m_GravityScale: 0
-  m_Material: {fileID: 0}
-  m_Interpolate: 0
-  m_SleepingMode: 1
-  m_CollisionDetection: 0
-  m_Constraints: 0
 --- !u!61 &431090061
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -1151,7 +1109,6 @@ GameObject:
   - component: {fileID: 1223339787}
   - component: {fileID: 1223339786}
   - component: {fileID: 1223339785}
-  - component: {fileID: 1223339784}
   m_Layer: 0
   m_Name: StunProjectilePickup
   m_TagString: Pickup
@@ -1159,26 +1116,6 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!50 &1223339784
-Rigidbody2D:
-  serializedVersion: 4
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 1223339783}
-  m_BodyType: 0
-  m_Simulated: 1
-  m_UseFullKinematicContacts: 0
-  m_UseAutoMass: 0
-  m_Mass: 1
-  m_LinearDrag: 0
-  m_AngularDrag: 0.05
-  m_GravityScale: 0
-  m_Material: {fileID: 0}
-  m_Interpolate: 0
-  m_SleepingMode: 1
-  m_CollisionDetection: 0
-  m_Constraints: 0
 --- !u!61 &1223339785
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -1827,7 +1764,6 @@ GameObject:
   - component: {fileID: 1809584059}
   - component: {fileID: 1809584058}
   - component: {fileID: 1809584057}
-  - component: {fileID: 1809584056}
   m_Layer: 0
   m_Name: CharacterPickup
   m_TagString: Pickup
@@ -1835,26 +1771,6 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!50 &1809584056
-Rigidbody2D:
-  serializedVersion: 4
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 1809584055}
-  m_BodyType: 0
-  m_Simulated: 1
-  m_UseFullKinematicContacts: 0
-  m_UseAutoMass: 0
-  m_Mass: 1
-  m_LinearDrag: 0
-  m_AngularDrag: 0.05
-  m_GravityScale: 0
-  m_Material: {fileID: 0}
-  m_Interpolate: 0
-  m_SleepingMode: 1
-  m_CollisionDetection: 0
-  m_Constraints: 0
 --- !u!61 &1809584057
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -2019,7 +1935,6 @@ GameObject:
   - component: {fileID: 2117692362}
   - component: {fileID: 2117692361}
   - component: {fileID: 2117692360}
-  - component: {fileID: 2117692364}
   m_Layer: 0
   m_Name: BlockPickup
   m_TagString: Pickup
@@ -2119,26 +2034,6 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 10
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!50 &2117692364
-Rigidbody2D:
-  serializedVersion: 4
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 2117692359}
-  m_BodyType: 0
-  m_Simulated: 1
-  m_UseFullKinematicContacts: 0
-  m_UseAutoMass: 0
-  m_Mass: 1
-  m_LinearDrag: 0
-  m_AngularDrag: 0.05
-  m_GravityScale: 0
-  m_Material: {fileID: 0}
-  m_Interpolate: 0
-  m_SleepingMode: 1
-  m_CollisionDetection: 0
-  m_Constraints: 0
 --- !u!1 &2138889500
 GameObject:
   m_ObjectHideFlags: 0

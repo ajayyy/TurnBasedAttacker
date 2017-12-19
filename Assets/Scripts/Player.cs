@@ -1,5 +1,6 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using UnityEngine.UI;
 using UnityEngine;
 
 public class Player : MonoBehaviour {
@@ -208,6 +209,7 @@ public class Player : MonoBehaviour {
                     playerScript.GetComponent<Animator>().SetTrigger("move");
 
                     gameController.players.Add(newPlayer);
+                    GameController.instance.playerStatusList[playerScript.playerNum].GetComponentInChildren<Text>().text = int.Parse(GameController.instance.playerStatusList[playerScript.playerNum].GetComponentInChildren<Text>().text) + 1 + "";
 
                     doneTurn = true;
                     spawnMode = false;

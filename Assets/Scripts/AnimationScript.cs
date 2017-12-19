@@ -1,5 +1,6 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using UnityEngine.UI;
 using UnityEngine;
 
 /// <summary>
@@ -128,6 +129,8 @@ public class AnimationScript : MonoBehaviour {
             }
 
             GameController.instance.players.Remove(gameObject);
+
+            GameController.instance.playerStatusList[playerScript.playerNum].GetComponentInChildren<Text>().text = int.Parse(GameController.instance.playerStatusList[playerScript.playerNum].GetComponentInChildren<Text>().text) - 1 + "";
 
         } //not player if null
 

@@ -108,7 +108,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 1
     m_VerticalOverflow: 1
     m_LineSpacing: 1
-  m_Text: 0
+  m_Text: 1
 --- !u!114 &114335668543944614
 MonoBehaviour:
   m_ObjectHideFlags: 1

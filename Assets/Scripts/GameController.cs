@@ -1,5 +1,6 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using UnityEngine.UI;
 using UnityEngine;
 
 public class GameController : MonoBehaviour {
@@ -48,6 +49,7 @@ public class GameController : MonoBehaviour {
     public GameObject sidebar;
     //prefab for the player status
     public GameObject playerStatus;
+    public List<GameObject> playerStatusList = new List<GameObject>();
 
     void Awake () {
         if(instance == null) {
@@ -68,6 +70,9 @@ public class GameController : MonoBehaviour {
                 newPlayerStatus.GetComponent<SpriteRenderer>().color = playerScript.idleColor;
 
                 completedPlayers.Add(playerScript.playerNum);
+                playerStatusList.Add(newPlayerStatus);
+            } else {
+                playerStatusList[playerScript.playerNum].GetComponentInChildren<Text>().text = int.Parse(playerStatusList[playerScript.playerNum].GetComponentInChildren<Text>().text) + 1 + "";
             }
 
         }

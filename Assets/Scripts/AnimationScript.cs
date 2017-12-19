@@ -79,7 +79,7 @@ public class AnimationScript : MonoBehaviour {
 
             GameObject newBlock = Instantiate(GameController.instance.block);
             newBlock.GetComponent<AnimationScript>().direction = direction - 180;
-            newBlock.transform.position = new Vector3(MathHelper.cap((int) target.x, 11), MathHelper.cap((int) target.y, 11));
+            newBlock.transform.position = new Vector3(MathHelper.cap(Mathf.RoundToInt(target.x), 11), MathHelper.cap(Mathf.RoundToInt(target.y), 11));
         }
 
         if (type == 3) {

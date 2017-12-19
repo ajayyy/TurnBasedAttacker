@@ -411,7 +411,7 @@ public class Player : MonoBehaviour {
                     //check if there is something in the way
                     RaycastHit2D otherObject = Physics2D.Raycast(transform.position + MathHelper.DegreeToVector3(playerAnimation.direction), MathHelper.DegreeToVector2(playerAnimation.direction));
 
-                    if(otherObject.collider == null || Vector3.Distance(otherObject.point, transform.position + MathHelper.DegreeToVector3(playerAnimation.direction)) > 0.6f || otherObject.collider.tag.Equals("Pickup")) {
+                    if(otherObject.collider == null || (Vector3.Distance(otherObject.point, transform.position + MathHelper.DegreeToVector3(playerAnimation.direction)) > 0.6f || (otherObject.collider.tag != "Border" && Vector3.Distance(otherObject.point, transform.position + MathHelper.DegreeToVector3(playerAnimation.direction)) >= 0.45f)) || otherObject.collider.tag == "Pickup") {
                         animator.SetTrigger("move");
                         doneTurn = true; //once the animation becomes idle again, the doneTurn if statement will be triggered, and the next turn will start
                     }

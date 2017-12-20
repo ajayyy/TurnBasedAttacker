@@ -295,7 +295,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   count: {fileID: 338155220}
   min: 1
-  max: 99
+  max: 16
+  maxText: {fileID: 0}
 --- !u!1 &834392767
 GameObject:
   m_ObjectHideFlags: 0
@@ -1169,7 +1170,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   count: {fileID: 1563337688}
   min: 1
-  max: 99
+  max: 10
+  maxText: {fileID: 338155220}
 --- !u!1 &1968633760
 GameObject:
   m_ObjectHideFlags: 0

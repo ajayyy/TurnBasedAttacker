@@ -71,9 +71,12 @@ public class GameController : MonoBehaviour {
             Destroy(this);
         }
 
+
+        //create arrow pointing at who's turn it is
         arrowObject = Instantiate(arrowPrefab);
         arrowObject.transform.parent = sidebar.transform;
 
+        //create player status'
         foreach(GameObject player in players) {
             Player playerScript = player.GetComponent<Player>();
 

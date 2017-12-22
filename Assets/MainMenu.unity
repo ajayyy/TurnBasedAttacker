@@ -294,7 +294,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   count: {fileID: 338155220}
-  min: 1
+  min: 2
   max: 16
   maxText: {fileID: 0}
 --- !u!1 &598476108

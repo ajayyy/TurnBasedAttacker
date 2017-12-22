@@ -14,6 +14,9 @@ public class GameController : MonoBehaviour {
 
     public int turnNum = 0;
 
+    //The text gameobject displaying the turn number
+    public Text turnNumText;
+
     ///<summary>
     /// What player's turn is it
     ///</summary>
@@ -78,8 +81,8 @@ public class GameController : MonoBehaviour {
         }
 	}
 	
-	void Update () {
-		
+	void FixedUpdate () {
+        turnNumText.text = "Turn " + (turnNum + 1);
 	}
 
     public void NextTurn() {

@@ -102,9 +102,17 @@ public class GameController : MonoBehaviour {
         if(turnPlayerNum >= personAmount) {
             turnNum++;
             turnPlayerNum = 0;
+            arrowObject.GetComponent<AnimationScript>().direction = 90;
+        }else {
+            arrowObject.GetComponent<AnimationScript>().direction = 270;
         }
 
-        arrowObject.transform.localPosition = new Vector3(-1f, -(completedPlayers.IndexOf(turnPlayerNum) * 1.3f));
+        arrowObject.GetComponent<AnimationScript>().target = arrowObject.transform.parent.position + new Vector3(-1f, -(completedPlayers.IndexOf(turnPlayerNum) * 1.3f));
+
+
+        arrowObject.GetComponent<Animator>().SetTrigger("move");
+
+        //arrowObject.transform.localPosition = new Vector3(-1f, -(completedPlayers.IndexOf(turnPlayerNum) * 1.3f));
 
         lastMove = Time.time;
     }

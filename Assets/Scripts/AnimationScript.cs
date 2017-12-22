@@ -17,6 +17,7 @@ public class AnimationScript : MonoBehaviour {
     public Vector3 target = Vector3.zero;
     public GameObject targetObject; //target gameobject if it exists
     public int type = 0; //0: one unit movement, 1: move to target
+    public bool snapToGrid = true; //should it snap to the grid (true for game elements, not true for ui elements)
 
     //local variables
     Vector3 startPosition;
@@ -46,6 +47,9 @@ public class AnimationScript : MonoBehaviour {
                 case 3:
                     transform.position = startPosition + MathHelper.DegreeToVector3(direction) * offsetAmount * Vector3.Distance(target, startPosition);
                     break;
+                case 4: //UI element
+                    transform.position = startPosition + MathHelper.DegreeToVector3(direction) * offsetAmount * Vector3.Distance(target, startPosition);
+                    break;
             }
         }
     }
@@ -55,7 +59,8 @@ public class AnimationScript : MonoBehaviour {
         started = false;
 
         //round the positions incase it didn't reach a full number for some reason
-        transform.position = new Vector3(Mathf.Round(transform.position.x), Mathf.Round(transform.position.y));
+        if(snapToGrid)
+            transform.position = new Vector3(Mathf.Round(transform.position.x), Mathf.Round(transform.position.y));
 
         if (type == 1) {
             gameObject.SetActive(false);

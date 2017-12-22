@@ -71,6 +71,34 @@ public class GameController : MonoBehaviour {
             Destroy(this);
         }
 
+        List<Vector3> positionsChosen = new List<Vector3>();
+        //create players based on settings specified in the main menu
+        for(int i = 0; i < GameSettings.players; i++) {
+            for(int s = 0; s < GameSettings.units; s++) {
+                GameObject newPlayer = Instantiate(player);
+
+                Player playerScript = newPlayer.GetComponent<Player>();
+
+                playerScript.playerNum = i;
+                playerScript.idleColor = playerColors[i];
+                playerScript.selected = false;
+                if (s == 0) playerScript.selected = true;
+
+                Vector3 position = new Vector3(Mathf.RoundToInt(Random.Range(-9f, 9f)), Mathf.RoundToInt(Random.Range(-9f, 9f)));
+
+                while (positionsChosen.Contains(position)) {
+                    print("fixing");
+                    position = new Vector3(Mathf.RoundToInt(Random.Range(-9f, 9f)), Mathf.RoundToInt(Random.Range(-9f, 9f)));
+                }
+
+                newPlayer.transform.position = position;
+
+                players.Add(newPlayer);
+                positionsChosen.Add(position);
+            }
+        }
+
+        personAmount = GameSettings.players;
 
         //create arrow pointing at who's turn it is
         arrowObject = Instantiate(arrowPrefab);

@@ -22,6 +22,9 @@ public class GameController : MonoBehaviour {
     ///</summary>
     public int turnPlayerNum = 0;
 
+    //a list of all player idle colors selected in the inspector
+    public Color[] playerColors;
+
     /// <summary>
     /// Time of last movment (to make a delay of when you can move again
     /// </summary>

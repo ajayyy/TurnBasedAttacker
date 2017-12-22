@@ -53,6 +53,12 @@ public class GameController : MonoBehaviour {
     //prefab for the player status
     public GameObject playerStatus;
     public List<GameObject> playerStatusList = new List<GameObject>();
+    //list of player icons in the status list
+    List<int> completedPlayers = new List<int>();
+    //prefab for the arrow showing who's turn it is
+    public GameObject arrowPrefab;
+    [HideInInspector]
+    public GameObject arrowObject;
 
     void Awake () {
         if(instance == null) {
@@ -62,7 +68,9 @@ public class GameController : MonoBehaviour {
             Destroy(this);
         }
 
-        List<int> completedPlayers = new List<int>();
+        arrowObject = Instantiate(arrowPrefab);
+        arrowObject.transform.parent = sidebar.transform;
+
         foreach(GameObject player in players) {
             Player playerScript = player.GetComponent<Player>();
 
@@ -71,6 +79,10 @@ public class GameController : MonoBehaviour {
                 newPlayerStatus.transform.parent = sidebar.transform;
                 newPlayerStatus.transform.localPosition = new Vector3(0, - (completedPlayers.Count * 1.3f));
                 newPlayerStatus.GetComponent<SpriteRenderer>().color = playerScript.idleColor;
+
+                if(turnPlayerNum == playerScript.playerNum) {
+                    arrowObject.transform.localPosition = new Vector3(-1f, -(completedPlayers.Count * 1.3f));
+                }
 
                 completedPlayers.Add(playerScript.playerNum);
                 playerStatusList.Add(newPlayerStatus);
@@ -91,6 +103,8 @@ public class GameController : MonoBehaviour {
             turnNum++;
             turnPlayerNum = 0;
         }
+
+        arrowObject.transform.localPosition = new Vector3(-1f, -(completedPlayers.IndexOf(turnPlayerNum) * 1.3f));
 
         lastMove = Time.time;
     }

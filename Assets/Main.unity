@@ -2080,6 +2080,9 @@ MonoBehaviour:
   playerStatus: {fileID: 1482603564401906, guid: bfc753076ab8cce4c864d69161b9b241,
     type: 2}
   playerStatusList: []
+  arrowPrefab: {fileID: 1987829259919222, guid: bf03db130b5a44743ad84ae0d950c951,
+    type: 2}
+  arrowObject: {fileID: 0}
 --- !u!4 &1968514528
 Transform:
   m_ObjectHideFlags: 0

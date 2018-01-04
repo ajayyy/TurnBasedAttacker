@@ -24,16 +24,16 @@
      borderopacity="1.0"
      inkscape:pageopacity="0.0"
      inkscape:pageshadow="2"
-     inkscape:zoom="1.4"
-     inkscape:cx="319.55459"
-     inkscape:cy="653.31381"
+     inkscape:zoom="1.979899"
+     inkscape:cx="191.14217"
+     inkscape:cy="712.76672"
      inkscape:document-units="px"
      inkscape:current-layer="layer1"
      showgrid="false"
      inkscape:window-width="1366"
      inkscape:window-height="708"
      inkscape:window-x="-4"
-     inkscape:window-y="-4"
+     inkscape:window-y="764"
      inkscape:window-maximized="1" />
   <metadata
      id="metadata7">
@@ -105,5 +105,25 @@
        inkscape:export-filename="C:\Users\Ajay\Documents\Unity Projects\Final Project\Assets\Sprites\border.png"
        inkscape:export-xdpi="774.04272"
        inkscape:export-ydpi="774.04272" />
+    <path
+       sodipodi:type="star"
+       style="fill:#ffffff;fill-opacity:1;stroke:none"
+       id="path2993"
+       sodipodi:sides="3"
+       sodipodi:cx="123.23861"
+       sodipodi:cy="379.60059"
+       sodipodi:r1="119.75528"
+       sodipodi:r2="59.87764"
+       sodipodi:arg1="0"
+       sodipodi:arg2="1.0471976"
+       inkscape:flatsided="true"
+       inkscape:rounded="0"
+       inkscape:randomized="0"
+       d="M 242.99389,379.60059 63.36097,483.3117 l 0,-207.42223 z"
+       inkscape:transform-center-x="-22.528962"
+       transform="translate(0,-70.205602)"
+       inkscape:export-filename="C:\Users\Ajay\Documents\Unity Projects\Final Project\Assets\Sprites\arrow.png"
+       inkscape:export-xdpi="30.372837"
+       inkscape:export-ydpi="30.372837" />
   </g>
 </svg>

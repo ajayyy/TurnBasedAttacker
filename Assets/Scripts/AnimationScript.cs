@@ -135,8 +135,14 @@ public class AnimationScript : MonoBehaviour {
 
             GameController.instance.players.Remove(gameObject);
 
-			if (int.Parse (GameController.instance.playerStatusList [playerScript.playerNum].GetComponentInChildren<Text> ().text) - 1 == 0) {
+			GameController.instance.playerStatusList[playerScript.playerNum].GetComponentInChildren<Text>().text = int.Parse(GameController.instance.playerStatusList[playerScript.playerNum].GetComponentInChildren<Text>().text) - 1 + "";
+
+			if (int.Parse (GameController.instance.playerStatusList [playerScript.playerNum].GetComponentInChildren<Text> ().text) == 0) {
 				GameController.instance.playerStatusList [playerScript.playerNum].GetComponentInChildren<Text>().enabled = false;
+
+				if (GameController.instance.turnPlayerNum == playerScript.playerNum) {
+					GameController.instance.NextTurn ();
+				}
 
 				foreach (Transform child in GameController.instance.playerStatusList [playerScript.playerNum].transform) {
 					if (child.gameObject.name == "X") {
@@ -144,8 +150,7 @@ public class AnimationScript : MonoBehaviour {
 						break;
 					}
 				}
-			} else {
-				GameController.instance.playerStatusList[playerScript.playerNum].GetComponentInChildren<Text>().text = int.Parse(GameController.instance.playerStatusList[playerScript.playerNum].GetComponentInChildren<Text>().text) - 1 + "";
+
 			}
 
         } //not player if null

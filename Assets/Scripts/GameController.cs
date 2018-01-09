@@ -132,17 +132,19 @@ public class GameController : MonoBehaviour {
 	}
 
     public void NextTurn() {
-        turnPlayerNum++;
-        if(turnPlayerNum >= personAmount) {
-            turnNum++;
-            turnPlayerNum = 0;
-            arrowObject.GetComponent<AnimationScript>().direction = 90;
-        }else {
-            arrowObject.GetComponent<AnimationScript>().direction = 270;
-        }
+		do {
+			turnPlayerNum++;
 
-        arrowObject.GetComponent<AnimationScript>().target = arrowObject.transform.parent.position + new Vector3(-1f, -(completedPlayers.IndexOf(turnPlayerNum) * 1.3f));
+			if (turnPlayerNum >= personAmount) {
+				turnNum++;
+				turnPlayerNum = 0;
+				arrowObject.GetComponent<AnimationScript> ().direction = 90;
+			} else {
+				arrowObject.GetComponent<AnimationScript> ().direction = 270;
+			}
+		} while (int.Parse (GameController.instance.playerStatusList [turnPlayerNum].GetComponentInChildren<Text> ().text) == 0);
 
+		arrowObject.GetComponent<AnimationScript>().target = arrowObject.transform.parent.position + new Vector3(-1f, -(completedPlayers.IndexOf(turnPlayerNum) * 1.3f));
 
         arrowObject.GetComponent<Animator>().SetTrigger("move");
 

@@ -8,6 +8,6 @@ public class GameSettings {
     public static int players = 2;
 
     //number of units per player
-    public static int units = 2;
+    public static int units = 1;
 
 }

@@ -135,7 +135,18 @@ public class AnimationScript : MonoBehaviour {
 
             GameController.instance.players.Remove(gameObject);
 
-            GameController.instance.playerStatusList[playerScript.playerNum].GetComponentInChildren<Text>().text = int.Parse(GameController.instance.playerStatusList[playerScript.playerNum].GetComponentInChildren<Text>().text) - 1 + "";
+			if (int.Parse (GameController.instance.playerStatusList [playerScript.playerNum].GetComponentInChildren<Text> ().text) - 1 == 0) {
+				GameController.instance.playerStatusList [playerScript.playerNum].GetComponentInChildren<Text>().enabled = false;
+
+				foreach (Transform child in GameController.instance.playerStatusList [playerScript.playerNum].transform) {
+					if (child.gameObject.name == "X") {
+						child.gameObject.SetActive (true);
+						break;
+					}
+				}
+			} else {
+				GameController.instance.playerStatusList[playerScript.playerNum].GetComponentInChildren<Text>().text = int.Parse(GameController.instance.playerStatusList[playerScript.playerNum].GetComponentInChildren<Text>().text) - 1 + "";
+			}
 
         } //not player if null
 

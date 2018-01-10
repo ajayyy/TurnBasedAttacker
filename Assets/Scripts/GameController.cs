@@ -63,6 +63,9 @@ public class GameController : MonoBehaviour {
     [HideInInspector]
     public GameObject arrowObject;
 
+	//Amount of next turns left in the queue
+	int nextTurnsLeft = 0;
+
     void Awake () {
         if(instance == null) {
             instance = this;
@@ -129,9 +132,19 @@ public class GameController : MonoBehaviour {
 	
 	void FixedUpdate () {
         turnNumText.text = "Turn " + (turnNum + 1);
+
+		if (nextTurnsLeft > 0 && !arrowObject.GetComponent<Animator> ().GetCurrentAnimatorStateInfo (0).IsName ("movement")) {
+			nextTurnsLeft--;
+			NextTurn ();
+		}
 	}
 
     public void NextTurn() {
+		if (arrowObject.GetComponent<Animator> ().GetCurrentAnimatorStateInfo (0).IsName ("movement")) {
+			nextTurnsLeft++;
+			return;
+		}
+
 		do {
 			turnPlayerNum++;
 

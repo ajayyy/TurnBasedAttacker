@@ -73,6 +73,11 @@ public class Player : MonoBehaviour {
         //shothand for GameController.instance
         GameController gameController = GameController.instance;
 
+		if (gameController.gameOver) {
+			//the game is done, the player should not be able to move
+			return;
+		}
+
         if(stunned && gameController.turnNum - 3 >= turnStunned) {
             stunned = false;
             Destroy(stunnedColor);

@@ -133,15 +133,17 @@ public class AnimationScript : MonoBehaviour {
                 }
             }
 
+			//remove player from list and lower that players unit count
             GameController.instance.players.Remove(gameObject);
-
 			GameController.instance.playerStatusList[playerScript.playerNum].GetComponentInChildren<Text>().text = int.Parse(GameController.instance.playerStatusList[playerScript.playerNum].GetComponentInChildren<Text>().text) - 1 + "";
 
+			//if it's 0, then make it an X and skip their turn if it is next
 			if (int.Parse (GameController.instance.playerStatusList [playerScript.playerNum].GetComponentInChildren<Text> ().text) == 0) {
 				GameController.instance.playerStatusList [playerScript.playerNum].GetComponentInChildren<Text>().enabled = false;
 
 				if (GameController.instance.turnPlayerNum == playerScript.playerNum) {
 					GameController.instance.NextTurn ();
+					GameController.instance.playersDead++;
 				}
 
 				foreach (Transform child in GameController.instance.playerStatusList [playerScript.playerNum].transform) {
@@ -149,6 +151,13 @@ public class AnimationScript : MonoBehaviour {
 						child.gameObject.SetActive (true);
 						break;
 					}
+				}
+
+				if (GameController.instance.playersDead >= GameController.instance.personAmount - 1) {
+					//the only units left in the players array will be the winner's units
+					GameController.instance.winner.GetComponent<Text> ().text = "Player " + (GameController.instance.players[0].GetComponent<Player>().playerNum + 1) + " Wins";
+					GameController.instance.winner.SetActive (true);
+					GameController.instance.gameOver = true;
 				}
 
 			}

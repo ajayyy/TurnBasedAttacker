@@ -176,13 +176,43 @@ public class AnimationScript : MonoBehaviour {
 						winner.SetActive (true);
 					}
 
-					for (int i = 0; i < 2; i++) { //in a for loop to keep consistency
+					for (int i = 0; i < 2; i++) {
 						GameObject winner = Instantiate (GameController.instance.winners [1]);
 						winner.transform.SetParent(GameController.instance.winnerTextsHolder.transform);
-						winner.transform.localPosition = new Vector3 (0, 212);
+						winner.transform.localPosition = new Vector3 (0, 212 - (i*60));
 						winner.transform.localScale = new Vector3(1, 1, 1);
-						winner.GetComponent<Text> ().text = "2. Player " + (GameController.instance.playersDeadList[i].playerNum + 1);
+						winner.GetComponent<Text> ().text = (i+2) + ". Player " + (GameController.instance.playersDeadList[i].playerNum + 1);
 						winner.GetComponent<Text> ().color = GameController.instance.playersDeadList[i].idleColor;
+						winner.SetActive (true);
+					}
+
+					for (int i = 0; i < 3; i++) {
+						GameObject winner = Instantiate (GameController.instance.winners [2]);
+						winner.transform.SetParent(GameController.instance.winnerTextsHolder.transform);
+						winner.transform.localPosition = new Vector3 (0, 97 - (i*45));
+						winner.transform.localScale = new Vector3(1, 1, 1);
+						winner.GetComponent<Text> ().text = (i+2+2) + ". Player " + (GameController.instance.playersDeadList[i+2].playerNum + 1);
+						winner.GetComponent<Text> ().color = GameController.instance.playersDeadList[i+2].idleColor;
+						winner.SetActive (true);
+					}
+
+					for (int i = 0; i < 5; i++) {
+						GameObject winner = Instantiate (GameController.instance.winners [3]);
+						winner.transform.SetParent(GameController.instance.winnerTextsHolder.transform);
+						winner.transform.localPosition = new Vector3 (0, -34 - (i*35));
+						winner.transform.localScale = new Vector3(1, 1, 1);
+						winner.GetComponent<Text> ().text = (i+2+2+3) + ". Player " + (GameController.instance.playersDeadList[i+2+3].playerNum + 1);
+						winner.GetComponent<Text> ().color = GameController.instance.playersDeadList[i+2+3].idleColor;
+						winner.SetActive (true);
+					}
+
+					for (int i = 0; i < 5; i++) {
+						GameObject winner = Instantiate (GameController.instance.winners [3]);
+						winner.transform.SetParent(GameController.instance.winnerTextsHolder.transform);
+						winner.transform.localPosition = new Vector3 (0, -199 - (i*20));
+						winner.transform.localScale = new Vector3(1, 1, 1);
+						winner.GetComponent<Text> ().text = (i+2+2+3+5) + ". Player " + (GameController.instance.playersDeadList[i+2+3+5].playerNum + 1);
+						winner.GetComponent<Text> ().color = GameController.instance.playersDeadList[i+2+3+5].idleColor;
 						winner.SetActive (true);
 					}
 

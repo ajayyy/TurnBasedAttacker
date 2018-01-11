@@ -155,8 +155,19 @@ public class AnimationScript : MonoBehaviour {
 
 				if (GameController.instance.playersDead >= GameController.instance.personAmount - 1) {
 					//the only units left in the players array will be the winner's units
-					GameController.instance.winner.GetComponent<Text> ().text = "Player " + (GameController.instance.players[0].GetComponent<Player>().playerNum + 1) + " Wins";
-					GameController.instance.winner.SetActive (true);
+//					GameController.instance.winner.GetComponent<Text> ().text = "Player " + (GameController.instance.players[0].GetComponent<Player>().playerNum + 1) + " Wins";
+//					GameController.instance.winner.SetActive (true);
+					//players left to add to the scoreboard
+					int playersLeft = GameController.instance.personAmount;
+
+					for (int i = 0; i < 1; i++) { //in a for loop to keep consistency
+						GameObject winner = Instantiate (GameController.instance.winners [0]);
+						winner.transform.parent = GameController.instance.winnerTextsHolder.transform;
+						winner.transform.localPosition = Vector3.zero;
+						winner.GetComponent<Text> ().text = "Player " + (GameController.instance.players[0].GetComponent<Player>().playerNum + 1) + " Wins";
+						winner.SetActive (true);
+					}
+
 					GameController.instance.gameOver = true;
 				}
 

@@ -438,30 +438,27 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 8
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!1 &635117307
+--- !u!1 &442351219
 GameObject:
   m_ObjectHideFlags: 0
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   serializedVersion: 5
   m_Component:
-  - component: {fileID: 635117308}
-  - component: {fileID: 635117310}
-  - component: {fileID: 635117309}
-  - component: {fileID: 635117311}
+  - component: {fileID: 442351220}
   m_Layer: 5
-  m_Name: Winner
+  m_Name: Winner Texts
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
---- !u!224 &635117308
+  m_IsActive: 1
+--- !u!224 &442351220
 RectTransform:
   m_ObjectHideFlags: 0
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 635117307}
+  m_GameObject: {fileID: 442351219}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
@@ -471,65 +468,9 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 160, y: 30}
+  m_AnchoredPosition: {x: 0, y: 0.00000047683716}
+  m_SizeDelta: {x: 100, y: 100}
   m_Pivot: {x: 0.5, y: 0.5}
---- !u!114 &635117309
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 635117307}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 708705254, guid: f70555f144d8491a825f0804e09c671c, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_Material: {fileID: 0}
-  m_Color: {r: 1, g: 0, b: 0, a: 1}
-  m_RaycastTarget: 1
-  m_OnCullStateChanged:
-    m_PersistentCalls:
-      m_Calls: []
-    m_TypeName: UnityEngine.UI.MaskableGraphic+CullStateChangedEvent, UnityEngine.UI,
-      Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
-  m_FontData:
-    m_Font: {fileID: 12800000, guid: d1a4ec040f6e1a24da6d7f2eb8b4458e, type: 3}
-    m_FontSize: 108
-    m_FontStyle: 0
-    m_BestFit: 0
-    m_MinSize: 9
-    m_MaxSize: 114
-    m_Alignment: 4
-    m_AlignByGeometry: 0
-    m_RichText: 1
-    m_HorizontalOverflow: 1
-    m_VerticalOverflow: 1
-    m_LineSpacing: 1
-  m_Text: 'Player # Wins'
---- !u!222 &635117310
-CanvasRenderer:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 635117307}
---- !u!95 &635117311
-Animator:
-  serializedVersion: 3
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 635117307}
-  m_Enabled: 1
-  m_Avatar: {fileID: 0}
-  m_Controller: {fileID: 9100000, guid: 050b9c810f4c869439b954bd280aa2f4, type: 2}
-  m_CullingMode: 0
-  m_UpdateMode: 0
-  m_ApplyRootMotion: 0
-  m_LinearVelocityBlending: 0
-  m_WarningMessage: 
-  m_HasTransformHierarchy: 1
-  m_AllowConstantClipSamplingOptimization: 1
 --- !u!1 &643495471
 GameObject:
   m_ObjectHideFlags: 0
@@ -616,7 +557,7 @@ RectTransform:
   m_LocalScale: {x: 0.031294454, y: 0.031294454, z: 0.031294454}
   m_Children:
   - {fileID: 991871132}
-  - {fileID: 635117308}
+  - {fileID: 442351220}
   m_Father: {fileID: 0}
   m_RootOrder: 15
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -1566,8 +1507,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   players: []
-  personAmount: 2
+  personAmount: 0
   playersDead: 0
+  gameOver: 0
   turnNum: 0
   turnNumText: {fileID: 991871133}
   turnPlayerNum: 0
@@ -1604,7 +1546,13 @@ MonoBehaviour:
   arrowPrefab: {fileID: 1987829259919222, guid: bf03db130b5a44743ad84ae0d950c951,
     type: 2}
   arrowObject: {fileID: 0}
-  winner: {fileID: 635117307}
+  winnerTextsHolder: {fileID: 442351219}
+  winners:
+  - {fileID: 1678744958562740, guid: 6554cad096c514f4a8f1a260096fb865, type: 2}
+  - {fileID: 1879940562910910, guid: a8ff28e2253123c448b31823b0d32481, type: 2}
+  - {fileID: 1857361160920098, guid: 2bed6e02c703a2f4aa7ce62a195250dc, type: 2}
+  - {fileID: 1929082674488658, guid: 9f1aa13bdaabb0843b29f158e27c3d20, type: 2}
+  - {fileID: 1638515514704252, guid: 1e41cb6c738b0aa4bbe612313eba5dba, type: 2}
 --- !u!4 &1968514528
 Transform:
   m_ObjectHideFlags: 0

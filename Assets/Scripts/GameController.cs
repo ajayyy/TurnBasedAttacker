@@ -11,7 +11,7 @@ public class GameController : MonoBehaviour {
     public List<GameObject> players = new List<GameObject>();
 
 	// Amount of actual people playing/turns to go through. Because the players array now includes more than one player per person
-    public float personAmount = 0;
+    public int personAmount = 0;
 
 	//Amount of players with no units left
 	public float playersDead = 0;
@@ -70,8 +70,10 @@ public class GameController : MonoBehaviour {
     [HideInInspector]
     public GameObject arrowObject;
 
-	//Winner text
-	public GameObject winner;
+	//The empty gameobject that will hold all of the winner texts
+	public GameObject winnerTextsHolder;
+	//Winner text prefabs
+	public GameObject[] winners;
 
 	//Amount of next turns left in the queue
 	int nextTurnsLeft = 0;

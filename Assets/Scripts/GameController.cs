@@ -14,7 +14,10 @@ public class GameController : MonoBehaviour {
     public int personAmount = 0;
 
 	//Amount of players with no units left
-	public float playersDead = 0;
+	public int playersDead = 0;
+
+	//stores all the player nums in the order they died (the last player class that was left
+	public List<Player> playersDeadList = new List<Player>();
 
 	//if the game is over and it is showing the scoreboard
 	public bool gameOver = false;

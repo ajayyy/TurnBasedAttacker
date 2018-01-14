@@ -207,9 +207,9 @@ public class AnimationScript : MonoBehaviour {
 					}
 
 					for (int i = 0; i < 5; i++) {
-						GameObject winner = Instantiate (GameController.instance.winners [3]);
+						GameObject winner = Instantiate (GameController.instance.winners [4]);
 						winner.transform.SetParent(GameController.instance.winnerTextsHolder.transform);
-						winner.transform.localPosition = new Vector3 (0, -199 - (i*20));
+						winner.transform.localPosition = new Vector3 (0, -205 - (i*28));
 						winner.transform.localScale = new Vector3(1, 1, 1);
 						winner.GetComponent<Text> ().text = (i+2+2+3+5) + ". Player " + (GameController.instance.playersDeadList[i+2+3+5].playerNum + 1);
 						winner.GetComponent<Text> ().color = GameController.instance.playersDeadList[i+2+3+5].idleColor;

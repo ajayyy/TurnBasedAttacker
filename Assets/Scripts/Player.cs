@@ -70,8 +70,8 @@ public class Player : MonoBehaviour {
     }
 
     void Update () {
-		if (playerNum != 15)
-			GetComponent<AnimationScript> ().OnDeadAnimationEnded();
+		//if (playerNum != 15)
+		//	GetComponent<AnimationScript> ().OnDeadAnimationEnded();
 		
         //shothand for GameController.instance
         GameController gameController = GameController.instance;

@@ -81,6 +81,11 @@ public class GameController : MonoBehaviour {
 	//Amount of next turns left in the queue
 	int nextTurnsLeft = 0;
 
+    // The time the game started
+    float startTime;
+    //Text that has the timer
+    public Text timerText;
+
     void Awake () {
         if(instance == null) {
             instance = this;
@@ -143,16 +148,61 @@ public class GameController : MonoBehaviour {
             }
 
         }
-	}
+
+        startTime = Time.time;
+    }
 	
 	void FixedUpdate () {
+        //Draw to turn timer
         turnNumText.text = "Turn " + (turnNum + 1);
 
-		if (nextTurnsLeft > 0 && !arrowObject.GetComponent<Animator> ().GetCurrentAnimatorStateInfo (0).IsName ("movement")) {
-			nextTurnsLeft--;
-			NextTurn ();
-		}
-	}
+        //Draw to timer
+
+        float elapsedTime = Time.time - startTime;
+
+        string time = "";
+
+        if (elapsedTime >= 3600) { //over an hour
+            int hoursTaken = ((int)(elapsedTime / 3600));
+
+            //add a 0 if it is less than ten to look like a clock
+            if (hoursTaken < 10) {
+                time += "0" + hoursTaken + ":";
+            } else {
+                time += hoursTaken + ":";
+            }
+        }
+
+        if (elapsedTime >= 60) { //over a minute
+            //subtract the hours taken
+            int minutesTaken = ((int)(elapsedTime / 60 - (int)(elapsedTime / 3600) * 60));
+
+            //add a 0 if it is less than ten to look like a clock
+            if (minutesTaken < 10) {
+                time += "0" + minutesTaken + ":";
+            } else {
+                time += minutesTaken + ":";
+            }
+        }
+
+        //subtract the hours taken and minutes taken
+        int secondsTaken = ((int)(elapsedTime - (int)(elapsedTime / 60) * 60));
+
+        //add a 0 if it is less than ten to look like a clock
+        if (secondsTaken < 10) {
+            time += "0" + secondsTaken;
+        } else {
+            time += secondsTaken;
+        }
+
+        timerText.text = "Time: " + time;
+
+        //Check next turn queue and call next turn if nessesary
+        if (nextTurnsLeft > 0 && !arrowObject.GetComponent<Animator>().GetCurrentAnimatorStateInfo(0).IsName("movement")) {
+            nextTurnsLeft--;
+            NextTurn();
+        }
+    }
 
     public void NextTurn() {
 		if (arrowObject.GetComponent<Animator> ().GetCurrentAnimatorStateInfo (0).IsName ("movement")) {

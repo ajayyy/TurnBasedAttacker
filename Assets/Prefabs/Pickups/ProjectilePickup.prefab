@@ -22,6 +22,7 @@ GameObject:
   - component: {fileID: 212056933991417310}
   - component: {fileID: 114684664142058912}
   - component: {fileID: 61778872013713462}
+  - component: {fileID: 95822005179073022}
   m_Layer: 0
   m_Name: ProjectilePickup
   m_TagString: Pickup
@@ -67,6 +68,23 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 0.5, y: 0.5}
   m_EdgeRadius: 0
+--- !u!95 &95822005179073022
+Animator:
+  serializedVersion: 3
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1241871911234054}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: 36a2e3d4d93a7ee41ab6ed542ba843ad, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
 --- !u!114 &114684664142058912
 MonoBehaviour:
   m_ObjectHideFlags: 1

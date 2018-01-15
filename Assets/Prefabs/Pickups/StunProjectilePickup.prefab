@@ -22,6 +22,7 @@ GameObject:
   - component: {fileID: 212973582822884978}
   - component: {fileID: 114706267054273566}
   - component: {fileID: 61299523064381032}
+  - component: {fileID: 95087139492037382}
   m_Layer: 0
   m_Name: StunProjectilePickup
   m_TagString: Pickup
@@ -67,6 +68,23 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 0.5, y: 0.5}
   m_EdgeRadius: 0
+--- !u!95 &95087139492037382
+Animator:
+  serializedVersion: 3
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1604616306803978}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: 36a2e3d4d93a7ee41ab6ed542ba843ad, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
 --- !u!114 &114706267054273566
 MonoBehaviour:
   m_ObjectHideFlags: 1

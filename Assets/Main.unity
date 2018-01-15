@@ -1086,6 +1086,7 @@ MonoBehaviour:
   - {fileID: 1411541111503600, guid: 5c49093293cecb6459fd50643e10836c, type: 2}
   - {fileID: 1086697927017280, guid: 082ea012b8437ba4b9185c3ea1dffb7c, type: 2}
   - {fileID: 1604616306803978, guid: c0d8ed4e1dcadcc48a8fbba115f61b3b, type: 2}
+  pickups: []
   timerText: {fileID: 258192444}
 --- !u!4 &1968514528
 Transform:

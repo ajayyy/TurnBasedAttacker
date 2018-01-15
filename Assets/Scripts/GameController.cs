@@ -78,6 +78,11 @@ public class GameController : MonoBehaviour {
 	//Winner text prefabs
 	public GameObject[] winners;
 
+    //Prefabs for all the possible pickups
+    public GameObject[] pickupPrefabs;
+    //The actual spawned pickups
+    public List<GameObject> pickups = new List<GameObject>();
+
 	//Amount of next turns left in the queue
 	int nextTurnsLeft = 0;
 
@@ -86,18 +91,18 @@ public class GameController : MonoBehaviour {
     //Text that has the timer
     public Text timerText;
 
-    void Awake () {
-        if(instance == null) {
+    void Awake() {
+        if (instance == null) {
             instance = this;
-        }else {
+        } else {
             Debug.LogError("Two GameControllers open in one scene");
             Destroy(this);
         }
 
         List<Vector3> positionsChosen = new List<Vector3>();
         //create players based on settings specified in the main menu
-        for(int i = 0; i < GameSettings.players; i++) {
-            for(int s = 0; s < GameSettings.units; s++) {
+        for (int i = 0; i < GameSettings.players; i++) {
+            for (int s = 0; s < GameSettings.units; s++) {
                 GameObject newPlayer = Instantiate(player);
 
                 Player playerScript = newPlayer.GetComponent<Player>();
@@ -122,6 +127,24 @@ public class GameController : MonoBehaviour {
         }
 
         personAmount = GameSettings.players;
+
+        List<Vector3> pickupPositionsChosen = new List<Vector3>();
+
+        for (int i = 0; i < (int)(personAmount * 0.25f) + 3; i++) {
+            GameObject newPickup = Instantiate(pickupPrefabs[(int)Random.Range(0f, pickupPrefabs.Length)]);
+
+            Vector3 position = new Vector3(Mathf.RoundToInt(Random.Range(-9f, 9f)), Mathf.RoundToInt(Random.Range(-9f, 9f)));
+
+            while (pickupPositionsChosen.Contains(position) || positionsChosen.Contains(position)) {
+                print("fixing");
+                position = new Vector3(Mathf.RoundToInt(Random.Range(-9f, 9f)), Mathf.RoundToInt(Random.Range(-9f, 9f)));
+            }
+
+            newPickup.transform.position = position;
+
+            pickups.Add(newPickup);
+            pickupPositionsChosen.Add(position);
+        }
 
         //create arrow pointing at who's turn it is
         arrowObject = Instantiate(arrowPrefab);

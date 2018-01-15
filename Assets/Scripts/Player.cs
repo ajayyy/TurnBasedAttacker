@@ -455,6 +455,7 @@ public class Player : MonoBehaviour {
             pickup = collider.GetComponent<Pickup>().type;
             holding = true;
 
+            GameController.instance.pickups.Remove(collider.gameObject);
             Destroy(collider.gameObject);
         }
     }

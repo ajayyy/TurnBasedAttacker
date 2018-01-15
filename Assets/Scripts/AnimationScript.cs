@@ -223,10 +223,6 @@ public class AnimationScript : MonoBehaviour {
 
         } //not player if null
 
-        if(GetComponent<Pickup>() != null) { //must be a pickup
-            GameController.instance.pickups.Remove(gameObject);
-        }
-
         Destroy(gameObject);
 
     }

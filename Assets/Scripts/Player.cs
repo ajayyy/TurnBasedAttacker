@@ -70,8 +70,16 @@ public class Player : MonoBehaviour {
     }
 
     void Update () {
+		//if (playerNum != 15)
+		//	GetComponent<AnimationScript> ().OnDeadAnimationEnded();
+		
         //shothand for GameController.instance
         GameController gameController = GameController.instance;
+
+		if (gameController.gameOver) {
+			//the game is done, the player should not be able to move
+			return;
+		}
 
         if(stunned && gameController.turnNum - 3 >= turnStunned) {
             stunned = false;
@@ -79,7 +87,7 @@ public class Player : MonoBehaviour {
         }
 
         //if it is this player's turn
-        if(gameController.turnPlayerNum == playerNum && Time.time - gameController.lastMove >= 0.01f && selected && animator.GetCurrentAnimatorStateInfo(0).IsName("idle") && !stunned) {
+		if(gameController.turnPlayerNum == playerNum && Time.time - gameController.lastMove >= 0.01f && selected && EverythingIdle() && !stunned) {
             if (doneTurn) {
                 gameController.NextTurn();
                 spriteRenderer.color = idleColor;
@@ -447,8 +455,16 @@ public class Player : MonoBehaviour {
             pickup = collider.GetComponent<Pickup>().type;
             holding = true;
 
+            GameController.instance.pickups.Remove(collider.gameObject);
             Destroy(collider.gameObject);
         }
     }
+
+	bool EverythingIdle() {
+
+		GameController gameController = GameController.instance;
+
+		return animator.GetCurrentAnimatorStateInfo (0).IsName("idle") && (!projectile.activeSelf || projectile.GetComponent<Animator> ().GetCurrentAnimatorStateInfo (0).IsName ("idle")) && (!gameController.blockProjectile.activeSelf || gameController.blockProjectile.GetComponent<Animator> ().GetCurrentAnimatorStateInfo (0).IsName ("idle")) && (!gameController.stunProjectile.activeSelf || gameController.stunProjectile.GetComponent<Animator>().GetCurrentAnimatorStateInfo(0).IsName("idle"));
+	}
 
 }

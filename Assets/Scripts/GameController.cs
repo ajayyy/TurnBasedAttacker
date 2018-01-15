@@ -10,7 +10,17 @@ public class GameController : MonoBehaviour {
     //contains all players, including if a player has multiple characters on screen
     public List<GameObject> players = new List<GameObject>();
 
-    public float personAmount = 0; // Amount of actual people playing/turns to go through. Because the players array now includes more than one player per person
+	// Amount of actual people playing/turns to go through. Because the players array now includes more than one player per person
+    public int personAmount = 0;
+
+	//Amount of players with no units left
+	public int playersDead = 0;
+
+	//stores all the player nums in the order they died (the last player class that was left
+	public List<Player> playersDeadList = new List<Player>();
+
+	//if the game is over and it is showing the scoreboard
+	public bool gameOver = false;
 
     public int turnNum = 0;
 
@@ -63,18 +73,36 @@ public class GameController : MonoBehaviour {
     [HideInInspector]
     public GameObject arrowObject;
 
-    void Awake () {
-        if(instance == null) {
+	//The empty gameobject that will hold all of the winner texts
+	public GameObject winnerTextsHolder;
+	//Winner text prefabs
+	public GameObject[] winners;
+
+    //Prefabs for all the possible pickups
+    public GameObject[] pickupPrefabs;
+    //The actual spawned pickups
+    public List<GameObject> pickups = new List<GameObject>();
+
+	//Amount of next turns left in the queue
+	int nextTurnsLeft = 0;
+
+    // The time the game started
+    float startTime;
+    //Text that has the timer
+    public Text timerText;
+
+    void Awake() {
+        if (instance == null) {
             instance = this;
-        }else {
+        } else {
             Debug.LogError("Two GameControllers open in one scene");
             Destroy(this);
         }
 
         List<Vector3> positionsChosen = new List<Vector3>();
         //create players based on settings specified in the main menu
-        for(int i = 0; i < GameSettings.players; i++) {
-            for(int s = 0; s < GameSettings.units; s++) {
+        for (int i = 0; i < GameSettings.players; i++) {
+            for (int s = 0; s < GameSettings.units; s++) {
                 GameObject newPlayer = Instantiate(player);
 
                 Player playerScript = newPlayer.GetComponent<Player>();
@@ -99,6 +127,24 @@ public class GameController : MonoBehaviour {
         }
 
         personAmount = GameSettings.players;
+
+        List<Vector3> pickupPositionsChosen = new List<Vector3>();
+
+        for (int i = 0; i < (int)(personAmount * 0.25f) + 3; i++) {
+            GameObject newPickup = Instantiate(pickupPrefabs[(int)Random.Range(0f, pickupPrefabs.Length)]);
+
+            Vector3 position = new Vector3(Mathf.RoundToInt(Random.Range(-9f, 9f)), Mathf.RoundToInt(Random.Range(-9f, 9f)));
+
+            while (pickupPositionsChosen.Contains(position) || positionsChosen.Contains(position)) {
+                print("fixing");
+                position = new Vector3(Mathf.RoundToInt(Random.Range(-9f, 9f)), Mathf.RoundToInt(Random.Range(-9f, 9f)));
+            }
+
+            newPickup.transform.position = position;
+
+            pickups.Add(newPickup);
+            pickupPositionsChosen.Add(position);
+        }
 
         //create arrow pointing at who's turn it is
         arrowObject = Instantiate(arrowPrefab);
@@ -125,28 +171,109 @@ public class GameController : MonoBehaviour {
             }
 
         }
-	}
+
+        startTime = Time.time;
+    }
 	
 	void FixedUpdate () {
+        //Draw to turn timer
         turnNumText.text = "Turn " + (turnNum + 1);
-	}
 
-    public void NextTurn() {
-        turnPlayerNum++;
-        if(turnPlayerNum >= personAmount) {
-            turnNum++;
-            turnPlayerNum = 0;
-            arrowObject.GetComponent<AnimationScript>().direction = 90;
-        }else {
-            arrowObject.GetComponent<AnimationScript>().direction = 270;
+        //Draw to timer
+
+        float elapsedTime = Time.time - startTime;
+
+        string time = "";
+
+        if (elapsedTime >= 3600) { //over an hour
+            int hoursTaken = ((int)(elapsedTime / 3600));
+
+            //add a 0 if it is less than ten to look like a clock
+            if (hoursTaken < 10) {
+                time += "0" + hoursTaken + ":";
+            } else {
+                time += hoursTaken + ":";
+            }
         }
 
-        arrowObject.GetComponent<AnimationScript>().target = arrowObject.transform.parent.position + new Vector3(-1f, -(completedPlayers.IndexOf(turnPlayerNum) * 1.3f));
+        if (elapsedTime >= 60) { //over a minute
+            //subtract the hours taken
+            int minutesTaken = ((int)(elapsedTime / 60 - (int)(elapsedTime / 3600) * 60));
 
+            //add a 0 if it is less than ten to look like a clock
+            if (minutesTaken < 10) {
+                time += "0" + minutesTaken + ":";
+            } else {
+                time += minutesTaken + ":";
+            }
+        }
+
+        //subtract the hours taken and minutes taken
+        int secondsTaken = ((int)(elapsedTime - (int)(elapsedTime / 60) * 60));
+
+        //add a 0 if it is less than ten to look like a clock
+        if (secondsTaken < 10) {
+            time += "0" + secondsTaken;
+        } else {
+            time += secondsTaken;
+        }
+
+        timerText.text = "Time: " + time;
+
+        //Check next turn queue and call next turn if nessesary
+        if (nextTurnsLeft > 0 && !arrowObject.GetComponent<Animator>().GetCurrentAnimatorStateInfo(0).IsName("movement")) {
+            nextTurnsLeft--;
+            NextTurn();
+        }
+    }
+
+    public void NextTurn() {
+		if (arrowObject.GetComponent<Animator> ().GetCurrentAnimatorStateInfo (0).IsName ("movement")) {
+			nextTurnsLeft++;
+			return;
+		}
+
+		do {
+			turnPlayerNum++;
+
+			if (turnPlayerNum >= personAmount) {
+				turnNum++;
+				turnPlayerNum = 0;
+				arrowObject.GetComponent<AnimationScript> ().direction = 90;
+			} else {
+				arrowObject.GetComponent<AnimationScript> ().direction = 270;
+			}
+		} while (int.Parse (GameController.instance.playerStatusList [turnPlayerNum].GetComponentInChildren<Text> ().text) == 0);
+
+		arrowObject.GetComponent<AnimationScript>().target = arrowObject.transform.parent.position + new Vector3(-1f, -(completedPlayers.IndexOf(turnPlayerNum) * 1.3f));
 
         arrowObject.GetComponent<Animator>().SetTrigger("move");
 
-        //arrowObject.transform.localPosition = new Vector3(-1f, -(completedPlayers.IndexOf(turnPlayerNum) * 1.3f));
+        //spawn new pickup if there aren't already the maximum
+        if(pickups.Count < 7) {
+            List<Vector3> positionsChosen = new List<Vector3>();
+
+            //add all the currently occupied positions to the list
+            foreach(GameObject player in players) {
+                positionsChosen.Add(player.transform.position);
+            }
+            foreach (GameObject pickup in pickups) {
+                positionsChosen.Add(pickup.transform.position);
+            }
+
+            GameObject newPickup = Instantiate(pickupPrefabs[(int)Random.Range(0f, pickupPrefabs.Length)]);
+
+            Vector3 position = new Vector3(Mathf.RoundToInt(Random.Range(-9f, 9f)), Mathf.RoundToInt(Random.Range(-9f, 9f)));
+
+            while (positionsChosen.Contains(position)) {
+                print("fixing");
+                position = new Vector3(Mathf.RoundToInt(Random.Range(-9f, 9f)), Mathf.RoundToInt(Random.Range(-9f, 9f)));
+            }
+
+            newPickup.transform.position = position;
+
+            pickups.Add(newPickup);
+        }
 
         lastMove = Time.time;
     }

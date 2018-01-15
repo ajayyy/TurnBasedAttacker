@@ -133,9 +133,93 @@ public class AnimationScript : MonoBehaviour {
                 }
             }
 
+			//remove player from list and lower that players unit count
             GameController.instance.players.Remove(gameObject);
+			GameController.instance.playerStatusList[playerScript.playerNum].GetComponentInChildren<Text>().text = int.Parse(GameController.instance.playerStatusList[playerScript.playerNum].GetComponentInChildren<Text>().text) - 1 + "";
 
-            GameController.instance.playerStatusList[playerScript.playerNum].GetComponentInChildren<Text>().text = int.Parse(GameController.instance.playerStatusList[playerScript.playerNum].GetComponentInChildren<Text>().text) - 1 + "";
+			//if it's 0, then make it an X and skip their turn if it is next
+			if (int.Parse (GameController.instance.playerStatusList [playerScript.playerNum].GetComponentInChildren<Text> ().text) == 0) {
+				//add it to the dead list to know how many have died so far and when
+				GameController.instance.playersDead++;
+				GameController.instance.playersDeadList.Add (playerScript);
+
+				GameController.instance.playerStatusList [playerScript.playerNum].GetComponentInChildren<Text>().enabled = false;
+
+				if (GameController.instance.turnPlayerNum == playerScript.playerNum) {
+					GameController.instance.NextTurn ();
+				}
+
+				foreach (Transform child in GameController.instance.playerStatusList [playerScript.playerNum].transform) {
+					if (child.gameObject.name == "X") {
+						child.gameObject.SetActive (true);
+						break;
+					}
+				}
+
+				if (GameController.instance.playersDead >= GameController.instance.personAmount - 1) {
+					//the only units left in the players array will be the winner's units
+//					GameController.instance.winner.GetComponent<Text> ().text = "Player " + (GameController.instance.players[0].GetComponent<Player>().playerNum + 1) + " Wins";
+//					GameController.instance.winner.SetActive (true);
+
+					//reverse the list so the first item is the player who is second place
+					GameController.instance.playersDeadList.Reverse();
+
+					//players left to add to the scoreboard
+					int playersLeft = GameController.instance.personAmount;
+
+					for (int i = 0; i < 1; i++) { //in a for loop to keep consistency
+						GameObject winner = Instantiate (GameController.instance.winners [0]);
+						winner.transform.SetParent(GameController.instance.winnerTextsHolder.transform);
+						winner.transform.localPosition = new Vector3 (0, 278);
+						winner.GetComponent<Text> ().text = "Player " + (GameController.instance.players[0].GetComponent<Player>().playerNum + 1) + " Wins";
+						winner.GetComponent<Text> ().color = GameController.instance.players[0].GetComponent<Player>().idleColor;
+						winner.SetActive (true);
+					}
+
+					for (int i = 0; i < 2; i++) {
+						GameObject winner = Instantiate (GameController.instance.winners [1]);
+						winner.transform.SetParent(GameController.instance.winnerTextsHolder.transform);
+						winner.transform.localPosition = new Vector3 (0, 212 - (i*60));
+						winner.transform.localScale = new Vector3(1, 1, 1);
+						winner.GetComponent<Text> ().text = (i+2) + ". Player " + (GameController.instance.playersDeadList[i].playerNum + 1);
+						winner.GetComponent<Text> ().color = GameController.instance.playersDeadList[i].idleColor;
+						winner.SetActive (true);
+					}
+
+					for (int i = 0; i < 3; i++) {
+						GameObject winner = Instantiate (GameController.instance.winners [2]);
+						winner.transform.SetParent(GameController.instance.winnerTextsHolder.transform);
+						winner.transform.localPosition = new Vector3 (0, 97 - (i*45));
+						winner.transform.localScale = new Vector3(1, 1, 1);
+						winner.GetComponent<Text> ().text = (i+2+2) + ". Player " + (GameController.instance.playersDeadList[i+2].playerNum + 1);
+						winner.GetComponent<Text> ().color = GameController.instance.playersDeadList[i+2].idleColor;
+						winner.SetActive (true);
+					}
+
+					for (int i = 0; i < 5; i++) {
+						GameObject winner = Instantiate (GameController.instance.winners [3]);
+						winner.transform.SetParent(GameController.instance.winnerTextsHolder.transform);
+						winner.transform.localPosition = new Vector3 (0, -34 - (i*35));
+						winner.transform.localScale = new Vector3(1, 1, 1);
+						winner.GetComponent<Text> ().text = (i+2+2+3) + ". Player " + (GameController.instance.playersDeadList[i+2+3].playerNum + 1);
+						winner.GetComponent<Text> ().color = GameController.instance.playersDeadList[i+2+3].idleColor;
+						winner.SetActive (true);
+					}
+
+					for (int i = 0; i < 5; i++) {
+						GameObject winner = Instantiate (GameController.instance.winners [4]);
+						winner.transform.SetParent(GameController.instance.winnerTextsHolder.transform);
+						winner.transform.localPosition = new Vector3 (0, -205 - (i*28));
+						winner.transform.localScale = new Vector3(1, 1, 1);
+						winner.GetComponent<Text> ().text = (i+2+2+3+5) + ". Player " + (GameController.instance.playersDeadList[i+2+3+5].playerNum + 1);
+						winner.GetComponent<Text> ().color = GameController.instance.playersDeadList[i+2+3+5].idleColor;
+						winner.SetActive (true);
+					}
+
+					GameController.instance.gameOver = true;
+				}
+
+			}
 
         } //not player if null
 

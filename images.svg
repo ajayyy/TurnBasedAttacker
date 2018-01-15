@@ -13,7 +13,7 @@
    height="1052.3622047"
    id="svg2"
    version="1.1"
-   inkscape:version="0.48.2 r9819"
+   inkscape:version="0.91 r13725"
    sodipodi:docname="images.svg">
   <defs
      id="defs4" />
@@ -24,16 +24,16 @@
      borderopacity="1.0"
      inkscape:pageopacity="0.0"
      inkscape:pageshadow="2"
-     inkscape:zoom="1.979899"
-     inkscape:cx="191.14217"
-     inkscape:cy="712.76672"
+     inkscape:zoom="5.6"
+     inkscape:cx="92.994342"
+     inkscape:cy="445.60345"
      inkscape:document-units="px"
      inkscape:current-layer="layer1"
      showgrid="false"
-     inkscape:window-width="1366"
-     inkscape:window-height="708"
-     inkscape:window-x="-4"
-     inkscape:window-y="764"
+     inkscape:window-width="1280"
+     inkscape:window-height="962"
+     inkscape:window-x="1272"
+     inkscape:window-y="-8"
      inkscape:window-maximized="1" />
   <metadata
      id="metadata7">
@@ -43,7 +43,7 @@
         <dc:format>image/svg+xml</dc:format>
         <dc:type
            rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
-        <dc:title></dc:title>
+        <dc:title />
       </cc:Work>
     </rdf:RDF>
   </metadata>
@@ -125,5 +125,41 @@
        inkscape:export-filename="C:\Users\Ajay\Documents\Unity Projects\Final Project\Assets\Sprites\arrow.png"
        inkscape:export-xdpi="30.372837"
        inkscape:export-ydpi="30.372837" />
+    <text
+       xml:space="preserve"
+       style="font-style:normal;font-weight:normal;font-size:62.46878815px;line-height:125%;font-family:sans-serif;letter-spacing:0px;word-spacing:0px;fill:#ffffff;fill-opacity:1;stroke:none;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
+       x="44.102108"
+       y="610.776"
+       id="text4147"
+       sodipodi:linespacing="125%"
+       transform="scale(1.0808476,0.92519981)"><tspan
+         sodipodi:role="line"
+         id="tspan4149"
+         x="44.102108"
+         y="610.776">X</tspan></text>
+    <rect
+       style="fill:#ffffff;fill-opacity:1;stroke:none;stroke-width:47.0870018;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
+       id="rect4151"
+       width="7.6312613"
+       height="41.163715"
+       x="469.87036"
+       y="350.96127"
+       ry="0"
+       transform="matrix(0.70710678,0.70710678,-0.70710678,0.70710678,0,0)"
+       inkscape:export-filename="C:\Users\ramachandra\Desktop\Unity\Final Project\FinalProject\Assets\Sprites\x.png"
+       inkscape:export-xdpi="182.59142"
+       inkscape:export-ydpi="182.59142" />
+    <rect
+       ry="0"
+       y="453.10413"
+       x="-375.35876"
+       height="41.163715"
+       width="7.6312613"
+       id="rect4153"
+       style="fill:#ffffff;fill-opacity:1;stroke:none;stroke-width:47.0870018;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
+       transform="matrix(0.70710678,-0.70710678,0.70710678,0.70710678,0,0)"
+       inkscape:export-filename="C:\Users\ramachandra\Desktop\Unity\Final Project\FinalProject\Assets\Sprites\x.png"
+       inkscape:export-xdpi="182.59142"
+       inkscape:export-ydpi="182.59142" />
   </g>
 </svg>

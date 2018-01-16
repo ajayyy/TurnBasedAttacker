@@ -757,6 +757,7 @@ MonoBehaviour:
   direction: 1
   target: {x: 0, y: 0, z: 0}
   targetObject: {fileID: 0}
+  targetColor: {r: 0, g: 0, b: 0, a: 0}
   type: 3
   snapToGrid: 1
 --- !u!212 &1345992998
@@ -1002,6 +1003,7 @@ MonoBehaviour:
   direction: 1
   target: {x: 0, y: 0, z: 0}
   targetObject: {fileID: 0}
+  targetColor: {r: 0, g: 0, b: 0, a: 0}
   type: 1
   snapToGrid: 1
 --- !u!1 &1968514526
@@ -1152,6 +1154,7 @@ MonoBehaviour:
   direction: 1
   target: {x: 0, y: 0, z: 0}
   targetObject: {fileID: 0}
+  targetColor: {r: 0, g: 0, b: 0, a: 0}
   type: 2
   snapToGrid: 1
 --- !u!212 &2138889503

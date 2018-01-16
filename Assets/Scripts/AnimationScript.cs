@@ -16,15 +16,19 @@ public class AnimationScript : MonoBehaviour {
     public float direction = 0; // direction in angles of where the object should move based on the offset
     public Vector3 target = Vector3.zero;
     public GameObject targetObject; //target gameobject if it exists
-    public int type = 0; //0: one unit movement, 1: move to target
+    public Color targetColor;
+    public int type = 0; //0: one unit movement, 1: move to target, 5: fade to color
     public bool snapToGrid = true; //should it snap to the grid (true for game elements, not true for ui elements)
 
     //local variables
     Vector3 startPosition;
+    Color startColor;
     bool started = false; //has animating already started or is it the first time
 
-    void Start() {
+    SpriteRenderer spriteRenderer;
 
+    void Start() {
+        spriteRenderer = GetComponent<SpriteRenderer>();
     }
 
     void Update() {
@@ -32,6 +36,10 @@ public class AnimationScript : MonoBehaviour {
             if (!started) {
                 started = true;
                 startPosition = transform.position;
+
+                if(type == 5) {
+                    startColor = new Color(MathHelper.Cap(spriteRenderer.color.r, 1), MathHelper.Cap(spriteRenderer.color.g, 1), MathHelper.Cap(spriteRenderer.color.b, 1), MathHelper.Cap(spriteRenderer.color.a, 1));
+                }
             }
 
             switch (type) {
@@ -49,6 +57,10 @@ public class AnimationScript : MonoBehaviour {
                     break;
                 case 4: //UI element
                     transform.position = startPosition + MathHelper.DegreeToVector3(direction) * offsetAmount * Vector3.Distance(target, startPosition);
+                    break;
+                case 5: //Color fading
+                    spriteRenderer.color = new Color(startColor.r + (targetColor.r - startColor.r) * offsetAmount, startColor.g + (targetColor.g - startColor.g) * offsetAmount, startColor.b + (targetColor.b - startColor.b) * offsetAmount);
+                    print(startColor + "    " + targetColor + "    " + spriteRenderer.color);
                     break;
             }
         }
@@ -84,7 +96,7 @@ public class AnimationScript : MonoBehaviour {
 
             GameObject newBlock = Instantiate(GameController.instance.block);
             newBlock.GetComponent<AnimationScript>().direction = direction - 180;
-            newBlock.transform.position = new Vector3(MathHelper.cap(Mathf.RoundToInt(target.x), 11), MathHelper.cap(Mathf.RoundToInt(target.y), 11));
+            newBlock.transform.position = new Vector3(MathHelper.Cap(Mathf.RoundToInt(target.x), 11), MathHelper.Cap(Mathf.RoundToInt(target.y), 11));
         }
 
         if (type == 3) {
@@ -114,6 +126,10 @@ public class AnimationScript : MonoBehaviour {
                 }
             }
 
+        }
+
+        if(type == 5) {
+            spriteRenderer.color = targetColor;
         }
     }
 
@@ -226,4 +242,5 @@ public class AnimationScript : MonoBehaviour {
         Destroy(gameObject);
 
     }
+
 }

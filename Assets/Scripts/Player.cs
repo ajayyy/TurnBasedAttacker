@@ -90,7 +90,14 @@ public class Player : MonoBehaviour {
 		if(gameController.turnPlayerNum == playerNum && Time.time - gameController.lastMove >= 0.01f && selected && EverythingIdle() && !stunned) {
             if (doneTurn) {
                 gameController.NextTurn();
-                spriteRenderer.color = idleColor;
+
+                //fade color to idle color
+
+                GetComponent<AnimationScript>().type = 5;
+                GetComponent<AnimationScript>().targetColor = idleColor;
+
+                GetComponent<Animator>().SetTrigger("move");
+
                 doneTurn = false;
             } else if (shootMode) {
                 spriteRenderer.color = shootColor;
@@ -362,7 +369,16 @@ public class Player : MonoBehaviour {
                 }
 
             } else {
-                spriteRenderer.color = highlightColor;
+
+
+                if(spriteRenderer.color != highlightColor) {
+                    //fade color to highlight color
+
+                    GetComponent<AnimationScript>().type = 5;
+                    GetComponent<AnimationScript>().targetColor = highlightColor;
+
+                    GetComponent<Animator>().SetTrigger("move");
+                }
 
                 bool moved = false;
 

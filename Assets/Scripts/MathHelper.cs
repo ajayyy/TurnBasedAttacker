@@ -48,18 +48,31 @@ public class MathHelper : MonoBehaviour {
 
 	/// % in c# is remainder not modulo. So, -1 % 4 == -1. With this function mod(-1, 4) == 3
     /// Only used if there are going to be negatives involved, otherwise just use normal %
-	public static int mod(int x, int m) { 
+	public static int Mod(int x, int m) { 
 		int r = x%m;
 		return r<0 ? r+m : r;
 	}
 
     /// caps number to under or equal to cap and -cap
-	public static int cap(int x, int cap) {
+	public static int Cap(int x, int cap) {
         if(x > cap) {
             x = cap;
         }
 
         if(x < -cap) {
+            x = -cap;
+        }
+
+        return x;
+    }
+
+    /// caps number to under or equal to cap and -cap
+	public static float Cap(float x, float cap) {
+        if (x > cap) {
+            x = cap;
+        }
+
+        if (x < -cap) {
             x = -cap;
         }
 

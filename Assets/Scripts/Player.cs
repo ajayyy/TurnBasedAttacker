@@ -20,8 +20,8 @@ public class Player : MonoBehaviour {
     //the gameobject that will hold the color placed over the player when stunned to be able to destroy it
     public GameObject stunnedColor;
 
-    public Color highlightColor = new Color(100, 0, 0);
-    Color shootColor = new Color(0, 0, 100);
+    public Color highlightColor = new Color(1, 0, 0);
+    Color shootColor = new Color(0, 0, 1);
     public Color idleColor = new Color(0, 0, 0);
 
     public SpriteRenderer spriteRenderer;
@@ -91,17 +91,12 @@ public class Player : MonoBehaviour {
             if (doneTurn) {
                 gameController.NextTurn();
 
-                //fade color to idle color
-
-                GetComponent<AnimationScript>().type = 5;
-                GetComponent<AnimationScript>().targetColor = idleColor;
-
-                GetComponent<Animator>().SetTrigger("move");
+                ChangeColor(idleColor);
 
                 doneTurn = false;
             } else if (shootMode) {
-                spriteRenderer.color = shootColor;
-                
+                ChangeColor(shootColor);
+
                 bool chosen = false; //was a direction chosen
                 float direction = 0; //the direction chosen in angles
 
@@ -144,7 +139,7 @@ public class Player : MonoBehaviour {
                 }
 
             } else if (blockMode) {
-                spriteRenderer.color = shootColor;
+                ChangeColor(shootColor);
 
                 bool chosen = false; //was a direction chosen
                 float direction = 0; //the direction chosen in angles
@@ -182,7 +177,7 @@ public class Player : MonoBehaviour {
                 }
 
             } else if (spawnMode) {
-                spriteRenderer.color = shootColor;
+                ChangeColor(shootColor);
 
                 bool chosen = false; //was a direction chosen
                 float direction = 0; //the direction chosen in angles
@@ -232,7 +227,7 @@ public class Player : MonoBehaviour {
                 }
 
             } else if (slowShootMode) {
-                spriteRenderer.color = shootColor;
+                ChangeColor(shootColor);
 
                 bool chosen = false; //was a direction chosen
                 float direction = 0; //the direction chosen in angles
@@ -275,7 +270,7 @@ public class Player : MonoBehaviour {
                 }
 
             } else if (blockShootMode) {
-                spriteRenderer.color = shootColor;
+                ChangeColor(shootColor);
 
                 bool chosen = false; //was a direction chosen
                 float direction = 0; //the direction chosen in angles
@@ -322,7 +317,7 @@ public class Player : MonoBehaviour {
                 }
 
             } else if (stunShootMode) {
-                spriteRenderer.color = shootColor;
+                ChangeColor(shootColor);
 
                 bool chosen = false; //was a direction chosen
                 float direction = 0; //the direction chosen in angles
@@ -370,15 +365,7 @@ public class Player : MonoBehaviour {
 
             } else {
 
-
-                if(spriteRenderer.color != highlightColor) {
-                    //fade color to highlight color
-
-                    GetComponent<AnimationScript>().type = 5;
-                    GetComponent<AnimationScript>().targetColor = highlightColor;
-
-                    GetComponent<Animator>().SetTrigger("move");
-                }
+                ChangeColor(highlightColor);
 
                 bool moved = false;
 
@@ -455,7 +442,8 @@ public class Player : MonoBehaviour {
             if(player.playerNum == playerNum && player != this) {
                 //this player is part of this person's characters, they are not selected because this is now selected
                 player.selected = false;
-                player.spriteRenderer.color = player.idleColor;
+
+                player.ChangeColor(player.idleColor);
             }
         }
     }
@@ -473,6 +461,17 @@ public class Player : MonoBehaviour {
 
             GameController.instance.pickups.Remove(collider.gameObject);
             Destroy(collider.gameObject);
+        }
+    }
+
+    void ChangeColor(Color newColor) {
+        if (spriteRenderer.color != newColor) {
+            //fade color to highlight color
+
+            GetComponent<AnimationScript>().type = 5;
+            GetComponent<AnimationScript>().targetColor = newColor;
+
+            GetComponent<Animator>().SetTrigger("move");
         }
     }
 

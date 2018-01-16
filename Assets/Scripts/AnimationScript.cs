@@ -39,6 +39,7 @@ public class AnimationScript : MonoBehaviour {
 
                 if(type == 5) {
                     startColor = new Color(MathHelper.Cap(spriteRenderer.color.r, 1), MathHelper.Cap(spriteRenderer.color.g, 1), MathHelper.Cap(spriteRenderer.color.b, 1), MathHelper.Cap(spriteRenderer.color.a, 1));
+                    //targetColor = new Color(MathHelper.Cap(targetColor.r, 1), MathHelper.Cap(targetColor.g, 1), MathHelper.Cap(targetColor.b, 1), MathHelper.Cap(targetColor.a, 1));
                 }
             }
 
@@ -59,8 +60,10 @@ public class AnimationScript : MonoBehaviour {
                     transform.position = startPosition + MathHelper.DegreeToVector3(direction) * offsetAmount * Vector3.Distance(target, startPosition);
                     break;
                 case 5: //Color fading
-                    spriteRenderer.color = new Color(startColor.r + (targetColor.r - startColor.r) * offsetAmount, startColor.g + (targetColor.g - startColor.g) * offsetAmount, startColor.b + (targetColor.b - startColor.b) * offsetAmount);
-                    print(startColor + "    " + targetColor + "    " + spriteRenderer.color);
+                    spriteRenderer.color = Color.Lerp(startColor, targetColor, offsetAmount);
+
+                    print(startColor + "   " + targetColor);
+
                     break;
             }
         }
@@ -128,7 +131,7 @@ public class AnimationScript : MonoBehaviour {
 
         }
 
-        if(type == 5) {
+        if (type == 5) {
             spriteRenderer.color = targetColor;
         }
     }

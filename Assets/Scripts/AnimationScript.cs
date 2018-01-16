@@ -61,9 +61,6 @@ public class AnimationScript : MonoBehaviour {
                     break;
                 case 5: //Color fading
                     spriteRenderer.color = Color.Lerp(startColor, targetColor, offsetAmount);
-
-                    print(startColor + "   " + targetColor);
-
                     break;
             }
         }

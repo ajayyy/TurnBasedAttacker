@@ -37,8 +37,8 @@ public class Player : MonoBehaviour {
     bool doneTurn = false; //if true, and the animation state is idle, then go to next turn
 
     //info on what the player is holding
-    int pickup = 0;
-    bool holding = false; //true when holding
+    public int pickup = 0;
+    public bool holding = false; //true when holding
 
     //if true, waiting for input for the direction
     bool shootMode = false;

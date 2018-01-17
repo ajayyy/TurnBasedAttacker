@@ -278,4 +278,57 @@ public class GameController : MonoBehaviour {
         lastMove = Time.time;
     }
 
+
+    public void SaveGame() {
+        int gameIndex = 0;
+
+        if (PlayerPrefs.HasKey("GameAmount")) {
+            gameIndex = PlayerPrefs.GetInt("GameAmount");
+        }
+
+        PlayerPrefs.SetInt("Game" + gameIndex + "PersonAmount", personAmount);
+
+        PlayerPrefs.SetInt("Game" + gameIndex + "TurnNumber", turnNum);
+
+        PlayerPrefs.SetInt("Game" + gameIndex + "AlivePlayerAmount", players.Count);
+
+        for (int i = 0; i < players.Count; i++) {
+            PlayerPrefs.SetFloat("Game" + gameIndex + "Player" + i + "X", players[i].transform.position.x);
+            PlayerPrefs.SetFloat("Game" + gameIndex + "Player" + i + "Y", players[i].transform.position.y);
+
+            Player player = players[i].GetComponent<Player>();
+
+            if (player.holding) {
+                PlayerPrefs.SetFloat("Game" + gameIndex + "Player" + i + "Y", player.pickup);
+            }
+
+            PlayerPrefs.SetFloat("Game" + gameIndex + "Player" + i + "IdleR", player.idleColor.r);
+            PlayerPrefs.SetFloat("Game" + gameIndex + "Player" + i + "IdleG", player.idleColor.g);
+            PlayerPrefs.SetFloat("Game" + gameIndex + "Player" + i + "IdleB", player.idleColor.b);
+
+            PlayerPrefs.SetFloat("Game" + gameIndex + "Player" + i + "HighlightR", player.idleColor.r);
+            PlayerPrefs.SetFloat("Game" + gameIndex + "Player" + i + "HighlightG", player.idleColor.g);
+            PlayerPrefs.SetFloat("Game" + gameIndex + "Player" + i + "HighlightB", player.idleColor.b);
+
+            PlayerPrefs.SetFloat("Game" + gameIndex + "Player" + i + "ShootR", player.idleColor.r);
+            PlayerPrefs.SetFloat("Game" + gameIndex + "Player" + i + "ShootG", player.idleColor.g);
+            PlayerPrefs.SetFloat("Game" + gameIndex + "Player" + i + "ShootB", player.idleColor.b);
+
+        }
+
+        PlayerPrefs.SetInt("Game" + gameIndex + "PickupAmount", pickups.Count);
+
+        for (int i = 0; i < pickups.Count; i++) {
+            PlayerPrefs.SetFloat("Game" + gameIndex + "Pickup" + i + "X", pickups[i].transform.position.x);
+            PlayerPrefs.SetFloat("Game" + gameIndex + "Pickup" + i + "Y", pickups[i].transform.position.y);
+
+            Pickup pickup = pickups[i].GetComponent<Pickup>();
+
+            PlayerPrefs.SetInt("Game" + gameIndex + "Pickup" + i + "Type", pickup.type);
+
+        }
+
+        PlayerPrefs.SetInt("GameAmount", gameIndex + 1);
+
+    }
 }

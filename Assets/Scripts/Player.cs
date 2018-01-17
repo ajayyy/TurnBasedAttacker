@@ -21,7 +21,7 @@ public class Player : MonoBehaviour {
     public GameObject stunnedColor;
 
     public Color highlightColor = new Color(1, 0, 0);
-    Color shootColor = new Color(0, 0, 1);
+    public Color shootColor = new Color(0, 0, 1);
     public Color idleColor = new Color(0, 0, 0);
 
     public SpriteRenderer spriteRenderer;

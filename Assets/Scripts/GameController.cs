@@ -25,6 +25,7 @@ public class GameController : MonoBehaviour {
 	//if the game is over and it is showing the scoreboard
 	public bool gameOver = false;
 
+    //Actual turn number
     public int turnNum = 0;
 
     //The text gameobject displaying the turn number
@@ -133,48 +134,29 @@ public class GameController : MonoBehaviour {
 
         personAmount = GameSettings.players;
 
-        List<Vector3> pickupPositionsChosen = new List<Vector3>();
+        if(GameSettings.gameToLoad != -1) {
+            LoadGame();
+        } else {
 
-        for (int i = 0; i < (int)(personAmount * 0.25f) + 3; i++) {
-            GameObject newPickup = Instantiate(pickupPrefabs[(int)Random.Range(0f, pickupPrefabs.Length)]);
+            List<Vector3> pickupPositionsChosen = new List<Vector3>();
 
-            Vector3 position = new Vector3(Mathf.RoundToInt(Random.Range(-9f, 9f)), Mathf.RoundToInt(Random.Range(-9f, 9f)));
+            for (int i = 0; i < (int)(personAmount * 0.25f) + 3; i++) {
+                GameObject newPickup = Instantiate(pickupPrefabs[(int)Random.Range(0f, pickupPrefabs.Length)]);
 
-            while (pickupPositionsChosen.Contains(position) || positionsChosen.Contains(position)) {
-                print("fixing");
-                position = new Vector3(Mathf.RoundToInt(Random.Range(-9f, 9f)), Mathf.RoundToInt(Random.Range(-9f, 9f)));
-            }
+                Vector3 position = new Vector3(Mathf.RoundToInt(Random.Range(-9f, 9f)), Mathf.RoundToInt(Random.Range(-9f, 9f)));
 
-            newPickup.transform.position = position;
-
-            pickups.Add(newPickup);
-            pickupPositionsChosen.Add(position);
-        }
-
-        //create arrow pointing at who's turn it is
-        arrowObject = Instantiate(arrowPrefab);
-        arrowObject.transform.parent = sidebar.transform;
-
-        //create player status'
-        foreach(GameObject player in players) {
-            Player playerScript = player.GetComponent<Player>();
-
-            if (!completedPlayers.Contains(playerScript.playerNum)) {
-                GameObject newPlayerStatus = Instantiate(playerStatus);
-                newPlayerStatus.transform.parent = sidebar.transform;
-                newPlayerStatus.transform.localPosition = new Vector3(0, - (completedPlayers.Count * 1.3f));
-                newPlayerStatus.GetComponent<SpriteRenderer>().color = playerScript.idleColor;
-
-                if(turnPlayerNum == playerScript.playerNum) {
-                    arrowObject.transform.localPosition = new Vector3(-1f, -(completedPlayers.Count * 1.3f));
+                while (pickupPositionsChosen.Contains(position) || positionsChosen.Contains(position)) {
+                    print("fixing");
+                    position = new Vector3(Mathf.RoundToInt(Random.Range(-9f, 9f)), Mathf.RoundToInt(Random.Range(-9f, 9f)));
                 }
 
-                completedPlayers.Add(playerScript.playerNum);
-                playerStatusList.Add(newPlayerStatus);
-            } else {
-                playerStatusList[playerScript.playerNum].GetComponentInChildren<Text>().text = int.Parse(playerStatusList[playerScript.playerNum].GetComponentInChildren<Text>().text) + 1 + "";
+                newPickup.transform.position = position;
+
+                pickups.Add(newPickup);
+                pickupPositionsChosen.Add(position);
             }
 
+            CreatePlayerStatus();
         }
 
         startTime = Time.time;
@@ -283,6 +265,77 @@ public class GameController : MonoBehaviour {
         lastMove = Time.time;
     }
 
+    public void LoadGame() {
+        gameId = PlayerPrefs.GetString("Game" + GameSettings.gameToLoad + "GameId");
+
+        personAmount = PlayerPrefs.GetInt("Game" + GameSettings.gameToLoad + "PersonAmount");
+
+        turnNum = PlayerPrefs.GetInt("Game" + GameSettings.gameToLoad + "TurnNumber");
+        turnPlayerNum = PlayerPrefs.GetInt("Game" + GameSettings.gameToLoad + "TurnPlayerNumber");
+
+        int aliveUnitsAmount = PlayerPrefs.GetInt("Game" + GameSettings.gameToLoad + "AliveUnitsAmount");
+
+        for (int i = 0; i < aliveUnitsAmount; i++) {
+            GameObject newPlayer = Instantiate(player);
+
+            Player playerScript = newPlayer.GetComponent<Player>();
+
+            playerScript.playerNum = PlayerPrefs.GetInt("Game" + GameSettings.gameToLoad + "Player" + i + "PlayerNum");
+
+            float r = PlayerPrefs.GetFloat("Game" + GameSettings.gameToLoad + "Player" + i + "IdleR");
+            float g = PlayerPrefs.GetFloat("Game" + GameSettings.gameToLoad + "Player" + i + "IdleG");
+            float b = PlayerPrefs.GetFloat("Game" + GameSettings.gameToLoad + "Player" + i + "IdleB");
+            playerScript.idleColor = new Color(r, g, b);
+
+            r = PlayerPrefs.GetFloat("Game" + GameSettings.gameToLoad + "Player" + i + "HighlightR");
+            g = PlayerPrefs.GetFloat("Game" + GameSettings.gameToLoad + "Player" + i + "HighlightG");
+            b = PlayerPrefs.GetFloat("Game" + GameSettings.gameToLoad + "Player" + i + "HighlightB");
+            playerScript.highlightColor = new Color(r, g, b);
+
+            r = PlayerPrefs.GetFloat("Game" + GameSettings.gameToLoad + "Player" + i + "ShootR");
+            g = PlayerPrefs.GetFloat("Game" + GameSettings.gameToLoad + "Player" + i + "ShootG");
+            b = PlayerPrefs.GetFloat("Game" + GameSettings.gameToLoad + "Player" + i + "ShootB");
+            playerScript.shootColor = new Color(r, g, b);
+
+            playerScript.selected = PlayerPrefs.GetInt("Game" + GameSettings.gameToLoad + "Player" + i + "Selected") == 1;
+
+            float x = PlayerPrefs.GetFloat("Game" + GameSettings.gameToLoad + "Player" + i + "X");
+            float y = PlayerPrefs.GetFloat("Game" + GameSettings.gameToLoad + "Player" + i + "Y");
+
+            Vector3 position = new Vector3(x, y);
+
+            if(PlayerPrefs.HasKey("Game" + GameSettings.gameToLoad + "Player" + i + "Pickup")) {
+                playerScript.pickup = PlayerPrefs.GetInt("Game" + GameSettings.gameToLoad + "Player" + i + "Pickup");
+            }
+
+            newPlayer.transform.position = position;
+
+            players.Add(newPlayer);
+        }
+
+        int pickupAmount = PlayerPrefs.GetInt("Game" + GameSettings.gameToLoad + "PickupAmount");
+
+        for (int i = 0; i < pickupAmount; i++) {
+            GameObject newPickup = Instantiate(pickupPrefabs[(int)Random.Range(0f, pickupPrefabs.Length)]);
+
+            float x = PlayerPrefs.GetFloat("Game" + GameSettings.gameToLoad + "Pickup" + i + "X");
+            float y = PlayerPrefs.GetFloat("Game" + GameSettings.gameToLoad + "Pickup" + i + "Y");
+
+            Vector3 position = new Vector3(x, y);
+
+            newPickup.transform.position = position;
+
+            Pickup pickupScript = newPickup.GetComponent<Pickup>();
+
+            pickupScript.type = PlayerPrefs.GetInt("Game" + GameSettings.gameToLoad + "Pickup" + i + "Type");
+
+            pickups.Add(newPickup);
+
+        }
+
+        CreatePlayerStatus();
+
+    }
 
     public void SaveGame() {
         int gameIndex = 0;
@@ -304,7 +357,9 @@ public class GameController : MonoBehaviour {
 
         PlayerPrefs.SetInt("Game" + gameIndex + "TurnNumber", turnNum);
 
-        PlayerPrefs.SetInt("Game" + gameIndex + "AlivePlayerAmount", players.Count);
+        PlayerPrefs.SetInt("Game" + gameIndex + "TurnPlayerNum", turnPlayerNum);
+
+        PlayerPrefs.SetInt("Game" + gameIndex + "AliveUnitsAmount", players.Count);
 
         for (int i = 0; i < players.Count; i++) {
             PlayerPrefs.SetFloat("Game" + gameIndex + "Player" + i + "X", players[i].transform.position.x);
@@ -312,21 +367,25 @@ public class GameController : MonoBehaviour {
 
             Player player = players[i].GetComponent<Player>();
 
+            PlayerPrefs.SetInt("Game" + gameIndex + "Player" + i + "PlayerNum", player.playerNum);
+
             if (player.holding) {
-                PlayerPrefs.SetFloat("Game" + gameIndex + "Player" + i + "Y", player.pickup);
+                PlayerPrefs.SetInt("Game" + gameIndex + "Player" + i + "Pickup", player.pickup);
             }
+
+            PlayerPrefs.SetInt("Game" + gameIndex + "Player" + i + "Selected", player.selected ? 1 : 0);
 
             PlayerPrefs.SetFloat("Game" + gameIndex + "Player" + i + "IdleR", player.idleColor.r);
             PlayerPrefs.SetFloat("Game" + gameIndex + "Player" + i + "IdleG", player.idleColor.g);
             PlayerPrefs.SetFloat("Game" + gameIndex + "Player" + i + "IdleB", player.idleColor.b);
 
-            PlayerPrefs.SetFloat("Game" + gameIndex + "Player" + i + "HighlightR", player.idleColor.r);
-            PlayerPrefs.SetFloat("Game" + gameIndex + "Player" + i + "HighlightG", player.idleColor.g);
-            PlayerPrefs.SetFloat("Game" + gameIndex + "Player" + i + "HighlightB", player.idleColor.b);
+            PlayerPrefs.SetFloat("Game" + gameIndex + "Player" + i + "HighlightR", player.highlightColor.r);
+            PlayerPrefs.SetFloat("Game" + gameIndex + "Player" + i + "HighlightG", player.highlightColor.g);
+            PlayerPrefs.SetFloat("Game" + gameIndex + "Player" + i + "HighlightB", player.highlightColor.b);
 
-            PlayerPrefs.SetFloat("Game" + gameIndex + "Player" + i + "ShootR", player.idleColor.r);
-            PlayerPrefs.SetFloat("Game" + gameIndex + "Player" + i + "ShootG", player.idleColor.g);
-            PlayerPrefs.SetFloat("Game" + gameIndex + "Player" + i + "ShootB", player.idleColor.b);
+            PlayerPrefs.SetFloat("Game" + gameIndex + "Player" + i + "ShootR", player.shootColor.r);
+            PlayerPrefs.SetFloat("Game" + gameIndex + "Player" + i + "ShootG", player.shootColor.g);
+            PlayerPrefs.SetFloat("Game" + gameIndex + "Player" + i + "ShootB", player.shootColor.b);
 
         }
 
@@ -346,5 +405,33 @@ public class GameController : MonoBehaviour {
             PlayerPrefs.SetInt("GameAmount", gameIndex + 1);
         }
 
+    }
+
+    void CreatePlayerStatus() {
+        //create arrow pointing at who's turn it is
+        arrowObject = Instantiate(arrowPrefab);
+        arrowObject.transform.parent = sidebar.transform;
+
+        //create player status'
+        foreach (GameObject player in players) {
+            Player playerScript = player.GetComponent<Player>();
+
+            if (!completedPlayers.Contains(playerScript.playerNum)) {
+                GameObject newPlayerStatus = Instantiate(playerStatus);
+                newPlayerStatus.transform.parent = sidebar.transform;
+                newPlayerStatus.transform.localPosition = new Vector3(0, -(completedPlayers.Count * 1.3f));
+                newPlayerStatus.GetComponent<SpriteRenderer>().color = playerScript.idleColor;
+
+                if (turnPlayerNum == playerScript.playerNum) {
+                    arrowObject.transform.localPosition = new Vector3(-1f, -(completedPlayers.Count * 1.3f));
+                }
+
+                completedPlayers.Add(playerScript.playerNum);
+                playerStatusList.Add(newPlayerStatus);
+            } else {
+                playerStatusList[playerScript.playerNum].GetComponentInChildren<Text>().text = int.Parse(playerStatusList[playerScript.playerNum].GetComponentInChildren<Text>().text) + 1 + "";
+            }
+
+        }
     }
 }

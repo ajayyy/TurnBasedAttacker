@@ -302,13 +302,22 @@ public class GameController : MonoBehaviour {
             float x = PlayerPrefs.GetFloat("Game" + GameSettings.gameToLoad + "Player" + i + "X");
             float y = PlayerPrefs.GetFloat("Game" + GameSettings.gameToLoad + "Player" + i + "Y");
 
-            Vector3 position = new Vector3(x, y);
+            newPlayer.transform.position = new Vector3(x, y);
 
             if(PlayerPrefs.GetInt("Game" + GameSettings.gameToLoad + "Player" + i + "HoldingPickup") == 1) {
                 playerScript.pickup = PlayerPrefs.GetInt("Game" + GameSettings.gameToLoad + "Player" + i + "Pickup");
             }
 
-            newPlayer.transform.position = position;
+            playerScript.stunned = PlayerPrefs.GetInt("Game" + GameSettings.gameToLoad + "Player" + i + "Stunned") == 1;
+            playerScript.turnStunned = PlayerPrefs.GetInt("Game" + GameSettings.gameToLoad + "Player" + i + "TurnsStunned");
+            if (playerScript.stunned) {
+                if (turnPlayerNum > playerScript.playerNum) {
+                    playerScript.turnStunned++;
+                }
+
+                playerScript.stunnedColor = Instantiate(stunColor);
+                playerScript.stunnedColor.transform.position = newPlayer.transform.position;
+            }
 
             players.Add(newPlayer);
         }
@@ -374,6 +383,9 @@ public class GameController : MonoBehaviour {
             if (player.holding) {
                 PlayerPrefs.SetInt("Game" + gameIndex + "Player" + i + "Pickup", player.pickup);
             }
+
+            PlayerPrefs.SetInt("Game" + gameIndex + "Player" + i + "Stunned", player.stunned ? 1 : 0);
+            PlayerPrefs.SetInt("Game" + gameIndex + "Player" + i + "TurnsStunned", player.turnStunned);
 
             PlayerPrefs.SetInt("Game" + gameIndex + "Player" + i + "Selected", player.selected ? 1 : 0);
 

@@ -227,7 +227,36 @@ public class GameController : MonoBehaviour {
 				turnNum++;
 				turnPlayerNum = 0;
 				arrowObject.GetComponent<AnimationScript> ().direction = 90;
-			} else {
+
+                //if it is a new turn then spawn a new pickup
+
+                //spawn new pickup if there aren't already the maximum
+                if (pickups.Count < 7) {
+                    List<Vector3> positionsChosen = new List<Vector3>();
+
+                    //add all the currently occupied positions to the list
+                    foreach (GameObject player in players) {
+                        positionsChosen.Add(player.transform.position);
+                    }
+                    foreach (GameObject pickup in pickups) {
+                        positionsChosen.Add(pickup.transform.position);
+                    }
+
+                    GameObject newPickup = Instantiate(pickupPrefabs[(int)Random.Range(0f, pickupPrefabs.Length)]);
+
+                    Vector3 position = new Vector3(Mathf.RoundToInt(Random.Range(-9f, 9f)), Mathf.RoundToInt(Random.Range(-9f, 9f)));
+
+                    while (positionsChosen.Contains(position)) {
+                        print("fixing");
+                        position = new Vector3(Mathf.RoundToInt(Random.Range(-9f, 9f)), Mathf.RoundToInt(Random.Range(-9f, 9f)));
+                    }
+
+                    newPickup.transform.position = position;
+
+                    pickups.Add(newPickup);
+                }
+
+            } else {
 				arrowObject.GetComponent<AnimationScript> ().direction = 270;
 			}
 		} while (int.Parse (GameController.instance.playerStatusList [turnPlayerNum].GetComponentInChildren<Text> ().text) == 0);
@@ -235,32 +264,6 @@ public class GameController : MonoBehaviour {
 		arrowObject.GetComponent<AnimationScript>().target = arrowObject.transform.parent.position + new Vector3(-1f, -(completedPlayers.IndexOf(turnPlayerNum) * 1.3f));
 
         arrowObject.GetComponent<Animator>().SetTrigger("move");
-
-        //spawn new pickup if there aren't already the maximum
-        if(pickups.Count < 7) {
-            List<Vector3> positionsChosen = new List<Vector3>();
-
-            //add all the currently occupied positions to the list
-            foreach(GameObject player in players) {
-                positionsChosen.Add(player.transform.position);
-            }
-            foreach (GameObject pickup in pickups) {
-                positionsChosen.Add(pickup.transform.position);
-            }
-
-            GameObject newPickup = Instantiate(pickupPrefabs[(int)Random.Range(0f, pickupPrefabs.Length)]);
-
-            Vector3 position = new Vector3(Mathf.RoundToInt(Random.Range(-9f, 9f)), Mathf.RoundToInt(Random.Range(-9f, 9f)));
-
-            while (positionsChosen.Contains(position)) {
-                print("fixing");
-                position = new Vector3(Mathf.RoundToInt(Random.Range(-9f, 9f)), Mathf.RoundToInt(Random.Range(-9f, 9f)));
-            }
-
-            newPickup.transform.position = position;
-
-            pickups.Add(newPickup);
-        }
 
         lastMove = Time.time;
     }

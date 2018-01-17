@@ -304,7 +304,7 @@ public class GameController : MonoBehaviour {
 
             Vector3 position = new Vector3(x, y);
 
-            if(PlayerPrefs.HasKey("Game" + GameSettings.gameToLoad + "Player" + i + "Pickup")) {
+            if(PlayerPrefs.GetInt("Game" + GameSettings.gameToLoad + "Player" + i + "HoldingPickup") == 1) {
                 playerScript.pickup = PlayerPrefs.GetInt("Game" + GameSettings.gameToLoad + "Player" + i + "Pickup");
             }
 
@@ -368,6 +368,8 @@ public class GameController : MonoBehaviour {
             Player player = players[i].GetComponent<Player>();
 
             PlayerPrefs.SetInt("Game" + gameIndex + "Player" + i + "PlayerNum", player.playerNum);
+
+            PlayerPrefs.SetInt("Game" + gameIndex + "Player" + i + "HoldingPickup", player.holding ? 1 : 0);
 
             if (player.holding) {
                 PlayerPrefs.SetInt("Game" + gameIndex + "Player" + i + "Pickup", player.pickup);

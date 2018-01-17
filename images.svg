@@ -24,16 +24,16 @@
      borderopacity="1.0"
      inkscape:pageopacity="0.0"
      inkscape:pageshadow="2"
-     inkscape:zoom="1.4"
-     inkscape:cx="250.57291"
-     inkscape:cy="562.98781"
+     inkscape:zoom="1.979899"
+     inkscape:cx="258.27611"
+     inkscape:cy="599.15565"
      inkscape:document-units="px"
      inkscape:current-layer="layer1"
      showgrid="false"
      inkscape:window-width="1366"
      inkscape:window-height="705"
-     inkscape:window-x="1272"
-     inkscape:window-y="766"
+     inkscape:window-x="-8"
+     inkscape:window-y="-8"
      inkscape:window-maximized="1" />
   <metadata
      id="metadata7">
@@ -161,5 +161,15 @@
        inkscape:export-filename="C:\Users\ramachandra\Desktop\Unity\Final Project\FinalProject\Assets\Sprites\x.png"
        inkscape:export-xdpi="182.59142"
        inkscape:export-ydpi="182.59142" />
+    <rect
+       style="fill:none;stroke:#ffffff;stroke-opacity:1;stroke-width:7.1;stroke-miterlimit:4;stroke-dasharray:none"
+       id="rect3706"
+       width="96.974648"
+       height="32.324883"
+       x="218.69803"
+       y="533.64886"
+       inkscape:export-filename="C:\Users\Ajay\Documents\UnityProjects\FinalProject\Assets\Sprites\button.png"
+       inkscape:export-xdpi="368.97"
+       inkscape:export-ydpi="368.97" />
   </g>
 </svg>

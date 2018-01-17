@@ -7,6 +7,9 @@ public class GameController : MonoBehaviour {
 
     public static GameController instance = null;
 
+    //set in awake
+    public string gameId;
+
     //contains all players, including if a player has multiple characters on screen
     public List<GameObject> players = new List<GameObject>();
 
@@ -98,6 +101,8 @@ public class GameController : MonoBehaviour {
             Debug.LogError("Two GameControllers open in one scene");
             Destroy(this);
         }
+
+        gameId = System.Guid.NewGuid().ToString();
 
         List<Vector3> positionsChosen = new List<Vector3>();
         //create players based on settings specified in the main menu
@@ -284,7 +289,16 @@ public class GameController : MonoBehaviour {
 
         if (PlayerPrefs.HasKey("GameAmount")) {
             gameIndex = PlayerPrefs.GetInt("GameAmount");
+
+            for(int i = 0; i < gameIndex; i++) {
+                if(PlayerPrefs.GetString("Game" + i + "GameId") == gameId) {
+                    gameIndex = i;
+                    break;
+                }
+            }
         }
+
+        PlayerPrefs.SetString("Game" + gameIndex + "GameId", gameId);
 
         PlayerPrefs.SetInt("Game" + gameIndex + "PersonAmount", personAmount);
 
@@ -328,7 +342,9 @@ public class GameController : MonoBehaviour {
 
         }
 
-        PlayerPrefs.SetInt("GameAmount", gameIndex + 1);
+        if(gameIndex == PlayerPrefs.GetInt("GameAmount")) {
+            PlayerPrefs.SetInt("GameAmount", gameIndex + 1);
+        }
 
     }
 }

@@ -65,6 +65,10 @@ public class GameController : MonoBehaviour {
     //the player prefab
     public GameObject player;
 
+    //Lists of the objects that stay on field, used for saving the game state
+    public List<GameObject> blocks = new List<GameObject>();
+    public List<GameObject> slowProjectiles = new List<GameObject>();
+
     //gameobject holding all player statuses
     public GameObject sidebar;
     //prefab for the player status
@@ -147,6 +151,8 @@ public class GameController : MonoBehaviour {
 
                 while (pickupPositionsChosen.Contains(position) || positionsChosen.Contains(position)) {
                     print("fixing");
+
+                    //try again until it is not an already chosen position too
                     position = new Vector3(Mathf.RoundToInt(Random.Range(-9f, 9f)), Mathf.RoundToInt(Random.Range(-9f, 9f)));
                 }
 
@@ -328,7 +334,7 @@ public class GameController : MonoBehaviour {
         int pickupAmount = PlayerPrefs.GetInt("Game" + GameSettings.gameToLoad + "PickupAmount");
 
         for (int i = 0; i < pickupAmount; i++) {
-            GameObject newPickup = Instantiate(pickupPrefabs[(int)Random.Range(0f, pickupPrefabs.Length)]);
+            GameObject newPickup = Instantiate(pickupPrefabs[PlayerPrefs.GetInt("Game" + GameSettings.gameToLoad + "Pickup" + i + "Type")]);
 
             float x = PlayerPrefs.GetFloat("Game" + GameSettings.gameToLoad + "Pickup" + i + "X");
             float y = PlayerPrefs.GetFloat("Game" + GameSettings.gameToLoad + "Pickup" + i + "Y");
@@ -337,11 +343,39 @@ public class GameController : MonoBehaviour {
 
             newPickup.transform.position = position;
 
-            Pickup pickupScript = newPickup.GetComponent<Pickup>();
-
-            pickupScript.type = PlayerPrefs.GetInt("Game" + GameSettings.gameToLoad + "Pickup" + i + "Type");
-
             pickups.Add(newPickup);
+
+        }
+
+        int blockAmount = PlayerPrefs.GetInt("Game" + GameSettings.gameToLoad + "BlockAmount");
+
+        for (int i = 0; i < blockAmount; i++) {
+            GameObject newBlock = Instantiate(block);
+
+            float x = PlayerPrefs.GetFloat("Game" + GameSettings.gameToLoad + "Block" + i + "X");
+            float y = PlayerPrefs.GetFloat("Game" + GameSettings.gameToLoad + "Block" + i + "Y");
+
+            Vector3 position = new Vector3(x, y);
+
+            newBlock.transform.position = position;
+
+            blocks.Add(newBlock);
+
+        }
+
+        int slowProjectileAmount = PlayerPrefs.GetInt("Game" + GameSettings.gameToLoad + "SlowProjectileAmount");
+
+        for (int i = 0; i < blockAmount; i++) {
+            GameObject newSlowProjectile = Instantiate(slowProjectile);
+
+            float x = PlayerPrefs.GetFloat("Game" + GameSettings.gameToLoad + "SlowProjectile" + i + "X");
+            float y = PlayerPrefs.GetFloat("Game" + GameSettings.gameToLoad + "SlowProjectile" + i + "Y");
+
+            Vector3 position = new Vector3(x, y);
+
+            newSlowProjectile.transform.position = position;
+
+            slowProjectiles.Add(newSlowProjectile);
 
         }
 
@@ -418,7 +452,21 @@ public class GameController : MonoBehaviour {
 
         }
 
-        if(gameIndex == PlayerPrefs.GetInt("GameAmount")) {
+        PlayerPrefs.SetInt("Game" + gameIndex + "BlockAmount", blocks.Count);
+
+        for (int i = 0; i < blocks.Count; i++) {
+            PlayerPrefs.SetFloat("Game" + gameIndex + "Block" + i + "X", blocks[i].transform.position.x);
+            PlayerPrefs.SetFloat("Game" + gameIndex + "Block" + i + "Y", blocks[i].transform.position.y);
+        }
+
+        PlayerPrefs.SetInt("Game" + gameIndex + "SlowProjectileAmount", slowProjectiles.Count);
+
+        for (int i = 0; i < slowProjectiles.Count; i++) {
+            PlayerPrefs.SetFloat("Game" + gameIndex + "SlowProjectile" + i + "X", slowProjectiles[i].transform.position.x);
+            PlayerPrefs.SetFloat("Game" + gameIndex + "SlowProjectile" + i + "Y", slowProjectiles[i].transform.position.y);
+        }
+
+        if (gameIndex == PlayerPrefs.GetInt("GameAmount")) {
             PlayerPrefs.SetInt("GameAmount", gameIndex + 1);
         }
 

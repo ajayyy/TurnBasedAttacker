@@ -171,6 +171,8 @@ public class Player : MonoBehaviour {
                     newBlock.GetComponent<AnimationScript>().direction = direction;
                     newBlock.transform.position = transform.position;
 
+                    gameController.blocks.Add(newBlock);
+
                     doneTurn = true;
                     blockMode = false;
                     holding = false;
@@ -261,6 +263,8 @@ public class Player : MonoBehaviour {
                     slowProjectileScript.direction = direction;
                     slowProjectileScript.lastTurnMoved = playerNum;
                     newProjectile.transform.position = transform.position;
+
+                    gameController.slowProjectiles.Add(newProjectile);
 
 
                     doneTurn = true;

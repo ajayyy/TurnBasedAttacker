@@ -107,6 +107,8 @@ public class GameController : MonoBehaviour {
             Destroy(this);
         }
 
+        startTime = Time.time;
+
         gameId = System.Guid.NewGuid().ToString();
 
         List<Vector3> positionsChosen = new List<Vector3>();
@@ -165,7 +167,6 @@ public class GameController : MonoBehaviour {
             CreatePlayerStatus();
         }
 
-        startTime = Time.time;
     }
 	
 	void FixedUpdate () {
@@ -281,6 +282,8 @@ public class GameController : MonoBehaviour {
 
         turnNum = PlayerPrefs.GetInt("Game" + GameSettings.gameToLoad + "TurnNumber");
         turnPlayerNum = PlayerPrefs.GetInt("Game" + GameSettings.gameToLoad + "TurnPlayerNumber");
+
+        startTime = Time.time - PlayerPrefs.GetFloat("Game" + GameSettings.gameToLoad + "Time");
 
         int aliveUnitsAmount = PlayerPrefs.GetInt("Game" + GameSettings.gameToLoad + "AliveUnitsAmount");
 
@@ -404,6 +407,8 @@ public class GameController : MonoBehaviour {
         PlayerPrefs.SetInt("Game" + gameIndex + "TurnNumber", turnNum);
 
         PlayerPrefs.SetInt("Game" + gameIndex + "TurnPlayerNum", turnPlayerNum);
+
+        PlayerPrefs.SetFloat("Game" + gameIndex + "Time", Time.time - startTime);
 
         PlayerPrefs.SetInt("Game" + gameIndex + "AliveUnitsAmount", players.Count);
 

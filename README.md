@@ -1,4 +1,4 @@
-[Download here](https://github.com/ajayyy/FinalProject/archive/master.zip)
+[Download here](https://github.com/ajayyy/FinalProject/releases)
 
 ![screenshot.png](https://res.cloudinary.com/hpiynhbhq/image/upload/v1515093489/hh5rnvgzbdupqmdhjeks.png)
 

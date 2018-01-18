@@ -104,6 +104,10 @@ public class GameController : MonoBehaviour {
 
     //Button to save the game
     public GameObject saveGameButton;
+    //True when there are no animations for the next turn runnning
+    public bool saveGameUsable = true;
+    //True when a save game needs to be done when it is usable again
+    public bool saveGameQueued = false;
 
     void Awake() {
         if (instance == null) {
@@ -229,6 +233,12 @@ public class GameController : MonoBehaviour {
         if (nextTurnsLeft > 0 && !arrowObject.GetComponent<Animator>().GetCurrentAnimatorStateInfo(0).IsName("movement")) {
             nextTurnsLeft--;
             NextTurn();
+        }
+
+        //Check to see if there is a save game queued
+        if(saveGameQueued && saveGameUsable) {
+            SaveGame();
+            saveGameQueued = false;
         }
     }
 
@@ -408,6 +418,12 @@ public class GameController : MonoBehaviour {
     }
 
     public void SaveGame() {
+
+        if (!saveGameUsable) {
+            saveGameQueued = true;
+            return;
+        }
+
         int gameIndex = 0;
 
         if (PlayerPrefs.HasKey("GameAmount")) {

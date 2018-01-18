@@ -95,12 +95,18 @@ public class Player : MonoBehaviour {
             stunnedColor.GetComponent<Animator>().SetTrigger("move");
         }
 
+        //if it's this player's turn but it is animating
+        if (gameController.turnPlayerNum == playerNum && Time.time - gameController.lastMove >= 0.01f && selected && !EverythingIdle() && !stunned) {
+            //make the button disabled
+            gameController.saveGameUsable = false;
+        }
+
         //if it is this player's turn
         if (gameController.turnPlayerNum == playerNum && Time.time - gameController.lastMove >= 0.01f && selected && EverythingIdle() && !stunned) {
 
             //make button enabled if we can play
             if(Time.time - gameController.lastMove <= 0.5f && !doneTurn) {
-                gameController.saveGameButton.GetComponent<Button>().interactable = true;
+                gameController.saveGameUsable = true;
             }
 
             if (doneTurn) {
@@ -455,12 +461,6 @@ public class Player : MonoBehaviour {
                 }
             }
 
-        }
-
-        //if it's this player's turn but it is animating
-        if (gameController.turnPlayerNum == playerNum && Time.time - gameController.lastMove >= 0.01f && selected && !EverythingIdle() && !stunned) {
-            //make the button disabled
-            gameController.saveGameButton.GetComponent<Button>().interactable = false;
         }
 
     }

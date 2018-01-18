@@ -102,6 +102,9 @@ public class GameController : MonoBehaviour {
     //Text that has the timer
     public Text timerText;
 
+    //Button to save the game
+    public GameObject saveGameButton;
+
     void Awake() {
         if (instance == null) {
             instance = this;

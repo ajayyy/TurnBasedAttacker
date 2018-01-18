@@ -127,6 +127,12 @@ public class AnimationScript : MonoBehaviour {
                     }
                 }
             }
+            //print("SADsadsad");
+            //if (int.Parse(GameController.instance.playerStatusList[playerScript.playerNum].GetComponentInChildren<Text>().text) == 1) {
+            //    GameController.instance.usablePlayers[playerScript.playerNum] = false;
+            //} else {
+            //    print(GameController.instance.playerStatusList[playerScript.playerNum].GetComponentInChildren<Text>().text);
+            //}
 
         }
 

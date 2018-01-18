@@ -84,10 +84,22 @@ public class Player : MonoBehaviour {
         if(stunned && gameController.turnNum - 3 >= turnStunned) {
             stunned = false;
             Destroy(stunnedColor);
+            gameController.usablePlayers[playerNum] = true;
         }
 
+        ////if stunned and it's this player's turn
+        //if (gameController.turnPlayerNum == playerNum && Time.time - gameController.lastMove >= 0.01f && stunned) {
+
+        //    print(playerNum + " " + gameController.turnPlayerNum);
+
+        //    //check if this is the last unit
+        //    if (int.Parse(GameController.instance.playerStatusList[playerNum].GetComponentInChildren<Text>().text) == 1) {
+        //        gameController.NextTurn();
+        //    }
+        //}
+
         //if it is this player's turn
-		if(gameController.turnPlayerNum == playerNum && Time.time - gameController.lastMove >= 0.01f && selected && EverythingIdle() && !stunned) {
+        if (gameController.turnPlayerNum == playerNum && Time.time - gameController.lastMove >= 0.01f && selected && EverythingIdle() && !stunned) {
             if (doneTurn) {
                 gameController.NextTurn();
 
@@ -358,6 +370,12 @@ public class Player : MonoBehaviour {
                         gameController.stunProjectile.GetComponent<AnimationScript>().targetObject = otherPlayer.collider.gameObject;
                         gameController.stunProjectile.transform.position = transform.position;
                         gameController.stunProjectile.SetActive(true);
+
+                        Player playerScript = otherPlayer.collider.gameObject.GetComponent<Player>();
+
+                        if (int.Parse(GameController.instance.playerStatusList[playerScript.playerNum].GetComponentInChildren<Text>().text) == 1) {
+                            GameController.instance.usablePlayers[playerScript.playerNum] = false;
+                        }
 
                         gameController.stunProjectile.GetComponent<Animator>().SetTrigger("move");
                         doneTurn = true;

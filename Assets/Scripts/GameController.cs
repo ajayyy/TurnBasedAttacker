@@ -13,6 +13,9 @@ public class GameController : MonoBehaviour {
     //contains all players, including if a player has multiple characters on screen
     public List<GameObject> players = new List<GameObject>();
 
+    //true if not stunned
+    public bool[] usablePlayers;
+
 	// Amount of actual people playing/turns to go through. Because the players array now includes more than one player per person
     public int personAmount = 0;
 
@@ -140,7 +143,12 @@ public class GameController : MonoBehaviour {
 
         personAmount = GameSettings.players;
 
-        if(GameSettings.gameToLoad != -1) {
+        usablePlayers = new bool[personAmount];
+        for (int i = 0; i < usablePlayers.Length; i++) {
+            usablePlayers[i] = true;
+        }
+
+        if (GameSettings.gameToLoad != -1) {
             LoadGame();
         } else {
 
@@ -266,7 +274,7 @@ public class GameController : MonoBehaviour {
             } else {
 				arrowObject.GetComponent<AnimationScript> ().direction = 270;
 			}
-		} while (int.Parse (GameController.instance.playerStatusList [turnPlayerNum].GetComponentInChildren<Text> ().text) == 0);
+		} while (int.Parse (GameController.instance.playerStatusList [turnPlayerNum].GetComponentInChildren<Text> ().text) == 0 || !usablePlayers[turnPlayerNum]);
 
 		arrowObject.GetComponent<AnimationScript>().target = arrowObject.transform.parent.position + new Vector3(-1f, -(completedPlayers.IndexOf(turnPlayerNum) * 1.3f));
 
@@ -279,6 +287,11 @@ public class GameController : MonoBehaviour {
         gameId = PlayerPrefs.GetString("Game" + GameSettings.gameToLoad + "GameId");
 
         personAmount = PlayerPrefs.GetInt("Game" + GameSettings.gameToLoad + "PersonAmount");
+
+        usablePlayers = new bool[personAmount];
+        for(int i = 0; i < usablePlayers.Length; i++) {
+            usablePlayers[i] = false;
+        }
 
         turnNum = PlayerPrefs.GetInt("Game" + GameSettings.gameToLoad + "TurnNumber");
         turnPlayerNum = PlayerPrefs.GetInt("Game" + GameSettings.gameToLoad + "TurnPlayerNumber");
@@ -329,7 +342,12 @@ public class GameController : MonoBehaviour {
 
                 playerScript.stunnedColor = Instantiate(stunColor);
                 playerScript.stunnedColor.transform.position = newPlayer.transform.position;
+
+            } else {
+                usablePlayers[playerScript.playerNum] = true;
             }
+
+            
 
             players.Add(newPlayer);
         }

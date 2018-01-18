@@ -1,13 +1,17 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using System.Net;
 using System.Net.Sockets;
 using UnityEngine;
 
-public class NetworkiNG : MonoBehaviour {
-
-    TcpClient clientSocket = new TcpClient();
+public class Networking : MonoBehaviour {
 
     void Start() {
+
+        TcpClient clientSocket = new TcpClient();
+
+        TcpListener serverSocket = new TcpListener(IPAddress.Any, 1273);
+
         clientSocket.Connect("127.0.0.1", 1273);
         NetworkStream serverStream = clientSocket.GetStream();
 

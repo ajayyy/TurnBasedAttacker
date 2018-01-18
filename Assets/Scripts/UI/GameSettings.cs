@@ -1,6 +1,6 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
-using UnityEngine;
+using System.Net.Sockets;
 
 public class GameSettings {
 
@@ -12,5 +12,11 @@ public class GameSettings {
 
     //the game to load, if -1 then no saved game will load
     public static int gameToLoad = -1;
+
+    //stores the server socket if this is connected to a server
+    public static TcpListener serverSocket;
+
+    //stores the client socket if this is connected to a server
+    public static TcpClient clientSocket;
 
 }

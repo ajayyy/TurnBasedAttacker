@@ -20,6 +20,8 @@ GameObject:
   m_Component:
   - component: {fileID: 4609544599410694}
   - component: {fileID: 212598426353793576}
+  - component: {fileID: 95272267945548918}
+  - component: {fileID: 114103133099501030}
   m_Layer: 0
   m_Name: Frozen
   m_TagString: Untagged
@@ -40,6 +42,42 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!95 &95272267945548918
+Animator:
+  serializedVersion: 3
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1929535383444582}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: 468afe66fbb2509468880ceccabe4820, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+--- !u!114 &114103133099501030
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1929535383444582}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 72315373f25255c41b81f22b2a0ccfd4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  animating: 0
+  offsetAmount: 0
+  direction: 0
+  target: {x: 0, y: 0, z: 0}
+  targetObject: {fileID: 0}
+  targetColor: {r: 0, g: 0, b: 0, a: 0}
+  type: 0
+  snapToGrid: 1
 --- !u!212 &212598426353793576
 SpriteRenderer:
   m_ObjectHideFlags: 1
@@ -73,7 +111,7 @@ SpriteRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 1
   m_Sprite: {fileID: 21300000, guid: b7141274f4010a148896e14949b1726d, type: 3}
-  m_Color: {r: 0, g: 0.284, b: 1, a: 0.622}
+  m_Color: {r: 0, g: 0.284, b: 1, a: 0}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0

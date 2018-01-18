@@ -20,8 +20,8 @@ public class Player : MonoBehaviour {
     //the gameobject that will hold the color placed over the player when stunned to be able to destroy it
     public GameObject stunnedColor;
 
-    public Color highlightColor = new Color(100, 0, 0);
-    Color shootColor = new Color(0, 0, 100);
+    public Color highlightColor = new Color(1, 0, 0);
+    public Color shootColor = new Color(0, 0, 1);
     public Color idleColor = new Color(0, 0, 0);
 
     public SpriteRenderer spriteRenderer;
@@ -37,8 +37,8 @@ public class Player : MonoBehaviour {
     bool doneTurn = false; //if true, and the animation state is idle, then go to next turn
 
     //info on what the player is holding
-    int pickup = 0;
-    bool holding = false; //true when holding
+    public int pickup = 0;
+    public bool holding = false; //true when holding
 
     //if true, waiting for input for the direction
     bool shootMode = false;
@@ -81,20 +81,43 @@ public class Player : MonoBehaviour {
 			return;
 		}
 
-        if(stunned && gameController.turnNum - 3 >= turnStunned) {
+        if(stunned && gameController.turnNum - 5 >= turnStunned) {
             stunned = false;
-            Destroy(stunnedColor);
+            //Destroy(stunnedColor);
+            gameController.usablePlayers[playerNum] = true;
+
+            //setup fade animation
+            Color stunColor = stunnedColor.GetComponent<SpriteRenderer>().color;
+            stunnedColor.GetComponent<AnimationScript>().type = 5;
+            stunnedColor.GetComponent<AnimationScript>().targetColor = new Color(stunColor.r, stunColor.g, stunColor.b, 0);
+            stunnedColor.GetComponent<AnimationScript>().kill = true;
+
+            stunnedColor.GetComponent<Animator>().SetTrigger("move");
+        }
+
+        //if it's this player's turn but it is animating
+        if (gameController.turnPlayerNum == playerNum && Time.time - gameController.lastMove >= 0.01f && selected && !EverythingIdle() && !stunned) {
+            //make the button disabled
+            gameController.saveGameUsable = false;
         }
 
         //if it is this player's turn
-		if(gameController.turnPlayerNum == playerNum && Time.time - gameController.lastMove >= 0.01f && selected && EverythingIdle() && !stunned) {
+        if (gameController.turnPlayerNum == playerNum && Time.time - gameController.lastMove >= 0.01f && selected && EverythingIdle() && !stunned) {
+
+            //make button enabled if we can play
+            if(Time.time - gameController.lastMove <= 0.5f && !doneTurn) {
+                gameController.saveGameUsable = true;
+            }
+
             if (doneTurn) {
                 gameController.NextTurn();
-                spriteRenderer.color = idleColor;
+
+                ChangeColor(idleColor);
+
                 doneTurn = false;
             } else if (shootMode) {
-                spriteRenderer.color = shootColor;
-                
+                ChangeColor(shootColor);
+
                 bool chosen = false; //was a direction chosen
                 float direction = 0; //the direction chosen in angles
 
@@ -137,7 +160,7 @@ public class Player : MonoBehaviour {
                 }
 
             } else if (blockMode) {
-                spriteRenderer.color = shootColor;
+                ChangeColor(shootColor);
 
                 bool chosen = false; //was a direction chosen
                 float direction = 0; //the direction chosen in angles
@@ -169,13 +192,15 @@ public class Player : MonoBehaviour {
                     newBlock.GetComponent<AnimationScript>().direction = direction;
                     newBlock.transform.position = transform.position;
 
+                    gameController.blocks.Add(newBlock);
+
                     doneTurn = true;
                     blockMode = false;
                     holding = false;
                 }
 
             } else if (spawnMode) {
-                spriteRenderer.color = shootColor;
+                ChangeColor(shootColor);
 
                 bool chosen = false; //was a direction chosen
                 float direction = 0; //the direction chosen in angles
@@ -225,7 +250,7 @@ public class Player : MonoBehaviour {
                 }
 
             } else if (slowShootMode) {
-                spriteRenderer.color = shootColor;
+                ChangeColor(shootColor);
 
                 bool chosen = false; //was a direction chosen
                 float direction = 0; //the direction chosen in angles
@@ -260,6 +285,8 @@ public class Player : MonoBehaviour {
                     slowProjectileScript.lastTurnMoved = playerNum;
                     newProjectile.transform.position = transform.position;
 
+                    gameController.slowProjectiles.Add(newProjectile);
+
 
                     doneTurn = true;
                     slowShootMode = false;
@@ -268,7 +295,7 @@ public class Player : MonoBehaviour {
                 }
 
             } else if (blockShootMode) {
-                spriteRenderer.color = shootColor;
+                ChangeColor(shootColor);
 
                 bool chosen = false; //was a direction chosen
                 float direction = 0; //the direction chosen in angles
@@ -315,7 +342,7 @@ public class Player : MonoBehaviour {
                 }
 
             } else if (stunShootMode) {
-                spriteRenderer.color = shootColor;
+                ChangeColor(shootColor);
 
                 bool chosen = false; //was a direction chosen
                 float direction = 0; //the direction chosen in angles
@@ -353,6 +380,12 @@ public class Player : MonoBehaviour {
                         gameController.stunProjectile.transform.position = transform.position;
                         gameController.stunProjectile.SetActive(true);
 
+                        Player playerScript = otherPlayer.collider.gameObject.GetComponent<Player>();
+
+                        if (int.Parse(GameController.instance.playerStatusList[playerScript.playerNum].GetComponentInChildren<Text>().text) == 1) {
+                            GameController.instance.usablePlayers[playerScript.playerNum] = false;
+                        }
+
                         gameController.stunProjectile.GetComponent<Animator>().SetTrigger("move");
                         doneTurn = true;
                         stunShootMode = false;
@@ -362,7 +395,8 @@ public class Player : MonoBehaviour {
                 }
 
             } else {
-                spriteRenderer.color = highlightColor;
+
+                ChangeColor(highlightColor);
 
                 bool moved = false;
 
@@ -439,7 +473,8 @@ public class Player : MonoBehaviour {
             if(player.playerNum == playerNum && player != this) {
                 //this player is part of this person's characters, they are not selected because this is now selected
                 player.selected = false;
-                player.spriteRenderer.color = player.idleColor;
+
+                player.ChangeColor(player.idleColor);
             }
         }
     }
@@ -457,6 +492,17 @@ public class Player : MonoBehaviour {
 
             GameController.instance.pickups.Remove(collider.gameObject);
             Destroy(collider.gameObject);
+        }
+    }
+
+    void ChangeColor(Color newColor) {
+        if (spriteRenderer.color != newColor) {
+            //fade color to highlight color
+
+            GetComponent<AnimationScript>().type = 5;
+            GetComponent<AnimationScript>().targetColor = newColor;
+
+            GetComponent<Animator>().SetTrigger("move");
         }
     }
 

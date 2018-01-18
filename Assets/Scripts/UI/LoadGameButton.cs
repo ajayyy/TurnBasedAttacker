@@ -1,13 +1,11 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
-using UnityEngine.UI;
 using UnityEngine.SceneManagement;
 using UnityEngine;
 
-public class StartButtonScript : MonoBehaviour {
+public class LoadGameButton : MonoBehaviour {
 
-    public Text players;
-    public Text units;
+    public int gameNum = 0;
 
 	void Start () {
 		
@@ -18,8 +16,10 @@ public class StartButtonScript : MonoBehaviour {
 	}
 
     public void OnClick() {
-        GameSettings.players = int.Parse(players.text);
-        GameSettings.units = int.Parse(units.text);
+        GameSettings.players = 0;
+        GameSettings.units = 0;
+
+        GameSettings.gameToLoad = gameNum;
 
         SceneManager.LoadScene("Game", LoadSceneMode.Single);
     }

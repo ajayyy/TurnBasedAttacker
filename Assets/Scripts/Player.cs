@@ -81,10 +81,18 @@ public class Player : MonoBehaviour {
 			return;
 		}
 
-        if(stunned && gameController.turnNum - 3 >= turnStunned) {
+        if(stunned && gameController.turnNum - 5 >= turnStunned) {
             stunned = false;
-            Destroy(stunnedColor);
+            //Destroy(stunnedColor);
             gameController.usablePlayers[playerNum] = true;
+
+            //setup fade animation
+            Color stunColor = stunnedColor.GetComponent<SpriteRenderer>().color;
+            stunnedColor.GetComponent<AnimationScript>().type = 5;
+            stunnedColor.GetComponent<AnimationScript>().targetColor = new Color(stunColor.r, stunColor.g, stunColor.b, 0);
+            stunnedColor.GetComponent<AnimationScript>().kill = true;
+
+            stunnedColor.GetComponent<Animator>().SetTrigger("move");
         }
 
         ////if stunned and it's this player's turn

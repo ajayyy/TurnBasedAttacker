@@ -19,6 +19,7 @@ public class AnimationScript : MonoBehaviour {
     public Color targetColor;
     public int type = 0; //0: one unit movement, 1: move to target, 5: fade to color
     public bool snapToGrid = true; //should it snap to the grid (true for game elements, not true for ui elements)
+    public bool kill = false; //true if you want it to die after doing the animation
 
     //local variables
     Vector3 startPosition;
@@ -116,6 +117,14 @@ public class AnimationScript : MonoBehaviour {
             playerScript.stunnedColor = Instantiate(GameController.instance.stunColor);
             playerScript.stunnedColor.transform.position = targetObject.transform.position;
 
+            //setup fade animation
+            Color stunColor = playerScript.stunnedColor.GetComponent<SpriteRenderer>().color;
+            playerScript.stunnedColor.GetComponent<SpriteRenderer>().color = new Color(stunColor.r, stunColor.g, stunColor.b, 0);
+            playerScript.stunnedColor.GetComponent<AnimationScript>().type = 5;
+            playerScript.stunnedColor.GetComponent<AnimationScript>().targetColor = new Color(stunColor.r, stunColor.g, stunColor.b, 1);
+
+            playerScript.stunnedColor.GetComponent<Animator>().SetTrigger("move");
+
             if (playerScript.selected) {
                 foreach (GameObject playerObject in GameController.instance.players) {
                     Player player = playerObject.GetComponent<Player>();
@@ -127,17 +136,15 @@ public class AnimationScript : MonoBehaviour {
                     }
                 }
             }
-            //print("SADsadsad");
-            //if (int.Parse(GameController.instance.playerStatusList[playerScript.playerNum].GetComponentInChildren<Text>().text) == 1) {
-            //    GameController.instance.usablePlayers[playerScript.playerNum] = false;
-            //} else {
-            //    print(GameController.instance.playerStatusList[playerScript.playerNum].GetComponentInChildren<Text>().text);
-            //}
 
         }
 
         if (type == 5) {
             spriteRenderer.color = targetColor;
+        }
+
+        if (kill) {
+            Destroy(gameObject);
         }
     }
 

@@ -14,7 +14,8 @@ public class HostingScript : MonoBehaviour {
 
         serverSocket.Start();
 
-        //serverSocket.AcceptSocket
+        TcpClient clientSocket = serverSocket.AcceptTcpClient();
+        print("connected");
 
     }
 

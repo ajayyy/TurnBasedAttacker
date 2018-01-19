@@ -16,7 +16,7 @@ public class GameSettings {
     //stores the server socket if this is connected to a server
     public static TcpListener serverSocket;
 
-    //stores the client socket if this is connected to a server
-    public static TcpClient clientSocket;
+    //stores the client sockets if this is connected to a server
+    public static List<TcpClient> clientSockets = new List<TcpClient>();
 
 }

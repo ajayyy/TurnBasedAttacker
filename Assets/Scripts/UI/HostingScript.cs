@@ -56,11 +56,11 @@ public class HostingScript : MonoBehaviour {
         TcpClient clientSocket = serverSocket.AcceptTcpClient();
         print("connected");
 
-        NetworkStream networkStream = clientSocket.GetStream();
-        byte[] bytesFrom = new byte[50];
-        networkStream.Read(bytesFrom, 0, bytesFrom.Length);
+        //NetworkStream networkStream = clientSocket.GetStream();
+        //byte[] bytesFrom = new byte[50];
+        //networkStream.Read(bytesFrom, 0, bytesFrom.Length);
 
-        print(System.Text.Encoding.ASCII.GetString(bytesFrom));
+        //print(System.Text.Encoding.ASCII.GetString(bytesFrom));
 
         GameSettings.clientSockets.Add(clientSocket);
 

@@ -1,5 +1,6 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using System.Threading;
 using System.Net;
 using System.Net.Sockets;
 using UnityEngine;
@@ -10,16 +11,24 @@ public class HostingScript : MonoBehaviour {
 
         GameSettings.serverSocket = new TcpListener(IPAddress.Any, 1273);
 
-        TcpListener serverSocket = GameSettings.serverSocket;
+        GameSettings.serverSocket.Start();
 
-        serverSocket.Start();
-
-        TcpClient clientSocket = serverSocket.AcceptTcpClient();
-        print("connected");
+        Thread t = new Thread(new ThreadStart(WaitForConnection));
+        t.Start();
 
     }
 
     void Update () {
 		
 	}
+
+    public void WaitForConnection() {
+        TcpListener serverSocket = GameSettings.serverSocket;
+
+        TcpClient clientSocket = serverSocket.AcceptTcpClient();
+        print("connected");
+
+        Thread t = new Thread(new ThreadStart(WaitForConnection));
+        t.Start();
+    }
 }

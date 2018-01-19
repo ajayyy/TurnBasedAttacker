@@ -7,13 +7,15 @@ using UnityEngine;
 
 public class HostingScript : MonoBehaviour {
 
-	void Start () {
+    Thread t;
+
+    void Start () {
 
         GameSettings.serverSocket = new TcpListener(IPAddress.Any, 1273);
 
         GameSettings.serverSocket.Start();
 
-        Thread t = new Thread(new ThreadStart(WaitForConnection));
+        t = new Thread(new ThreadStart(WaitForConnection));
         t.Start();
 
     }
@@ -28,7 +30,23 @@ public class HostingScript : MonoBehaviour {
         TcpClient clientSocket = serverSocket.AcceptTcpClient();
         print("connected");
 
-        Thread t = new Thread(new ThreadStart(WaitForConnection));
-        t.Start();
+        //NetworkStream networkStream = clientSocket.GetStream();
+        //byte[] bytesFrom = new byte[10025];
+        //networkStream.Read(bytesFrom, 0, (int)clientSocket.ReceiveBufferSize);
+
+        NetworkStream networkStream = clientSocket.GetStream();
+        byte[] bytesFrom = new byte[50];
+        networkStream.Read(bytesFrom, 0, 50);
+
+        print(System.Text.Encoding.ASCII.GetString(bytesFrom));
+
+        //t = new Thread(new ThreadStart(WaitForConnection));
+        //t.Start();
+    }
+
+    void OnApplicationQuit() {
+        if(t != null) {
+            t.Abort();
+        }
     }
 }

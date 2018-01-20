@@ -38,17 +38,7 @@ public class HostingScript : MonoBehaviour {
 
     void Update () {
 		for(int i = 0; i < playersToSpawn; i++) {
-            GameObject playerText = Instantiate(playerTextPrefab);
-
-            playerText.GetComponent<Text>().text = "Player " + (playerTexts.Count + 2);
-
-            playerText.transform.SetParent(playerTextParent.transform);
-
-            RectTransform playerTextTransform = playerText.GetComponent<RectTransform>();
-            playerTextTransform.anchoredPosition = new Vector2(0, 190 - ((playerTexts.Count + 1) * 30));
-            playerTextTransform.localScale = Vector2.one;
-
-            playerTexts.Add(playerText);
+            AddPlayerToList();
         }
         playersToSpawn = 0;
 
@@ -60,8 +50,18 @@ public class HostingScript : MonoBehaviour {
         }
 	}
 
-    void FixedUpdate() {
+    public void AddPlayerToList() {
+        GameObject playerText = Instantiate(playerTextPrefab);
 
+        playerText.GetComponent<Text>().text = "Player " + (playerTexts.Count + 2);
+
+        playerText.transform.SetParent(playerTextParent.transform);
+
+        RectTransform playerTextTransform = playerText.GetComponent<RectTransform>();
+        playerTextTransform.anchoredPosition = new Vector2(0, 190 - ((playerTexts.Count + 1) * 30));
+        playerTextTransform.localScale = Vector2.one;
+
+        playerTexts.Add(playerText);
     }
 
     public void RemovePlayerFromList(TcpClient client) {

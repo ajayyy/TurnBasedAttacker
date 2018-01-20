@@ -22,6 +22,9 @@ public class HostingScript : MonoBehaviour {
     //Set from second thread so that the main thread can spawn them
     public int playersToSpawn = 0;
 
+    //last time players were checked if they were online
+    float lastCheck;
+
     void Start () {
 
         GameSettings.serverSocket = new TcpListener(IPAddress.Any, 1273);
@@ -49,6 +52,45 @@ public class HostingScript : MonoBehaviour {
         }
         playersToSpawn = 0;
 	}
+
+    void FixedUpdate() {
+        if(Time.time - lastCheck >= 3) {
+
+            print("checking...");
+            foreach (TcpClient client in GameSettings.clientSockets) {
+                // Detect if client disconnected
+                //print(client.Client.Poll(0, SelectMode.SelectWrite));
+                if (client.Client.Poll(0, SelectMode.SelectWrite) && !client.Client.Poll(0, SelectMode.SelectError)) {
+                    byte[] buff = new byte[1];
+                    //print(client.Client.Receive(buff, SocketFlags.Peek));
+                    if (client.Client.Receive(buff, SocketFlags.Peek) == 0) {
+                        // Client disconnected
+
+                        print("disconnected");
+
+                        int index = GameSettings.clientSockets.IndexOf(client);
+
+                        GameObject playerText = null;
+
+                        if (playerTexts.Count <= index) {
+                            playersToSpawn--;
+                        } else {
+                            playerText = playerTexts[index];
+                        }
+
+
+                        playerTexts.RemoveAt(index);
+
+
+                        GameSettings.clientSockets.Remove(client);
+                        break;
+                    }
+                }
+            }
+
+            lastCheck = Time.time;
+        }
+    }
 
     public void WaitForConnection() {
         TcpListener serverSocket = GameSettings.serverSocket;

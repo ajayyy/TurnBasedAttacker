@@ -56,8 +56,7 @@ public class HostingScript : MonoBehaviour {
     void FixedUpdate() {
         if(Time.time - lastCheck >= 3) {
 
-            print("checking...");
-            foreach (TcpClient client in GameSettings.clientSockets) {
+            foreach (TcpClient client in GameSettings.clientSockets) { //See: https://social.msdn.microsoft.com/Forums/en-US/c857cad5-2eb6-4b6c-b0b5-7f4ce320c5cd/c-how-to-determine-if-a-tcpclient-has-been-disconnected?forum=netfxnetcom
                 // Detect if client disconnected
                 //print(client.Client.Poll(0, SelectMode.SelectWrite));
                 if (client.Client.Poll(0, SelectMode.SelectWrite) && !client.Client.Poll(0, SelectMode.SelectError)) {
@@ -76,11 +75,19 @@ public class HostingScript : MonoBehaviour {
                             playersToSpawn--;
                         } else {
                             playerText = playerTexts[index];
+
+                            for(int i = index; i < playerTexts.Count; i++) {
+                                playerTexts[i].GetComponent<RectTransform>().anchoredPosition += new Vector2(0, 30);
+
+                                playerText.GetComponent<Text>().text = "Player " + (i + 1);
+                            }
+
+
+                            Destroy(playerText);
+
+                            playerTexts.RemoveAt(index);
+
                         }
-
-
-                        playerTexts.RemoveAt(index);
-
 
                         GameSettings.clientSockets.Remove(client);
                         break;

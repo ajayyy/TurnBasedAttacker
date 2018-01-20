@@ -1,5 +1,6 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using System.Threading;
 using System.Net.Sockets;
 
 public class GameSettings {
@@ -18,5 +19,7 @@ public class GameSettings {
 
     //stores the client sockets if this is connected to a server
     public static List<TcpClient> clientSockets = new List<TcpClient>();
+
+    public static List<Thread> playerDisconnectThreads = new List<Thread>();
 
 }

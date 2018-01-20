@@ -22,8 +22,8 @@ public class HostingScript : MonoBehaviour {
     //Set from second thread so that the main thread can spawn them
     public int playersToSpawn = 0;
 
-    //last time players were checked if they were online
-    float lastCheck;
+    //Called by a thread to make the player text removed on the main thread
+    public List<TcpClient> playersToRemove = new List<TcpClient>();
 
     void Start () {
 
@@ -51,52 +51,43 @@ public class HostingScript : MonoBehaviour {
             playerTexts.Add(playerText);
         }
         playersToSpawn = 0;
+
+        for (int i = 0; i < playersToRemove.Count;) {
+
+            RemovePlayerFromList(playersToRemove[i]);
+
+            playersToRemove.RemoveAt(i);
+        }
 	}
 
     void FixedUpdate() {
-        if(Time.time - lastCheck >= 3) {
 
-            foreach (TcpClient client in GameSettings.clientSockets) { //See: https://social.msdn.microsoft.com/Forums/en-US/c857cad5-2eb6-4b6c-b0b5-7f4ce320c5cd/c-how-to-determine-if-a-tcpclient-has-been-disconnected?forum=netfxnetcom
-                // Detect if client disconnected
-                //print(client.Client.Poll(0, SelectMode.SelectWrite));
-                if (client.Client.Poll(0, SelectMode.SelectWrite) && !client.Client.Poll(0, SelectMode.SelectError)) {
-                    byte[] buff = new byte[1];
-                    //print(client.Client.Receive(buff, SocketFlags.Peek));
-                    if (client.Client.Receive(buff, SocketFlags.Peek) == 0) {
-                        // Client disconnected
+    }
 
-                        print("disconnected");
+    public void RemovePlayerFromList(TcpClient client) {
+        int index = GameSettings.clientSockets.IndexOf(client);
 
-                        int index = GameSettings.clientSockets.IndexOf(client);
+        GameObject playerText = null;
 
-                        GameObject playerText = null;
+        if (playerTexts.Count <= index) {
+            playersToSpawn--;
+        } else {
+            playerText = playerTexts[index];
 
-                        if (playerTexts.Count <= index) {
-                            playersToSpawn--;
-                        } else {
-                            playerText = playerTexts[index];
+            for (int i = index; i < playerTexts.Count; i++) {
+                playerTexts[i].GetComponent<RectTransform>().anchoredPosition += new Vector2(0, 30);
 
-                            for(int i = index; i < playerTexts.Count; i++) {
-                                playerTexts[i].GetComponent<RectTransform>().anchoredPosition += new Vector2(0, 30);
-
-                                playerText.GetComponent<Text>().text = "Player " + (i + 1);
-                            }
-
-
-                            Destroy(playerText);
-
-                            playerTexts.RemoveAt(index);
-
-                        }
-
-                        GameSettings.clientSockets.Remove(client);
-                        break;
-                    }
-                }
+                playerTexts[i].GetComponent<Text>().text = "Player " + (i + 1); //plus one instead because the first player isn't in the array (it's the this computer)
             }
 
-            lastCheck = Time.time;
+
+            Destroy(playerText);
+
+            playerTexts.RemoveAt(index);
+
         }
+
+        GameSettings.clientSockets.Remove(client);
     }
 
     public void WaitForConnection() {
@@ -118,6 +109,28 @@ public class HostingScript : MonoBehaviour {
 
         t = new Thread(new ThreadStart(WaitForConnection));
         t.Start();
+
+        Thread disconnectThread = new Thread(new ThreadStart(() => WaitForDisconnect(clientSocket)));
+        disconnectThread.Start();
+
+        GameSettings.playerDisconnectThreads.Add(disconnectThread);
+    }
+
+    public void WaitForDisconnect(TcpClient client) {
+        // Detect if client disconnected
+
+        if (client.Client.Poll(0, SelectMode.SelectWrite) && !client.Client.Poll(0, SelectMode.SelectError)) {
+            byte[] buff = new byte[1];
+
+            if (client.Client.Receive(buff, SocketFlags.Peek) == 0) {
+                // Client disconnected
+
+                print("disconnected");
+
+                playersToRemove.Add(client);
+
+            }
+        }
     }
 
     void OnApplicationQuit() {

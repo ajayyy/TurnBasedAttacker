@@ -17,9 +17,6 @@ public class GameSettings {
     //stores the server socket if this is connected to a server
     public static TcpListener serverSocket;
 
-    //stores the client sockets if this is connected to a server
-    public static List<TcpClient> clientSockets = new List<TcpClient>();
-
-    public static List<Thread> playerDisconnectThreads = new List<Thread>();
-
+    //a list of all the players connected if this is connected to a server or hosting a server
+    public static List<ConnectedPlayer> connectedPlayers = new List<ConnectedPlayer>();
 }

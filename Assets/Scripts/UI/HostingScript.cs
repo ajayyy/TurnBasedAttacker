@@ -23,7 +23,9 @@ public class HostingScript : MonoBehaviour {
     public int playersToSpawn = 0;
 
     //Called by a thread to make the player text removed on the main thread
-    public List<TcpClient> playersToRemove = new List<TcpClient>();
+    public List<ConnectedPlayer> playersToRemove = new List<ConnectedPlayer>();
+
+    //public Game
 
     void Start () {
 
@@ -50,6 +52,10 @@ public class HostingScript : MonoBehaviour {
         }
 	}
 
+    public void StartGame() {
+
+    }
+
     public void AddPlayerToList() {
         GameObject playerText = Instantiate(playerTextPrefab);
 
@@ -64,8 +70,8 @@ public class HostingScript : MonoBehaviour {
         playerTexts.Add(playerText);
     }
 
-    public void RemovePlayerFromList(TcpClient client) {
-        int index = GameSettings.clientSockets.IndexOf(client);
+    public void RemovePlayerFromList(ConnectedPlayer client) {
+        int index = GameSettings.connectedPlayers.IndexOf(client);
 
         GameObject playerText = null;
 
@@ -87,7 +93,7 @@ public class HostingScript : MonoBehaviour {
 
         }
 
-        GameSettings.clientSockets.Remove(client);
+        GameSettings.connectedPlayers.Remove(client);
     }
 
     public void WaitForConnection() {
@@ -102,7 +108,9 @@ public class HostingScript : MonoBehaviour {
 
         //print(System.Text.Encoding.ASCII.GetString(bytesFrom));
 
-        GameSettings.clientSockets.Add(clientSocket);
+        ConnectedPlayer connectedPlayer = new ConnectedPlayer(clientSocket, null);
+
+        GameSettings.connectedPlayers.Add(connectedPlayer);
 
         //this will make the main thread spawn a new player text
         playersToSpawn++;
@@ -110,19 +118,19 @@ public class HostingScript : MonoBehaviour {
         t = new Thread(new ThreadStart(WaitForConnection));
         t.Start();
 
-        Thread disconnectThread = new Thread(new ThreadStart(() => WaitForDisconnect(clientSocket)));
+        Thread disconnectThread = new Thread(new ThreadStart(() => WaitForDisconnect(connectedPlayer)));
         disconnectThread.Start();
 
-        GameSettings.playerDisconnectThreads.Add(disconnectThread);
+        connectedPlayer.playerDisconnectThread = disconnectThread;
     }
 
-    public void WaitForDisconnect(TcpClient client) {
+    public void WaitForDisconnect(ConnectedPlayer client) {
         // Detect if client disconnected
 
-        if (client.Client.Poll(0, SelectMode.SelectWrite) && !client.Client.Poll(0, SelectMode.SelectError)) {
+        if (client.clientSocket.Client.Poll(0, SelectMode.SelectWrite) && !client.clientSocket.Client.Poll(0, SelectMode.SelectError)) {
             byte[] buff = new byte[1];
 
-            if (client.Client.Receive(buff, SocketFlags.Peek) == 0) {
+            if (client.clientSocket.Client.Receive(buff, SocketFlags.Peek) == 0) {
                 // Client disconnected
 
                 print("disconnected");
@@ -135,9 +143,13 @@ public class HostingScript : MonoBehaviour {
 
     void OnApplicationQuit() {
 
-        foreach(TcpClient clientSocket in GameSettings.clientSockets) {
-            if (clientSocket != null) {
-                clientSocket.Close();
+        foreach(ConnectedPlayer connectedPlayer in GameSettings.connectedPlayers) {
+            if (connectedPlayer.clientSocket != null) {
+                connectedPlayer.clientSocket.Close();
+            }
+
+            if(connectedPlayer.playerDisconnectThread != null) {
+                connectedPlayer.playerDisconnectThread.Abort();
             }
         }
 

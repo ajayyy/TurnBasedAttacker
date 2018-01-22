@@ -19,4 +19,5 @@ public class GameSettings {
 
     //a list of all the players connected if this is connected to a server or hosting a server
     public static List<ConnectedPlayer> connectedPlayers = new List<ConnectedPlayer>();
+
 }

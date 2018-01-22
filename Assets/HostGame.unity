@@ -956,6 +956,7 @@ MonoBehaviour:
   playerTextParent: {fileID: 2067953768}
   playerTexts: []
   playersToSpawn: 0
+  startUnits: {fileID: 1563337688}
 --- !u!4 &1719558913
 Transform:
   m_ObjectHideFlags: 0

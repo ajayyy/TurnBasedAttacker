@@ -4,6 +4,7 @@ using System.Threading;
 using System.Net;
 using System.Net.Sockets;
 using UnityEngine.UI;
+using UnityEngine.SceneManagement;
 using UnityEngine;
 
 public class HostingScript : MonoBehaviour {
@@ -25,7 +26,8 @@ public class HostingScript : MonoBehaviour {
     //Called by a thread to make the player text removed on the main thread
     public List<ConnectedPlayer> playersToRemove = new List<ConnectedPlayer>();
 
-    //public Game
+    //The startUnits selector
+    public Text startUnits;
 
     void Start () {
 
@@ -53,7 +55,14 @@ public class HostingScript : MonoBehaviour {
 	}
 
     public void StartGame() {
+        if (t != null) {
+            t.Abort();
+        }
 
+        GameSettings.players = GameSettings.connectedPlayers.Count + 1;
+        GameSettings.units = int.Parse(startUnits.text);
+
+        SceneManager.LoadScene("Game", LoadSceneMode.Single);
     }
 
     public void AddPlayerToList() {

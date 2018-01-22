@@ -121,21 +121,21 @@ public class Player : MonoBehaviour {
                 bool chosen = false; //was a direction chosen
                 float direction = 0; //the direction chosen in angles
 
-                if (Input.GetKeyDown(KeyCode.D)) {
+                if (Right()) {
                     chosen = true;
                     direction = 0;
-                } else if (Input.GetKeyDown(KeyCode.A)) {
+                } else if (Left()) {
                     chosen = true;
                     direction = 180;
-                } else if (Input.GetKeyDown(KeyCode.W)) {
+                } else if (Up()) {
                     chosen = true;
                     direction = 90;
-                } else if (Input.GetKeyDown(KeyCode.S)) {
+                } else if (Down()) {
                     chosen = true;
                     direction = 270;
                 }
 
-                if (Input.GetKeyDown(KeyCode.E)) {
+                if (Action()) {
                     //disable it, they activated it by mistake
                     shootMode = false;
                 }
@@ -165,21 +165,21 @@ public class Player : MonoBehaviour {
                 bool chosen = false; //was a direction chosen
                 float direction = 0; //the direction chosen in angles
 
-                if (Input.GetKeyDown(KeyCode.D)) {
+                if (Right()) {
                     chosen = true;
                     direction = 0;
-                } else if (Input.GetKeyDown(KeyCode.A)) {
+                } else if (Left()) {
                     chosen = true;
                     direction = 180;
-                } else if (Input.GetKeyDown(KeyCode.W)) {
+                } else if (Up()) {
                     chosen = true;
                     direction = 90;
-                } else if (Input.GetKeyDown(KeyCode.S)) {
+                } else if (Down()) {
                     chosen = true;
                     direction = 270;
                 }
 
-                if (Input.GetKeyDown(KeyCode.E)) {
+                if (Action()) {
                     //disable it, they activated it by mistake
                     blockMode = false;
                 }
@@ -205,21 +205,21 @@ public class Player : MonoBehaviour {
                 bool chosen = false; //was a direction chosen
                 float direction = 0; //the direction chosen in angles
 
-                if (Input.GetKeyDown(KeyCode.D)) {
+                if (Right()) {
                     chosen = true;
                     direction = 0;
-                } else if (Input.GetKeyDown(KeyCode.A)) {
+                } else if (Left()) {
                     chosen = true;
                     direction = 180;
-                } else if (Input.GetKeyDown(KeyCode.W)) {
+                } else if (Up()) {
                     chosen = true;
                     direction = 90;
-                } else if (Input.GetKeyDown(KeyCode.S)) {
+                } else if (Down()) {
                     chosen = true;
                     direction = 270;
                 }
 
-                if (Input.GetKeyDown(KeyCode.E)) {
+                if (Action()) {
                     //disable it, they activated it by mistake
                     spawnMode = false;
                 }
@@ -255,21 +255,21 @@ public class Player : MonoBehaviour {
                 bool chosen = false; //was a direction chosen
                 float direction = 0; //the direction chosen in angles
 
-                if (Input.GetKeyDown(KeyCode.D)) {
+                if (Right()) {
                     chosen = true;
                     direction = 0;
-                } else if (Input.GetKeyDown(KeyCode.A)) {
+                } else if (Left()) {
                     chosen = true;
                     direction = 180;
-                } else if (Input.GetKeyDown(KeyCode.W)) {
+                } else if (Up()) {
                     chosen = true;
                     direction = 90;
-                } else if (Input.GetKeyDown(KeyCode.S)) {
+                } else if (Down()) {
                     chosen = true;
                     direction = 270;
                 }
 
-                if (Input.GetKeyDown(KeyCode.E)) {
+                if (Action()) {
                     //disable it, they activated it by mistake
                     slowShootMode = false;
                 }
@@ -300,21 +300,21 @@ public class Player : MonoBehaviour {
                 bool chosen = false; //was a direction chosen
                 float direction = 0; //the direction chosen in angles
 
-                if (Input.GetKeyDown(KeyCode.D)) {
+                if (Right()) {
                     chosen = true;
                     direction = 0;
-                } else if (Input.GetKeyDown(KeyCode.A)) {
+                } else if (Left()) {
                     chosen = true;
                     direction = 180;
-                } else if (Input.GetKeyDown(KeyCode.W)) {
+                } else if (Up()) {
                     chosen = true;
                     direction = 90;
-                } else if (Input.GetKeyDown(KeyCode.S)) {
+                } else if (Down()) {
                     chosen = true;
                     direction = 270;
                 }
 
-                if (Input.GetKeyDown(KeyCode.E)) {
+                if (Action()) {
                     //disable it, they activated it by mistake
                     blockShootMode = false;
                 }
@@ -347,21 +347,21 @@ public class Player : MonoBehaviour {
                 bool chosen = false; //was a direction chosen
                 float direction = 0; //the direction chosen in angles
 
-                if (Input.GetKeyDown(KeyCode.D)) {
+                if (Right()) {
                     chosen = true;
                     direction = 0;
-                } else if (Input.GetKeyDown(KeyCode.A)) {
+                } else if (Left()) {
                     chosen = true;
                     direction = 180;
-                } else if (Input.GetKeyDown(KeyCode.W)) {
+                } else if (Up()) {
                     chosen = true;
                     direction = 90;
-                } else if (Input.GetKeyDown(KeyCode.S)) {
+                } else if (Down()) {
                     chosen = true;
                     direction = 270;
                 }
 
-                if (Input.GetKeyDown(KeyCode.E)) {
+                if (Action()) {
                     //disable it, they activated it by mistake
                     stunShootMode = false;
                 }
@@ -401,51 +401,51 @@ public class Player : MonoBehaviour {
                 bool moved = false;
 
                 //movement
-                if (Input.GetKeyDown(KeyCode.D)) {
+                if (Right()) {
                     playerAnimation.direction = 0;
                     playerAnimation.type = 0;
                     moved = true;
-                } else if (Input.GetKeyDown(KeyCode.A)) {
+                } else if (Left()) {
                     playerAnimation.direction = 180;
                     playerAnimation.type = 0;
                     moved = true;
-                } else if (Input.GetKeyDown(KeyCode.W)) {
+                } else if (Up()) {
                     playerAnimation.direction = 90;
                     playerAnimation.type = 0;
                     moved = true;
-                } else if (Input.GetKeyDown(KeyCode.S)) {
+                } else if (Down()) {
                     playerAnimation.direction = 270;
                     playerAnimation.type = 0;
                     moved = true;
                 }
 
                 //projectiles
-                if (Input.GetKeyDown(KeyCode.E) && holding && pickup == 0) {
+                if (Action() && holding && pickup == 0) {
                     shootMode = true;
                 }
 
                 //place block
-                if (Input.GetKeyDown(KeyCode.E) && holding && pickup == 1) {
+                if (Action() && holding && pickup == 1) {
                     blockMode = true;
                 }
 
                 //spawn player
-                if (Input.GetKeyDown(KeyCode.E) && holding && pickup == 2) {
+                if (Action() && holding && pickup == 2) {
                     spawnMode = true;
                 }
 
                 //slow projectile
-                if (Input.GetKeyDown(KeyCode.E) && holding && pickup == 3) {
+                if (Action() && holding && pickup == 3) {
                     slowShootMode = true;
                 }
 
                 //block projectile
-                if (Input.GetKeyDown(KeyCode.E) && holding && pickup == 4) {
+                if (Action() && holding && pickup == 4) {
                     blockShootMode = true;
                 }
 
                 //stun projectile
-                if (Input.GetKeyDown(KeyCode.E) && holding && pickup == 5) {
+                if (Action() && holding && pickup == 5) {
                     stunShootMode = true;
                 }
 
@@ -512,5 +512,25 @@ public class Player : MonoBehaviour {
 
 		return animator.GetCurrentAnimatorStateInfo (0).IsName("idle") && (!projectile.activeSelf || projectile.GetComponent<Animator> ().GetCurrentAnimatorStateInfo (0).IsName ("idle")) && (!gameController.blockProjectile.activeSelf || gameController.blockProjectile.GetComponent<Animator> ().GetCurrentAnimatorStateInfo (0).IsName ("idle")) && (!gameController.stunProjectile.activeSelf || gameController.stunProjectile.GetComponent<Animator>().GetCurrentAnimatorStateInfo(0).IsName("idle"));
 	}
+
+    bool Up() {
+        return Input.GetKeyDown(KeyCode.W);
+    }
+
+    bool Down() {
+        return Input.GetKeyDown(KeyCode.S);
+    }
+
+    bool Right() {
+        return Input.GetKeyDown(KeyCode.D);
+    }
+
+    bool Left() {
+        return Input.GetKeyDown(KeyCode.A);
+    }
+
+    bool Action() {
+        return Input.GetKeyDown(KeyCode.E);
+    }
 
 }

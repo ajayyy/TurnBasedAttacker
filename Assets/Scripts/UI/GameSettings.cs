@@ -20,6 +20,9 @@ public class GameSettings {
     //not null when connected to a server, stores the socket to communicate with the server
     public static ConnectedSocket connectedServer;
 
+    //if connected to a server, used to tell who can be controlled, and who is controlled by others
+    public static int currentPlayerNum;
+
     //variables if hosting a server
 
     //stores the server socket if this is connected to a server

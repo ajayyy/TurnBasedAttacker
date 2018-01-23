@@ -45,7 +45,25 @@ public class JoiningScript : MonoBehaviour {
 
             SceneManager.LoadScene("Game", LoadSceneMode.Single);
         }
-	}
+
+        if (message != null && message.Contains("players: ")) {
+            GameSettings.connectedServer.RemoveMessage();
+
+            GameSettings.players = int.Parse(message.Split('{')[1].Split('}')[0]);
+        }
+
+        if (message != null && message.Contains("units: ")) {
+            GameSettings.connectedServer.RemoveMessage();
+
+            GameSettings.units = int.Parse(message.Split('{')[1].Split('}')[0]);
+        }
+
+        if (message != null && message.Contains("current: ")) {
+            GameSettings.connectedServer.RemoveMessage();
+
+            GameSettings.currentPlayerNum = int.Parse(message.Split('{')[1].Split('}')[0]);
+        }
+    }
 
     void OnApplicationQuit() {
         GameSettings.OnApplicationQuit();

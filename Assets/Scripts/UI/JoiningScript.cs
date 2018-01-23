@@ -1,8 +1,9 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
-using UnityEngine;
 using System.Threading;
 using System.Net.Sockets;
+using UnityEngine.SceneManagement;
+using UnityEngine;
 
 public class JoiningScript : MonoBehaviour {
 
@@ -30,8 +31,20 @@ public class JoiningScript : MonoBehaviour {
     }
 	
 	void FixedUpdate () {
-        if(Time.time % 2 == 0)
-            GameSettings.connectedServer.SendMessage("tessst");
+        //if(Time.time % 2 == 0)
+        //    GameSettings.connectedServer.SendMessage("tessst");
+
+        string message = GameSettings.connectedServer.GetMessage();
+
+        if (message != null && message.Contains("start")) {
+            GameSettings.connectedServer.RemoveMessage();
+
+            //start game
+            //GameSettings.players = GameSettings.connectedPlayers.Count + 1;
+            //GameSettings.units = int.Parse(startUnits.text);
+
+            SceneManager.LoadScene("Game", LoadSceneMode.Single);
+        }
 	}
 
     void OnApplicationQuit() {

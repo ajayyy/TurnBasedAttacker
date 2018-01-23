@@ -565,6 +565,7 @@ public class Player : MonoBehaviour {
             }
             return correctMessage;
         }
+
         if(playerNum != GameSettings.currentPlayerNum && GameSettings.connectedServer != null) {
             string message = GameSettings.connectedServer.GetMessage();
             bool correctMessage = message != null && message.Contains("m:w");
@@ -573,6 +574,10 @@ public class Player : MonoBehaviour {
             }
             return correctMessage;
         }
+        if (playerNum == GameSettings.currentPlayerNum && GameSettings.connectedServer != null && Input.GetKeyDown(KeyCode.W)) {
+            GameSettings.connectedServer.SendMessage("m:w");
+        }
+
         return Input.GetKeyDown(KeyCode.W);
     }
 
@@ -585,6 +590,7 @@ public class Player : MonoBehaviour {
             }
             return correctMessage;
         }
+
         if (playerNum != GameSettings.currentPlayerNum && GameSettings.connectedServer != null) {
             string message = GameSettings.connectedServer.GetMessage();
             bool correctMessage = message != null && message.Contains("m:s");
@@ -593,6 +599,10 @@ public class Player : MonoBehaviour {
             }
             return correctMessage;
         }
+        if (playerNum == GameSettings.currentPlayerNum && GameSettings.connectedServer != null && Input.GetKeyDown(KeyCode.S)) {
+            GameSettings.connectedServer.SendMessage("m:s");
+        }
+
         return Input.GetKeyDown(KeyCode.S);
     }
 
@@ -605,6 +615,7 @@ public class Player : MonoBehaviour {
             }
             return correctMessage;
         }
+
         if (playerNum != GameSettings.currentPlayerNum && GameSettings.connectedServer != null) {
             string message = GameSettings.connectedServer.GetMessage();
             bool correctMessage = message != null && message.Contains("m:d");
@@ -613,6 +624,10 @@ public class Player : MonoBehaviour {
             }
             return correctMessage;
         }
+        if (playerNum == GameSettings.currentPlayerNum && GameSettings.connectedServer != null && Input.GetKeyDown(KeyCode.D)) {
+            GameSettings.connectedServer.SendMessage("m:d");
+        }
+
         return Input.GetKeyDown(KeyCode.D);
     }
 
@@ -625,6 +640,7 @@ public class Player : MonoBehaviour {
             }
             return correctMessage;
         }
+
         if (playerNum != GameSettings.currentPlayerNum && GameSettings.connectedServer != null) {
             string message = GameSettings.connectedServer.GetMessage();
             bool correctMessage = message != null && message.Contains("m:a");
@@ -633,6 +649,10 @@ public class Player : MonoBehaviour {
             }
             return correctMessage;
         }
+        if (playerNum == GameSettings.currentPlayerNum && GameSettings.connectedServer != null && Input.GetKeyDown(KeyCode.A)) {
+            GameSettings.connectedServer.SendMessage("m:a");
+        }
+
         return Input.GetKeyDown(KeyCode.A);
     }
 
@@ -645,6 +665,7 @@ public class Player : MonoBehaviour {
             }
             return correctMessage;
         }
+
         if (playerNum != GameSettings.currentPlayerNum && GameSettings.connectedServer != null) {
             string message = GameSettings.connectedServer.GetMessage();
             bool correctMessage = message != null && message.Contains("m:e");
@@ -653,6 +674,10 @@ public class Player : MonoBehaviour {
             }
             return correctMessage;
         }
+        if (playerNum == GameSettings.currentPlayerNum && GameSettings.connectedServer != null && Input.GetKeyDown(KeyCode.E)) {
+            GameSettings.connectedServer.SendMessage("m:e");
+        }
+
         return Input.GetKeyDown(KeyCode.E);
     }
 

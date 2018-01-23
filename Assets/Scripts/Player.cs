@@ -515,24 +515,61 @@ public class Player : MonoBehaviour {
 
     bool Up() {
         if(playerNum > 0 && GameSettings.serverSocket != null) {
-
+            string message = GameSettings.connectedPlayers[playerNum - 1].GetMessage();
+            bool correctMessage = message != null && message.Contains("w");
+            if (correctMessage) {
+                GameSettings.connectedPlayers[playerNum - 1].RemoveMessage();
+            }
+            return correctMessage;
         }
         return Input.GetKeyDown(KeyCode.W);
     }
 
     bool Down() {
+        if (playerNum > 0 && GameSettings.serverSocket != null) {
+            string message = GameSettings.connectedPlayers[playerNum - 1].GetMessage();
+            bool correctMessage = message != null && message.Contains("s");
+            if (correctMessage) {
+                GameSettings.connectedPlayers[playerNum - 1].RemoveMessage();
+            }
+            return correctMessage;
+        }
         return Input.GetKeyDown(KeyCode.S);
     }
 
     bool Right() {
+        if (playerNum > 0 && GameSettings.serverSocket != null) {
+            string message = GameSettings.connectedPlayers[playerNum - 1].GetMessage();
+            bool correctMessage = message != null && message.Contains("d");
+            if (correctMessage) {
+                GameSettings.connectedPlayers[playerNum - 1].RemoveMessage();
+            }
+            return correctMessage;
+        }
         return Input.GetKeyDown(KeyCode.D);
     }
 
     bool Left() {
+        if (playerNum > 0 && GameSettings.serverSocket != null) {
+            string message = GameSettings.connectedPlayers[playerNum - 1].GetMessage();
+            bool correctMessage = message != null && message.Contains("a");
+            if (correctMessage) {
+                GameSettings.connectedPlayers[playerNum - 1].RemoveMessage();
+            }
+            return correctMessage;
+        }
         return Input.GetKeyDown(KeyCode.A);
     }
 
     bool Action() {
+        if (playerNum > 0 && GameSettings.serverSocket != null) {
+            string message = GameSettings.connectedPlayers[playerNum - 1].GetMessage();
+            bool correctMessage = message != null && message.Contains("e");
+            if (correctMessage) {
+                GameSettings.connectedPlayers[playerNum - 1].RemoveMessage();
+            }
+            return correctMessage;
+        }
         return Input.GetKeyDown(KeyCode.E);
     }
 

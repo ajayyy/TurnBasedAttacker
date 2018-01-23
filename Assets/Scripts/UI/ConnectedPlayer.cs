@@ -31,7 +31,9 @@ public class ConnectedPlayer {
             byte[] bytesFrom = new byte[50];
             networkStream.Read(bytesFrom, 0, bytesFrom.Length);
 
-            messageBuffer.Add(System.Text.Encoding.ASCII.GetString(bytesFrom));
+            messageBuffer.Add(System.Text.Encoding.ASCII.GetString(bytesFrom).Replace("\n",""));
+
+            //Debug.Log(System.Text.Encoding.ASCII.GetString(bytesFrom));
 
         }
 
@@ -45,9 +47,12 @@ public class ConnectedPlayer {
 
         string message = messageBuffer[0];
 
-        messageBuffer.RemoveAt(0);
-
         return message;
+    }
+
+    //if it meant something, it can be removed from the queue
+    public void RemoveMessage() {
+        messageBuffer.RemoveAt(0);
     }
 
 }

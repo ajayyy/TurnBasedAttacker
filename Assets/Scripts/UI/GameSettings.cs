@@ -14,16 +14,26 @@ public class GameSettings {
     //the game to load, if -1 then no saved game will load
     public static int gameToLoad = -1;
 
+    //variables if connected to a server
+
+    //the server this game is connected to
+    //not null when connected to a server, stores the socket to communicate with the server
+    public static ConnectedSocket connectedServer;
+
+    //variables if hosting a server
+
     //stores the server socket if this is connected to a server
     public static TcpListener serverSocket;
 
     //a list of all the players connected if this is connected to a server or hosting a server
-    public static List<ConnectedPlayer> connectedPlayers = new List<ConnectedPlayer>();
+    public static List<ConnectedSocket> connectedPlayers = new List<ConnectedSocket>();
+
+    //Functions
 
     //called by mono behaviors to close all network connections when the game is closed
     public static void OnApplicationQuit() {
 
-        foreach (ConnectedPlayer connectedPlayer in connectedPlayers) {
+        foreach (ConnectedSocket connectedPlayer in connectedPlayers) {
             if (connectedPlayer.clientSocket != null) {
                 connectedPlayer.clientSocket.Close();
             }
@@ -34,6 +44,20 @@ public class GameSettings {
 
             if (connectedPlayer.playerMessageThread != null) {
                 connectedPlayer.playerMessageThread.Abort();
+            }
+        }
+
+        if (connectedServer != null) {
+            if(connectedServer.clientSocket != null) {
+                connectedServer.clientSocket.Close();
+            }
+
+            if (connectedServer.playerDisconnectThread != null) {
+                connectedServer.playerDisconnectThread.Abort();
+            }
+
+            if (connectedServer.playerMessageThread != null) {
+                connectedServer.playerMessageThread.Abort();
             }
         }
 

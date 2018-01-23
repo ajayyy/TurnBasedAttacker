@@ -22,7 +22,7 @@ public class LoadGameButton : MonoBehaviour {
         GameSettings.gameToLoad = gameNum;
 
         GameSettings.serverSocket = null;
-        GameSettings.connectedPlayers = new List<ConnectedPlayer>();
+        GameSettings.connectedPlayers = new List<ConnectedSocket>();
 
         SceneManager.LoadScene("Game", LoadSceneMode.Single);
     }

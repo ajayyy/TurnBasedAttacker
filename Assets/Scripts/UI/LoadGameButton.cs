@@ -21,6 +21,9 @@ public class LoadGameButton : MonoBehaviour {
 
         GameSettings.gameToLoad = gameNum;
 
+        GameSettings.serverSocket = null;
+        GameSettings.connectedPlayers = new List<ConnectedPlayer>();
+
         SceneManager.LoadScene("Game", LoadSceneMode.Single);
     }
 }

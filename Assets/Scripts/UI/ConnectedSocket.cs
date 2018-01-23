@@ -18,15 +18,19 @@ public class ConnectedSocket {
     //the last messages sent since GetMessage() has been called
     List<string> messageBuffer = new List<string>();
 
+    //the network stream for reading and sending messages
+    NetworkStream networkStream;
+
     public ConnectedSocket(TcpClient clientSocket, Thread playerDisconnectThread) {
         this.clientSocket = clientSocket;
         this.playerDisconnectThread = playerDisconnectThread;
+
+        networkStream = clientSocket.GetStream();
     }
 
     public void WaitForMessages() {
 
         while (true) {
-            NetworkStream networkStream = clientSocket.GetStream();
 
             byte[] bytesFrom = new byte[50];
             networkStream.Read(bytesFrom, 0, bytesFrom.Length);
@@ -62,6 +66,14 @@ public class ConnectedSocket {
         if (WaitForDisconnect()) {
             playersToRemove.Add(this);
         }
+    }
+
+    public void SendMessage(string message) {
+
+        byte[] outStream = System.Text.Encoding.ASCII.GetBytes(message);
+        networkStream.Write(outStream, 0, outStream.Length);
+
+        networkStream.Flush();
     }
 
     public string GetMessage() {

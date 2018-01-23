@@ -7,11 +7,14 @@ using System.Net.Sockets;
 public class JoiningScript : MonoBehaviour {
 
 	void Start () {
-        ConnectedSocket connectedServer = new ConnectedSocket(new TcpClient(), null);
+
+        TcpClient clientSocket = new TcpClient();
+
+        clientSocket.Connect("127.0.0.1", 1273);
+
+        ConnectedSocket connectedServer = new ConnectedSocket(clientSocket, null);
 
         GameSettings.connectedServer = connectedServer;
-
-        connectedServer.clientSocket.Connect("127.0.0.1", 1273);
 
         //setup threads
 
@@ -26,7 +29,12 @@ public class JoiningScript : MonoBehaviour {
         connectedServer.playerMessageThread = messageThread;
     }
 	
-	void Update () {
-		
+	void FixedUpdate () {
+        if(Time.time % 2 == 0)
+            GameSettings.connectedServer.SendMessage("tessst");
 	}
+
+    void OnApplicationQuit() {
+        GameSettings.OnApplicationQuit();
+    }
 }

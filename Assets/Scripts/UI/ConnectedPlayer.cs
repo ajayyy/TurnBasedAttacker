@@ -16,7 +16,7 @@ public class ConnectedPlayer {
     public Thread playerMessageThread;
 
     //the last messages sent since GetMessage() has been called
-    string messageBuffer = "";
+    List<string> messageBuffer = new List<string>();
 
     public ConnectedPlayer(TcpClient clientSocket, Thread playerDisconnectThread) {
         this.clientSocket = clientSocket;
@@ -31,10 +31,23 @@ public class ConnectedPlayer {
             byte[] bytesFrom = new byte[50];
             networkStream.Read(bytesFrom, 0, bytesFrom.Length);
 
-            messageBuffer += System.Text.Encoding.ASCII.GetString(bytesFrom);
+            messageBuffer.Add(System.Text.Encoding.ASCII.GetString(bytesFrom));
 
         }
 
+    }
+
+    public string GetMessage() {
+
+        if(messageBuffer.Count == 0) {
+            return null;
+        }
+
+        string message = messageBuffer[0];
+
+        messageBuffer.RemoveAt(0);
+
+        return message;
     }
 
 }

@@ -7,6 +7,9 @@ public class MainMenu : MonoBehaviour {
 	void Start () {
         GameSettings.serverSocket = null;
         GameSettings.connectedPlayers = new List<ConnectedSocket>();
+
+        GameSettings.connectedServer = null;
+        GameSettings.currentPlayerNum = 0;
     }
 	
 	void Update () {

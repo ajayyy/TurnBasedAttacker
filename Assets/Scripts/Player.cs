@@ -101,6 +101,36 @@ public class Player : MonoBehaviour {
             gameController.saveGameUsable = false;
         }
 
+        //set this player as selected if it was clicked by the controlling player (LAN game)
+        if (GameSettings.serverSocket != null && playerNum != 0 && !selected) {
+            string message = GameSettings.connectedPlayers[playerNum - 1].GetMessage();
+            bool correctMessage = message != null && message.Contains("selected: ");
+
+            if (correctMessage) {
+                int selectedPlayer = int.Parse(message.Split('{')[1].Split('}')[0]);
+
+                if(selectedPlayer == gameController.players.IndexOf(gameObject)) {
+                    GameSettings.connectedPlayers[playerNum - 1].RemoveMessage();
+
+                    SelectPlayer();
+                }
+            }
+        }
+        if (GameSettings.connectedServer != null && playerNum != GameSettings.currentPlayerNum && !selected) {
+            string message = GameSettings.connectedServer.GetMessage();
+            bool correctMessage = message != null && message.Contains("selected: ");
+
+            if (correctMessage) {
+                int selectedPlayer = int.Parse(message.Split('{')[1].Split('}')[0]);
+
+                if (selectedPlayer == gameController.players.IndexOf(gameObject)) {
+                    GameSettings.connectedServer.RemoveMessage();
+
+                    SelectPlayer();
+                }
+            }
+        }
+
         //if it is this player's turn
         if (gameController.turnPlayerNum == playerNum && Time.time - gameController.lastMove >= 0.01f && selected && EverythingIdle() && !stunned) {
 
@@ -466,11 +496,24 @@ public class Player : MonoBehaviour {
     }
 
     void OnMouseDown() {
+        //check if this is connected or hosting a LAN game
+        if(GameSettings.serverSocket != null && playerNum != 0) {
+            return;
+        }
+        if (GameSettings.connectedServer != null && playerNum != GameSettings.currentPlayerNum) {
+            return;
+        }
+
+        SelectPlayer();
+    }
+    
+    //select this player and deselect all others
+    public void SelectPlayer() {
         selected = true;
-        
-        foreach(GameObject playerObject in GameController.instance.players) {
+
+        foreach (GameObject playerObject in GameController.instance.players) {
             Player player = playerObject.GetComponent<Player>();
-            if(player.playerNum == playerNum && player != this) {
+            if (player.playerNum == playerNum && player != this) {
                 //this player is part of this person's characters, they are not selected because this is now selected
                 player.selected = false;
 
@@ -516,7 +559,7 @@ public class Player : MonoBehaviour {
     bool Up() {
         if(playerNum > 0 && GameSettings.serverSocket != null) {
             string message = GameSettings.connectedPlayers[playerNum - 1].GetMessage();
-            bool correctMessage = message != null && message.Contains("w");
+            bool correctMessage = message != null && message.Contains("m:w");
             if (correctMessage) {
                 GameSettings.connectedPlayers[playerNum - 1].RemoveMessage();
             }
@@ -524,7 +567,7 @@ public class Player : MonoBehaviour {
         }
         if(playerNum != GameSettings.currentPlayerNum && GameSettings.connectedServer != null) {
             string message = GameSettings.connectedServer.GetMessage();
-            bool correctMessage = message != null && message.Contains("w");
+            bool correctMessage = message != null && message.Contains("m:w");
             if (correctMessage) {
                 GameSettings.connectedServer.RemoveMessage();
             }
@@ -536,7 +579,7 @@ public class Player : MonoBehaviour {
     bool Down() {
         if (playerNum > 0 && GameSettings.serverSocket != null) {
             string message = GameSettings.connectedPlayers[playerNum - 1].GetMessage();
-            bool correctMessage = message != null && message.Contains("s");
+            bool correctMessage = message != null && message.Contains("m:s");
             if (correctMessage) {
                 GameSettings.connectedPlayers[playerNum - 1].RemoveMessage();
             }
@@ -544,7 +587,7 @@ public class Player : MonoBehaviour {
         }
         if (playerNum != GameSettings.currentPlayerNum && GameSettings.connectedServer != null) {
             string message = GameSettings.connectedServer.GetMessage();
-            bool correctMessage = message != null && message.Contains("s");
+            bool correctMessage = message != null && message.Contains("m:s");
             if (correctMessage) {
                 GameSettings.connectedServer.RemoveMessage();
             }
@@ -556,7 +599,7 @@ public class Player : MonoBehaviour {
     bool Right() {
         if (playerNum > 0 && GameSettings.serverSocket != null) {
             string message = GameSettings.connectedPlayers[playerNum - 1].GetMessage();
-            bool correctMessage = message != null && message.Contains("d");
+            bool correctMessage = message != null && message.Contains("m:d");
             if (correctMessage) {
                 GameSettings.connectedPlayers[playerNum - 1].RemoveMessage();
             }
@@ -564,7 +607,7 @@ public class Player : MonoBehaviour {
         }
         if (playerNum != GameSettings.currentPlayerNum && GameSettings.connectedServer != null) {
             string message = GameSettings.connectedServer.GetMessage();
-            bool correctMessage = message != null && message.Contains("d");
+            bool correctMessage = message != null && message.Contains("m:d");
             if (correctMessage) {
                 GameSettings.connectedServer.RemoveMessage();
             }
@@ -576,7 +619,7 @@ public class Player : MonoBehaviour {
     bool Left() {
         if (playerNum > 0 && GameSettings.serverSocket != null) {
             string message = GameSettings.connectedPlayers[playerNum - 1].GetMessage();
-            bool correctMessage = message != null && message.Contains("a");
+            bool correctMessage = message != null && message.Contains("m:a");
             if (correctMessage) {
                 GameSettings.connectedPlayers[playerNum - 1].RemoveMessage();
             }
@@ -584,7 +627,7 @@ public class Player : MonoBehaviour {
         }
         if (playerNum != GameSettings.currentPlayerNum && GameSettings.connectedServer != null) {
             string message = GameSettings.connectedServer.GetMessage();
-            bool correctMessage = message != null && message.Contains("a");
+            bool correctMessage = message != null && message.Contains("m:a");
             if (correctMessage) {
                 GameSettings.connectedServer.RemoveMessage();
             }
@@ -596,7 +639,7 @@ public class Player : MonoBehaviour {
     bool Action() {
         if (playerNum > 0 && GameSettings.serverSocket != null) {
             string message = GameSettings.connectedPlayers[playerNum - 1].GetMessage();
-            bool correctMessage = message != null && message.Contains("e");
+            bool correctMessage = message != null && message.Contains("m:e");
             if (correctMessage) {
                 GameSettings.connectedPlayers[playerNum - 1].RemoveMessage();
             }
@@ -604,7 +647,7 @@ public class Player : MonoBehaviour {
         }
         if (playerNum != GameSettings.currentPlayerNum && GameSettings.connectedServer != null) {
             string message = GameSettings.connectedServer.GetMessage();
-            bool correctMessage = message != null && message.Contains("e");
+            bool correctMessage = message != null && message.Contains("m:e");
             if (correctMessage) {
                 GameSettings.connectedServer.RemoveMessage();
             }

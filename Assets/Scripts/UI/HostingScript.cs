@@ -131,6 +131,11 @@ public class HostingScript : MonoBehaviour {
         disconnectThread.Start();
 
         connectedPlayer.playerDisconnectThread = disconnectThread;
+
+        Thread messageThread = new Thread(connectedPlayer.WaitForMessages);
+        messageThread.Start();
+
+        connectedPlayer.playerMessageThread = messageThread;
     }
 
     public void WaitForDisconnect(ConnectedPlayer client) {
@@ -152,19 +157,7 @@ public class HostingScript : MonoBehaviour {
 
     void OnApplicationQuit() {
 
-        foreach(ConnectedPlayer connectedPlayer in GameSettings.connectedPlayers) {
-            if (connectedPlayer.clientSocket != null) {
-                connectedPlayer.clientSocket.Close();
-            }
-
-            if(connectedPlayer.playerDisconnectThread != null) {
-                connectedPlayer.playerDisconnectThread.Abort();
-            }
-        }
-
-        if (GameSettings.serverSocket != null) {
-            GameSettings.serverSocket.Stop();
-        }
+        GameSettings.OnApplicationQuit();
 
         if (t != null) {
             t.Abort();

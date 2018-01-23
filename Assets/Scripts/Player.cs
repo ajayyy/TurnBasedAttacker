@@ -514,6 +514,9 @@ public class Player : MonoBehaviour {
 	}
 
     bool Up() {
+        if(playerNum > 0 && GameSettings.serverSocket != null) {
+
+        }
         return Input.GetKeyDown(KeyCode.W);
     }
 

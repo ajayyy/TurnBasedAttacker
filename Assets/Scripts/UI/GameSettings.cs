@@ -20,4 +20,27 @@ public class GameSettings {
     //a list of all the players connected if this is connected to a server or hosting a server
     public static List<ConnectedPlayer> connectedPlayers = new List<ConnectedPlayer>();
 
+    //called by mono behaviors to close all network connections when the game is closed
+    public static void OnApplicationQuit() {
+
+        foreach (ConnectedPlayer connectedPlayer in connectedPlayers) {
+            if (connectedPlayer.clientSocket != null) {
+                connectedPlayer.clientSocket.Close();
+            }
+
+            if (connectedPlayer.playerDisconnectThread != null) {
+                connectedPlayer.playerDisconnectThread.Abort();
+            }
+
+            if (connectedPlayer.playerMessageThread != null) {
+                connectedPlayer.playerMessageThread.Abort();
+            }
+        }
+
+        if (serverSocket != null) {
+            serverSocket.Stop();
+        }
+
+    }
+
 }

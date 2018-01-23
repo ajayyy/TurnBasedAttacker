@@ -541,4 +541,9 @@ public class GameController : MonoBehaviour {
 
         }
     }
+
+    //disconnect all the sockets when the program is exiting
+    void OnApplicationQuit() {
+        GameSettings.OnApplicationQuit();
+    }
 }

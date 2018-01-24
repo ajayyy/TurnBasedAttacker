@@ -33,6 +33,15 @@ public class GameSettings {
 
     //Functions
 
+    //if hosting the server
+    public static void SendToAllExcept(string message, ConnectedSocket except) {
+        foreach (ConnectedSocket connectedPlayer in connectedPlayers) {
+            if (connectedPlayer == except) continue;
+
+            connectedPlayer.SendMessage(message);
+        }
+    }
+
     //called by mono behaviors to close all network connections when the game is closed
     public static void OnApplicationQuit() {
 

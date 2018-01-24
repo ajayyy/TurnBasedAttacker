@@ -562,6 +562,8 @@ public class Player : MonoBehaviour {
             bool correctMessage = message != null && message.Contains("m:w");
             if (correctMessage) {
                 GameSettings.connectedPlayers[playerNum - 1].RemoveMessage();
+
+                GameSettings.SendToAllExcept(message, GameSettings.connectedPlayers[playerNum - 1]);
             }
             return correctMessage;
         }
@@ -593,6 +595,8 @@ public class Player : MonoBehaviour {
             bool correctMessage = message != null && message.Contains("m:s");
             if (correctMessage) {
                 GameSettings.connectedPlayers[playerNum - 1].RemoveMessage();
+
+                GameSettings.SendToAllExcept(message, GameSettings.connectedPlayers[playerNum - 1]);
             }
             return correctMessage;
         }
@@ -623,6 +627,8 @@ public class Player : MonoBehaviour {
             bool correctMessage = message != null && message.Contains("m:d");
             if (correctMessage) {
                 GameSettings.connectedPlayers[playerNum - 1].RemoveMessage();
+
+                GameSettings.SendToAllExcept(message, GameSettings.connectedPlayers[playerNum - 1]);
             }
             return correctMessage;
         }
@@ -653,6 +659,8 @@ public class Player : MonoBehaviour {
             bool correctMessage = message != null && message.Contains("m:a");
             if (correctMessage) {
                 GameSettings.connectedPlayers[playerNum - 1].RemoveMessage();
+
+                GameSettings.SendToAllExcept(message, GameSettings.connectedPlayers[playerNum - 1]);
             }
             return correctMessage;
         }
@@ -683,6 +691,8 @@ public class Player : MonoBehaviour {
             bool correctMessage = message != null && message.Contains("m:e");
             if (correctMessage) {
                 GameSettings.connectedPlayers[playerNum - 1].RemoveMessage();
+
+                GameSettings.SendToAllExcept(message, GameSettings.connectedPlayers[playerNum - 1]);
             }
             return correctMessage;
         }

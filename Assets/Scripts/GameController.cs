@@ -592,7 +592,7 @@ public class GameController : MonoBehaviour {
 
         }
 
-        completedPlayers = new List<int>();
+        //completedPlayers = new List<int>();
     }
 
     //disconnect all the sockets when the program is exiting

@@ -174,8 +174,6 @@ public class GameController : MonoBehaviour {
 
                 newPlayer.transform.position = playerData.position;
 
-                players.Add(newPlayer);
-
                 if (!playerNumSpawned.Contains(playerScript.playerNum)) {
                     playerNumSpawned.Add(playerScript.playerNum);
                 }

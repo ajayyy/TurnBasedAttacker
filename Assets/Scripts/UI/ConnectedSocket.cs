@@ -19,7 +19,7 @@ public class ConnectedSocket {
     List<string> messageBuffer = new List<string>();
 
     //the network stream for reading and sending messages
-    NetworkStream networkStream;
+    public NetworkStream networkStream;
 
     public ConnectedSocket(TcpClient clientSocket, Thread playerDisconnectThread) {
         this.clientSocket = clientSocket;
@@ -37,7 +37,23 @@ public class ConnectedSocket {
 
             messageBuffer.Add(System.Text.Encoding.ASCII.GetString(bytesFrom).Replace("\n",""));
 
-            //Debug.Log(System.Text.Encoding.ASCII.GetString(bytesFrom));
+            int newMessageIndex = messageBuffer.Count - 1;
+
+            string[] commands = messageBuffer[newMessageIndex].Split(';');
+
+            if (commands.Length > 1) {
+                //multiple commands are here
+                for(int i = 1; i < commands.Length; i++) {
+                    if (commands[i].Contains(":") | commands[i].Contains("start")) {
+                        messageBuffer.Add(commands[i] + ";");
+                    }
+                }
+                messageBuffer[newMessageIndex] = commands[0] + ";";
+            }
+
+            foreach (string message in messageBuffer) {
+                Debug.Log(message);
+            }
 
         }
 

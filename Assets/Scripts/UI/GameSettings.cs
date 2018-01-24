@@ -48,6 +48,10 @@ public class GameSettings {
             if (connectedPlayer.playerMessageThread != null) {
                 connectedPlayer.playerMessageThread.Abort();
             }
+
+            if(connectedPlayer.networkStream != null) {
+                connectedPlayer.networkStream.Close();
+            }
         }
 
         if (connectedServer != null) {

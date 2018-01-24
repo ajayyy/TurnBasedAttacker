@@ -62,6 +62,14 @@ public class HostingScript : MonoBehaviour {
         GameSettings.players = GameSettings.connectedPlayers.Count + 1;
         GameSettings.units = int.Parse(startUnits.text);
 
+        foreach (ConnectedSocket connectedSocket in GameSettings.connectedPlayers) {
+            connectedSocket.SendMessage("players: {" + GameSettings.players + "};");
+            connectedSocket.SendMessage("units: {" + GameSettings.units + "};");
+            connectedSocket.SendMessage("current: {" + (GameSettings.connectedPlayers.IndexOf(connectedSocket) + 1) + "};");
+
+            connectedSocket.SendMessage("start;");
+        }
+
         SceneManager.LoadScene("Game", LoadSceneMode.Single);
     }
 

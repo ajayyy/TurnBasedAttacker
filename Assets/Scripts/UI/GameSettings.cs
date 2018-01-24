@@ -41,6 +41,11 @@ public class GameSettings {
             connectedPlayer.SendMessage(message);
         }
     }
+    public static void SendToAll(string message) {
+        foreach (ConnectedSocket connectedPlayer in connectedPlayers) {
+            connectedPlayer.SendMessage(message);
+        }
+    }
 
     //called by mono behaviors to close all network connections when the game is closed
     public static void OnApplicationQuit() {

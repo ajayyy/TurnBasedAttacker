@@ -113,6 +113,8 @@ public class Player : MonoBehaviour {
                     GameSettings.connectedPlayers[playerNum - 1].RemoveMessage();
 
                     SelectPlayer();
+
+                    GameSettings.SendToAllExcept(message, GameSettings.connectedPlayers[playerNum - 1]);
                 }
             }
         }
@@ -500,8 +502,15 @@ public class Player : MonoBehaviour {
         if(GameSettings.serverSocket != null && playerNum != 0) {
             return;
         }
+        if(GameSettings.serverSocket != null && playerNum == 0) {
+            GameSettings.SendToAll("selected: {" + GameController.instance.players.IndexOf(gameObject) + "}");
+        }
+
         if (GameSettings.connectedServer != null && playerNum != GameSettings.currentPlayerNum) {
             return;
+        }
+        if (GameSettings.connectedServer != null && playerNum == GameSettings.currentPlayerNum) {
+            GameSettings.connectedServer.SendMessage("selected: {" + GameController.instance.players.IndexOf(gameObject) + "}");
         }
 
         SelectPlayer();

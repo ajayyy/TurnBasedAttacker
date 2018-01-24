@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Threading;
 using System.Net.Sockets;
+using UnityEngine;
 
 public class GameSettings {
 
@@ -14,7 +15,9 @@ public class GameSettings {
     //the game to load, if -1 then no saved game will load
     public static int gameToLoad = -1;
 
-    //variables if connected to a server
+    /**
+     * variables if connected to a server
+     **/
 
     //the server this game is connected to
     //not null when connected to a server, stores the socket to communicate with the server
@@ -23,7 +26,15 @@ public class GameSettings {
     //if connected to a server, used to tell who can be controlled, and who is controlled by others
     public static int currentPlayerNum;
 
-    //variables if hosting a server
+    //this is sent from the server to the client so the client know where everyone starts
+    public static List<PlayerData> serverPlayerData = new List<PlayerData>();
+
+    //this is sent from the server to the client so the client know where all the pickups starts
+    public static List<PickupData> serverPickupData = new List<PickupData>();
+
+    /** 
+     * variables if hosting a server
+     **/
 
     //stores the server socket if this is connected to a server
     public static TcpListener serverSocket;
@@ -31,7 +42,9 @@ public class GameSettings {
     //a list of all the players connected if this is connected to a server or hosting a server
     public static List<ConnectedSocket> connectedPlayers = new List<ConnectedSocket>();
 
-    //Functions
+    /**
+    * Functions
+    **/
 
     //if hosting the server
     public static void SendToAllExcept(string message, ConnectedSocket except) {

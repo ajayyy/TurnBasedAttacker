@@ -63,6 +63,25 @@ public class JoiningScript : MonoBehaviour {
 
             GameSettings.currentPlayerNum = int.Parse(message.Split('{')[1].Split('}')[0]);
         }
+
+        //check if they are sending data
+        if (message != null && message.Contains("player: ")) {
+            GameSettings.connectedServer.RemoveMessage();
+
+            //index is ignored since tcp preserves order of messages
+            PlayerData player = new PlayerData(new Vector2(float.Parse(message.Split('{')[2].Split('}')[0]), float.Parse(message.Split('{')[3].Split('}')[0])), int.Parse(message.Split('{')[4].Split('}')[0]));
+
+            GameSettings.serverPlayerData.Add(player);
+        }
+        if (message != null && message.Contains("pickup: ")) {
+            GameSettings.connectedServer.RemoveMessage();
+
+            //index is ignored since tcp preserves order of messages
+            PickupData pickup = new PickupData(new Vector2(float.Parse(message.Split('{')[2].Split('}')[0]), float.Parse(message.Split('{')[3].Split('}')[0])), int.Parse(message.Split('{')[4].Split('}')[0]));
+
+            GameSettings.serverPickupData.Add(pickup);
+        }
+
     }
 
     void OnApplicationQuit() {

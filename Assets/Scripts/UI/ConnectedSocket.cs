@@ -32,7 +32,7 @@ public class ConnectedSocket {
 
         while (true) {
 
-            byte[] bytesFrom = new byte[50];
+            byte[] bytesFrom = new byte[1024];
             networkStream.Read(bytesFrom, 0, bytesFrom.Length);
 
             messageBuffer.Add(System.Text.Encoding.ASCII.GetString(bytesFrom).Replace("\n",""));
@@ -43,12 +43,12 @@ public class ConnectedSocket {
 
             if (commands.Length > 1) {
                 //multiple commands are here
-                for(int i = 1; i < commands.Length; i++) {
-                    if (commands[i].Contains(":") | commands[i].Contains("start")) {
+                for(int i = 0; i < commands.Length; i++) {
+                    if (commands[i].Contains(":") || commands[i].Contains("start")) {
                         messageBuffer.Add(commands[i] + ";");
                     }
                 }
-                messageBuffer[newMessageIndex] = commands[0] + ";";
+                messageBuffer.RemoveAt(newMessageIndex);
             }
 
             foreach (string message in messageBuffer) {

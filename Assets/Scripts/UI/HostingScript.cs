@@ -66,8 +66,6 @@ public class HostingScript : MonoBehaviour {
             connectedSocket.SendMessage("players: {" + GameSettings.players + "};");
             connectedSocket.SendMessage("units: {" + GameSettings.units + "};");
             connectedSocket.SendMessage("current: {" + (GameSettings.connectedPlayers.IndexOf(connectedSocket) + 1) + "};");
-
-            connectedSocket.SendMessage("start;");
         }
 
         SceneManager.LoadScene("Game", LoadSceneMode.Single);

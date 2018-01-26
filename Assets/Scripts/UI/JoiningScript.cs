@@ -3,15 +3,18 @@ using System.Collections.Generic;
 using System.Threading;
 using System.Net.Sockets;
 using UnityEngine.SceneManagement;
+using UnityEngine.UI;
 using UnityEngine;
 
 public class JoiningScript : MonoBehaviour {
 
-	void Start () {
+    //the ip address text field
+    public InputField ipAddress;
 
+    public void Connect() {
         TcpClient clientSocket = new TcpClient();
 
-        clientSocket.Connect("127.0.0.1", 1273);
+        clientSocket.Connect(ipAddress.text, 1273);
 
         ConnectedSocket connectedServer = new ConnectedSocket(clientSocket, null);
 
@@ -33,6 +36,10 @@ public class JoiningScript : MonoBehaviour {
 	void FixedUpdate () {
         //if(Time.time % 2 == 0)
         //    GameSettings.connectedServer.SendMessage("tessst");
+
+        if(GameSettings.connectedServer == null) {
+            return;
+        }
 
         string message = GameSettings.connectedServer.GetMessage();
 

@@ -7,6 +7,7 @@ using UnityEngine.UI;
 using UnityEngine.SceneManagement;
 using UnityEngine;
 
+
 public class HostingScript : MonoBehaviour {
 
     Thread t;
@@ -164,4 +165,5 @@ public class HostingScript : MonoBehaviour {
             t.Abort();
         }
     }
+
 }

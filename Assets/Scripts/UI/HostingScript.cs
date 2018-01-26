@@ -29,6 +29,12 @@ public class HostingScript : MonoBehaviour {
     //The startUnits selector
     public Text startUnits;
 
+    //The unit amount chooser to change the maximum
+    public AmountChooser unitAmountChooser;
+
+    //Amount of players connected including the host
+    public int playerAmount = 1;
+
     void Start () {
 
         GameSettings.serverSocket = new TcpListener(IPAddress.Any, 1273);
@@ -72,6 +78,9 @@ public class HostingScript : MonoBehaviour {
     }
 
     public void AddPlayerToList() {
+        playerAmount++;
+        unitAmountChooser.playerAmount = playerAmount;
+
         GameObject playerText = Instantiate(playerTextPrefab);
 
         playerText.GetComponent<Text>().text = "Player " + (playerTexts.Count + 2);
@@ -86,6 +95,9 @@ public class HostingScript : MonoBehaviour {
     }
 
     public void RemovePlayerFromList(ConnectedSocket client) {
+        playerAmount--;
+        unitAmountChooser.playerAmount = playerAmount;
+
         int index = GameSettings.connectedPlayers.IndexOf(client);
 
         GameObject playerText = null;

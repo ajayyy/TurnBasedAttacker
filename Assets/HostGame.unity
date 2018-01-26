@@ -957,6 +957,8 @@ MonoBehaviour:
   playerTexts: []
   playersToSpawn: 0
   startUnits: {fileID: 1563337688}
+  unitAmountChooser: {fileID: 1930615009}
+  playerAmount: 1
 --- !u!4 &1719558913
 Transform:
   m_ObjectHideFlags: 0
@@ -1115,6 +1117,7 @@ MonoBehaviour:
   min: 1
   max: 10
   maxText: {fileID: 0}
+  playerAmount: -1
 --- !u!1 &1968633760
 GameObject:
   m_ObjectHideFlags: 0

@@ -157,6 +157,39 @@ public class GameController : MonoBehaviour {
 
         if (GameSettings.gameToLoad != -1) {
             LoadGame();
+        } else if (GameSettings.connectedServer != null) { //check if this is connected to a server, and load the data if so
+
+            //each time a new playernum (person) is spawned it is added to this list
+            List<int> playerNumSpawned = new List<int>();
+
+            foreach (PlayerData playerData in GameSettings.serverPlayerData) {
+                GameObject newPlayer = players[GameSettings.serverPlayerData.IndexOf(playerData)];
+
+                Player playerScript = newPlayer.GetComponent<Player>();
+
+                playerScript.playerNum = playerData.playerNum;
+                playerScript.idleColor = playerColors[playerScript.playerNum];
+                playerScript.selected = false;
+                if (!playerNumSpawned.Contains(playerScript.playerNum)) playerScript.selected = true;
+
+                newPlayer.transform.position = playerData.position;
+
+                if (!playerNumSpawned.Contains(playerScript.playerNum)) {
+                    playerNumSpawned.Add(playerScript.playerNum);
+                }
+            }
+
+            foreach (PickupData pickupData in GameSettings.serverPickupData) {
+                print(pickupData.type);
+                GameObject newPickup = Instantiate(pickupPrefabs[pickupData.type]);
+
+                newPickup.transform.position = pickupData.position;
+
+                pickups.Add(newPickup);
+            }
+
+            CreatePlayerStatus();
+
         } else {
 
             List<Vector3> pickupPositionsChosen = new List<Vector3>();
@@ -182,6 +215,22 @@ public class GameController : MonoBehaviour {
             CreatePlayerStatus();
         }
 
+        if (GameSettings.serverSocket != null) { //check if hosting a server, if so then send out he player positions
+            foreach (GameObject player in players) {
+                Player playerScript = player.GetComponent<Player>();
+
+                GameSettings.SendToAll("player: {" + players.IndexOf(player) + "} {" + player.transform.position.x + "} {" + player.transform.position.y + "} {" + playerScript.playerNum + "};");
+            }
+
+            foreach (GameObject pickup in pickups) {
+                Pickup pickupScript = pickup.GetComponent<Pickup>();
+
+                GameSettings.SendToAll("pickup: {" + pickups.IndexOf(pickup) + "} {" + pickup.transform.position.x + "} {" + pickup.transform.position.y + "} {" + pickupScript.type + "};");
+            }
+
+            GameSettings.SendToAll("start;");
+
+        }
     }
 	
 	void FixedUpdate () {
@@ -540,5 +589,12 @@ public class GameController : MonoBehaviour {
             }
 
         }
+
+        //completedPlayers = new List<int>();
+    }
+
+    //disconnect all the sockets when the program is exiting
+    void OnApplicationQuit() {
+        GameSettings.OnApplicationQuit();
     }
 }

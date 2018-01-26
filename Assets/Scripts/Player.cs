@@ -101,6 +101,38 @@ public class Player : MonoBehaviour {
             gameController.saveGameUsable = false;
         }
 
+        //set this player as selected if it was clicked by the controlling player (LAN game)
+        if (GameSettings.serverSocket != null && playerNum != 0 && !selected) {
+            string message = GameSettings.connectedPlayers[playerNum - 1].GetMessage();
+            bool correctMessage = message != null && message.Contains("selected: ");
+
+            if (correctMessage) {
+                int selectedPlayer = int.Parse(message.Split('{')[1].Split('}')[0]);
+
+                if(selectedPlayer == gameController.players.IndexOf(gameObject)) {
+                    GameSettings.connectedPlayers[playerNum - 1].RemoveMessage();
+
+                    SelectPlayer();
+
+                    GameSettings.SendToAllExcept(message, GameSettings.connectedPlayers[playerNum - 1]);
+                }
+            }
+        }
+        if (GameSettings.connectedServer != null && playerNum != GameSettings.currentPlayerNum && !selected) {
+            string message = GameSettings.connectedServer.GetMessage();
+            bool correctMessage = message != null && message.Contains("selected: ");
+
+            if (correctMessage) {
+                int selectedPlayer = int.Parse(message.Split('{')[1].Split('}')[0]);
+
+                if (selectedPlayer == gameController.players.IndexOf(gameObject)) {
+                    GameSettings.connectedServer.RemoveMessage();
+
+                    SelectPlayer();
+                }
+            }
+        }
+
         //if it is this player's turn
         if (gameController.turnPlayerNum == playerNum && Time.time - gameController.lastMove >= 0.01f && selected && EverythingIdle() && !stunned) {
 
@@ -121,21 +153,21 @@ public class Player : MonoBehaviour {
                 bool chosen = false; //was a direction chosen
                 float direction = 0; //the direction chosen in angles
 
-                if (Input.GetKeyDown(KeyCode.D)) {
+                if (Right()) {
                     chosen = true;
                     direction = 0;
-                } else if (Input.GetKeyDown(KeyCode.A)) {
+                } else if (Left()) {
                     chosen = true;
                     direction = 180;
-                } else if (Input.GetKeyDown(KeyCode.W)) {
+                } else if (Up()) {
                     chosen = true;
                     direction = 90;
-                } else if (Input.GetKeyDown(KeyCode.S)) {
+                } else if (Down()) {
                     chosen = true;
                     direction = 270;
                 }
 
-                if (Input.GetKeyDown(KeyCode.E)) {
+                if (Action()) {
                     //disable it, they activated it by mistake
                     shootMode = false;
                 }
@@ -165,21 +197,21 @@ public class Player : MonoBehaviour {
                 bool chosen = false; //was a direction chosen
                 float direction = 0; //the direction chosen in angles
 
-                if (Input.GetKeyDown(KeyCode.D)) {
+                if (Right()) {
                     chosen = true;
                     direction = 0;
-                } else if (Input.GetKeyDown(KeyCode.A)) {
+                } else if (Left()) {
                     chosen = true;
                     direction = 180;
-                } else if (Input.GetKeyDown(KeyCode.W)) {
+                } else if (Up()) {
                     chosen = true;
                     direction = 90;
-                } else if (Input.GetKeyDown(KeyCode.S)) {
+                } else if (Down()) {
                     chosen = true;
                     direction = 270;
                 }
 
-                if (Input.GetKeyDown(KeyCode.E)) {
+                if (Action()) {
                     //disable it, they activated it by mistake
                     blockMode = false;
                 }
@@ -205,21 +237,21 @@ public class Player : MonoBehaviour {
                 bool chosen = false; //was a direction chosen
                 float direction = 0; //the direction chosen in angles
 
-                if (Input.GetKeyDown(KeyCode.D)) {
+                if (Right()) {
                     chosen = true;
                     direction = 0;
-                } else if (Input.GetKeyDown(KeyCode.A)) {
+                } else if (Left()) {
                     chosen = true;
                     direction = 180;
-                } else if (Input.GetKeyDown(KeyCode.W)) {
+                } else if (Up()) {
                     chosen = true;
                     direction = 90;
-                } else if (Input.GetKeyDown(KeyCode.S)) {
+                } else if (Down()) {
                     chosen = true;
                     direction = 270;
                 }
 
-                if (Input.GetKeyDown(KeyCode.E)) {
+                if (Action()) {
                     //disable it, they activated it by mistake
                     spawnMode = false;
                 }
@@ -255,21 +287,21 @@ public class Player : MonoBehaviour {
                 bool chosen = false; //was a direction chosen
                 float direction = 0; //the direction chosen in angles
 
-                if (Input.GetKeyDown(KeyCode.D)) {
+                if (Right()) {
                     chosen = true;
                     direction = 0;
-                } else if (Input.GetKeyDown(KeyCode.A)) {
+                } else if (Left()) {
                     chosen = true;
                     direction = 180;
-                } else if (Input.GetKeyDown(KeyCode.W)) {
+                } else if (Up()) {
                     chosen = true;
                     direction = 90;
-                } else if (Input.GetKeyDown(KeyCode.S)) {
+                } else if (Down()) {
                     chosen = true;
                     direction = 270;
                 }
 
-                if (Input.GetKeyDown(KeyCode.E)) {
+                if (Action()) {
                     //disable it, they activated it by mistake
                     slowShootMode = false;
                 }
@@ -300,21 +332,21 @@ public class Player : MonoBehaviour {
                 bool chosen = false; //was a direction chosen
                 float direction = 0; //the direction chosen in angles
 
-                if (Input.GetKeyDown(KeyCode.D)) {
+                if (Right()) {
                     chosen = true;
                     direction = 0;
-                } else if (Input.GetKeyDown(KeyCode.A)) {
+                } else if (Left()) {
                     chosen = true;
                     direction = 180;
-                } else if (Input.GetKeyDown(KeyCode.W)) {
+                } else if (Up()) {
                     chosen = true;
                     direction = 90;
-                } else if (Input.GetKeyDown(KeyCode.S)) {
+                } else if (Down()) {
                     chosen = true;
                     direction = 270;
                 }
 
-                if (Input.GetKeyDown(KeyCode.E)) {
+                if (Action()) {
                     //disable it, they activated it by mistake
                     blockShootMode = false;
                 }
@@ -347,21 +379,21 @@ public class Player : MonoBehaviour {
                 bool chosen = false; //was a direction chosen
                 float direction = 0; //the direction chosen in angles
 
-                if (Input.GetKeyDown(KeyCode.D)) {
+                if (Right()) {
                     chosen = true;
                     direction = 0;
-                } else if (Input.GetKeyDown(KeyCode.A)) {
+                } else if (Left()) {
                     chosen = true;
                     direction = 180;
-                } else if (Input.GetKeyDown(KeyCode.W)) {
+                } else if (Up()) {
                     chosen = true;
                     direction = 90;
-                } else if (Input.GetKeyDown(KeyCode.S)) {
+                } else if (Down()) {
                     chosen = true;
                     direction = 270;
                 }
 
-                if (Input.GetKeyDown(KeyCode.E)) {
+                if (Action()) {
                     //disable it, they activated it by mistake
                     stunShootMode = false;
                 }
@@ -401,51 +433,51 @@ public class Player : MonoBehaviour {
                 bool moved = false;
 
                 //movement
-                if (Input.GetKeyDown(KeyCode.D)) {
+                if (Right()) {
                     playerAnimation.direction = 0;
                     playerAnimation.type = 0;
                     moved = true;
-                } else if (Input.GetKeyDown(KeyCode.A)) {
+                } else if (Left()) {
                     playerAnimation.direction = 180;
                     playerAnimation.type = 0;
                     moved = true;
-                } else if (Input.GetKeyDown(KeyCode.W)) {
+                } else if (Up()) {
                     playerAnimation.direction = 90;
                     playerAnimation.type = 0;
                     moved = true;
-                } else if (Input.GetKeyDown(KeyCode.S)) {
+                } else if (Down()) {
                     playerAnimation.direction = 270;
                     playerAnimation.type = 0;
                     moved = true;
                 }
 
                 //projectiles
-                if (Input.GetKeyDown(KeyCode.E) && holding && pickup == 0) {
+                if (Action() && holding && pickup == 0) {
                     shootMode = true;
                 }
 
                 //place block
-                if (Input.GetKeyDown(KeyCode.E) && holding && pickup == 1) {
+                if (Action() && holding && pickup == 1) {
                     blockMode = true;
                 }
 
                 //spawn player
-                if (Input.GetKeyDown(KeyCode.E) && holding && pickup == 2) {
+                if (Action() && holding && pickup == 2) {
                     spawnMode = true;
                 }
 
                 //slow projectile
-                if (Input.GetKeyDown(KeyCode.E) && holding && pickup == 3) {
+                if (Action() && holding && pickup == 3) {
                     slowShootMode = true;
                 }
 
                 //block projectile
-                if (Input.GetKeyDown(KeyCode.E) && holding && pickup == 4) {
+                if (Action() && holding && pickup == 4) {
                     blockShootMode = true;
                 }
 
                 //stun projectile
-                if (Input.GetKeyDown(KeyCode.E) && holding && pickup == 5) {
+                if (Action() && holding && pickup == 5) {
                     stunShootMode = true;
                 }
 
@@ -466,11 +498,31 @@ public class Player : MonoBehaviour {
     }
 
     void OnMouseDown() {
+        //check if this is connected or hosting a LAN game
+        if(GameSettings.serverSocket != null && playerNum != 0) {
+            return;
+        }
+        if(GameSettings.serverSocket != null && playerNum == 0) {
+            GameSettings.SendToAll("selected: {" + GameController.instance.players.IndexOf(gameObject) + "}");
+        }
+
+        if (GameSettings.connectedServer != null && playerNum != GameSettings.currentPlayerNum) {
+            return;
+        }
+        if (GameSettings.connectedServer != null && playerNum == GameSettings.currentPlayerNum) {
+            GameSettings.connectedServer.SendMessage("selected: {" + GameController.instance.players.IndexOf(gameObject) + "}");
+        }
+
+        SelectPlayer();
+    }
+    
+    //select this player and deselect all others
+    public void SelectPlayer() {
         selected = true;
-        
-        foreach(GameObject playerObject in GameController.instance.players) {
+
+        foreach (GameObject playerObject in GameController.instance.players) {
             Player player = playerObject.GetComponent<Player>();
-            if(player.playerNum == playerNum && player != this) {
+            if (player.playerNum == playerNum && player != this) {
                 //this player is part of this person's characters, they are not selected because this is now selected
                 player.selected = false;
 
@@ -512,5 +564,166 @@ public class Player : MonoBehaviour {
 
 		return animator.GetCurrentAnimatorStateInfo (0).IsName("idle") && (!projectile.activeSelf || projectile.GetComponent<Animator> ().GetCurrentAnimatorStateInfo (0).IsName ("idle")) && (!gameController.blockProjectile.activeSelf || gameController.blockProjectile.GetComponent<Animator> ().GetCurrentAnimatorStateInfo (0).IsName ("idle")) && (!gameController.stunProjectile.activeSelf || gameController.stunProjectile.GetComponent<Animator>().GetCurrentAnimatorStateInfo(0).IsName("idle"));
 	}
+
+    bool Up() {
+        if(playerNum > 0 && GameSettings.serverSocket != null) {
+            string message = GameSettings.connectedPlayers[playerNum - 1].GetMessage();
+            bool correctMessage = message != null && message.Contains("m:w");
+            if (correctMessage) {
+                GameSettings.connectedPlayers[playerNum - 1].RemoveMessage();
+
+                GameSettings.SendToAllExcept(message, GameSettings.connectedPlayers[playerNum - 1]);
+            }
+            return correctMessage;
+        }
+        if (playerNum == 0 && GameSettings.serverSocket != null && Input.GetKeyDown(KeyCode.W)) {
+            foreach (ConnectedSocket connectedPlayer in GameSettings.connectedPlayers) {
+                connectedPlayer.SendMessage("m:w;");
+            }
+        }
+
+
+        if (playerNum != GameSettings.currentPlayerNum && GameSettings.connectedServer != null) {
+            string message = GameSettings.connectedServer.GetMessage();
+            bool correctMessage = message != null && message.Contains("m:w");
+            if (correctMessage) {
+                GameSettings.connectedServer.RemoveMessage();
+            }
+            return correctMessage;
+        }
+        if (playerNum == GameSettings.currentPlayerNum && GameSettings.connectedServer != null && Input.GetKeyDown(KeyCode.W)) {
+            GameSettings.connectedServer.SendMessage("m:w;");
+        }
+
+        return Input.GetKeyDown(KeyCode.W);
+    }
+
+    bool Down() {
+        if (playerNum > 0 && GameSettings.serverSocket != null) {
+            string message = GameSettings.connectedPlayers[playerNum - 1].GetMessage();
+            bool correctMessage = message != null && message.Contains("m:s");
+            if (correctMessage) {
+                GameSettings.connectedPlayers[playerNum - 1].RemoveMessage();
+
+                GameSettings.SendToAllExcept(message, GameSettings.connectedPlayers[playerNum - 1]);
+            }
+            return correctMessage;
+        }
+        if (playerNum == 0 && GameSettings.serverSocket != null && Input.GetKeyDown(KeyCode.S)) {
+            foreach (ConnectedSocket connectedPlayer in GameSettings.connectedPlayers) {
+                connectedPlayer.SendMessage("m:s;");
+            }
+        }
+
+        if (playerNum != GameSettings.currentPlayerNum && GameSettings.connectedServer != null) {
+            string message = GameSettings.connectedServer.GetMessage();
+            bool correctMessage = message != null && message.Contains("m:s");
+            if (correctMessage) {
+                GameSettings.connectedServer.RemoveMessage();
+            }
+            return correctMessage;
+        }
+        if (playerNum == GameSettings.currentPlayerNum && GameSettings.connectedServer != null && Input.GetKeyDown(KeyCode.S)) {
+            GameSettings.connectedServer.SendMessage("m:s;");
+        }
+
+        return Input.GetKeyDown(KeyCode.S);
+    }
+
+    bool Right() {
+        if (playerNum > 0 && GameSettings.serverSocket != null) {
+            string message = GameSettings.connectedPlayers[playerNum - 1].GetMessage();
+            bool correctMessage = message != null && message.Contains("m:d");
+            if (correctMessage) {
+                GameSettings.connectedPlayers[playerNum - 1].RemoveMessage();
+
+                GameSettings.SendToAllExcept(message, GameSettings.connectedPlayers[playerNum - 1]);
+            }
+            return correctMessage;
+        }
+        if (playerNum == 0 && GameSettings.serverSocket != null && Input.GetKeyDown(KeyCode.D)) {
+            foreach (ConnectedSocket connectedPlayer in GameSettings.connectedPlayers) {
+                connectedPlayer.SendMessage("m:d;");
+            }
+        }
+
+        if (playerNum != GameSettings.currentPlayerNum && GameSettings.connectedServer != null) {
+            string message = GameSettings.connectedServer.GetMessage();
+            bool correctMessage = message != null && message.Contains("m:d");
+            if (correctMessage) {
+                GameSettings.connectedServer.RemoveMessage();
+            }
+            return correctMessage;
+        }
+        if (playerNum == GameSettings.currentPlayerNum && GameSettings.connectedServer != null && Input.GetKeyDown(KeyCode.D)) {
+            GameSettings.connectedServer.SendMessage("m:d;");
+        }
+
+        return Input.GetKeyDown(KeyCode.D);
+    }
+
+    bool Left() {
+        if (playerNum > 0 && GameSettings.serverSocket != null) {
+            string message = GameSettings.connectedPlayers[playerNum - 1].GetMessage();
+            bool correctMessage = message != null && message.Contains("m:a");
+            if (correctMessage) {
+                GameSettings.connectedPlayers[playerNum - 1].RemoveMessage();
+
+                GameSettings.SendToAllExcept(message, GameSettings.connectedPlayers[playerNum - 1]);
+            }
+            return correctMessage;
+        }
+        if (playerNum == 0 && GameSettings.serverSocket != null && Input.GetKeyDown(KeyCode.A)) {
+            foreach (ConnectedSocket connectedPlayer in GameSettings.connectedPlayers) {
+                connectedPlayer.SendMessage("m:a;");
+            }
+        }
+
+        if (playerNum != GameSettings.currentPlayerNum && GameSettings.connectedServer != null) {
+            string message = GameSettings.connectedServer.GetMessage();
+            bool correctMessage = message != null && message.Contains("m:a");
+            if (correctMessage) {
+                GameSettings.connectedServer.RemoveMessage();
+            }
+            return correctMessage;
+        }
+        if (playerNum == GameSettings.currentPlayerNum && GameSettings.connectedServer != null && Input.GetKeyDown(KeyCode.A)) {
+            GameSettings.connectedServer.SendMessage("m:a;");
+        }
+
+        return Input.GetKeyDown(KeyCode.A);
+    }
+
+    bool Action() {
+        if (playerNum > 0 && GameSettings.serverSocket != null) {
+            string message = GameSettings.connectedPlayers[playerNum - 1].GetMessage();
+            bool correctMessage = message != null && message.Contains("m:e");
+            if (correctMessage) {
+                GameSettings.connectedPlayers[playerNum - 1].RemoveMessage();
+
+                GameSettings.SendToAllExcept(message, GameSettings.connectedPlayers[playerNum - 1]);
+            }
+            return correctMessage;
+        }
+        if (playerNum == 0 && GameSettings.serverSocket != null && Input.GetKeyDown(KeyCode.E)) {
+            foreach (ConnectedSocket connectedPlayer in GameSettings.connectedPlayers) {
+                connectedPlayer.SendMessage("m:e;");
+            }
+        }
+
+        if (playerNum != GameSettings.currentPlayerNum && GameSettings.connectedServer != null) {
+            string message = GameSettings.connectedServer.GetMessage();
+            bool correctMessage = message != null && message.Contains("m:e");
+            if (correctMessage) {
+                GameSettings.connectedServer.RemoveMessage();
+            }
+            return correctMessage;
+        }
+        if (playerNum == GameSettings.currentPlayerNum && GameSettings.connectedServer != null && Input.GetKeyDown(KeyCode.E)) {
+            GameSettings.connectedServer.SendMessage("m:e;");
+        }
+
+        return Input.GetKeyDown(KeyCode.E);
+    }
 
 }

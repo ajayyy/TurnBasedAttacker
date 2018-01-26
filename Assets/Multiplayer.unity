@@ -359,11 +359,10 @@ MonoBehaviour:
   m_GameObject: {fileID: 600502455}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 158252a3e7e6e124184e96754e23c671, type: 3}
+  m_Script: {fileID: 11500000, guid: 8db413bcac3c9434bb31eeb4b6e5d0bd, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  players: {fileID: 0}
-  units: {fileID: 0}
+  sceneToLoad: HostGame
 --- !u!222 &600502459
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -600,11 +599,10 @@ MonoBehaviour:
   m_GameObject: {fileID: 1036210329}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 158252a3e7e6e124184e96754e23c671, type: 3}
+  m_Script: {fileID: 11500000, guid: 8db413bcac3c9434bb31eeb4b6e5d0bd, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  players: {fileID: 0}
-  units: {fileID: 0}
+  sceneToLoad: JoinGame
 --- !u!114 &1036210332
 MonoBehaviour:
   m_ObjectHideFlags: 0

@@ -11,7 +11,12 @@ public class JoiningScript : MonoBehaviour {
     //the ip address text field
     public InputField ipAddress;
 
+    //the text that shows the status of the connection
+    public Text status;
+
     public void Connect() {
+        status.text = "Error connecting to that ip";
+
         TcpClient clientSocket = new TcpClient();
 
         clientSocket.Connect(ipAddress.text, 1273);
@@ -31,9 +36,12 @@ public class JoiningScript : MonoBehaviour {
         messageThread.Start();
 
         connectedServer.playerMessageThread = messageThread;
+
+        status.text = "Connected!";
+        status.color = new Color(0, 1, 0);
     }
-	
-	void FixedUpdate () {
+
+    void FixedUpdate () {
         //if(Time.time % 2 == 0)
         //    GameSettings.connectedServer.SendMessage("tessst");
 

@@ -6,7 +6,7 @@ using System.Net.Sockets;
 using UnityEngine.UI;
 using UnityEngine.SceneManagement;
 using UnityEngine;
-
+using System.Text.RegularExpressions;
 
 public class HostingScript : MonoBehaviour {
 
@@ -36,7 +36,12 @@ public class HostingScript : MonoBehaviour {
     //Amount of players connected including the host
     public int playerAmount = 1;
 
+    //the text that will show the ip address
+    public Text ipAddress;
+
     void Start () {
+
+        ipAddress.text = "IP: " + GetIPAddress();
 
         GameSettings.serverSocket = new TcpListener(IPAddress.Any, 1273);
 
@@ -164,6 +169,18 @@ public class HostingScript : MonoBehaviour {
         if (t != null) {
             t.Abort();
         }
+    }
+
+    public static string GetIPAddress() { //https://stackoverflow.com/a/25523154/1985387
+        IPHostEntry host;
+        string localIP = "?";
+        host = Dns.GetHostEntry(Dns.GetHostName());
+        foreach (IPAddress ip in host.AddressList) {
+            if (ip.AddressFamily == AddressFamily.InterNetwork) {
+                localIP = ip.ToString();
+            }
+        }
+        return localIP;
     }
 
 }

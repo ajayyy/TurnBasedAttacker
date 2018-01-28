@@ -109,6 +109,9 @@ public class GameController : MonoBehaviour {
     //True when a save game needs to be done when it is usable again
     public bool saveGameQueued = false;
 
+    //The sound that is played every time a turn passes
+    public AudioSource nextTurnSound;
+
     void Awake() {
         if (instance == null) {
             instance = this;
@@ -302,6 +305,9 @@ public class GameController : MonoBehaviour {
 
 			if (turnPlayerNum >= personAmount) {
 				turnNum++;
+
+                nextTurnSound.Play();
+
 				turnPlayerNum = 0;
 				arrowObject.GetComponent<AnimationScript> ().direction = 90;
 

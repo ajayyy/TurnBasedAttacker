@@ -22,6 +22,8 @@ GameObject:
   - component: {fileID: 222993175864619938}
   - component: {fileID: 114942740301669198}
   - component: {fileID: 114523849441323290}
+  - component: {fileID: 114623543160902062}
+  - component: {fileID: 95811700085208400}
   m_Layer: 5
   m_Name: LoadGameButton
   m_TagString: Untagged
@@ -39,7 +41,6 @@ GameObject:
   - component: {fileID: 224733492807609938}
   - component: {fileID: 222747995240911998}
   - component: {fileID: 114039130725686490}
-  - component: {fileID: 95027117357259198}
   m_Layer: 5
   m_Name: Text
   m_TagString: Untagged
@@ -47,16 +48,16 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!95 &95027117357259198
+--- !u!95 &95811700085208400
 Animator:
   serializedVersion: 3
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1489675458965490}
+  m_GameObject: {fileID: 1378575605140156}
   m_Enabled: 1
   m_Avatar: {fileID: 0}
-  m_Controller: {fileID: 9100000, guid: f63f9615104f7f046b460fda807218f7, type: 2}
+  m_Controller: {fileID: 9100000, guid: 46051641acfdfd343aa2b2fcd1188bb7, type: 2}
   m_CullingMode: 0
   m_UpdateMode: 0
   m_ApplyRootMotion: 0
@@ -108,6 +109,34 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 83a9b9429d918884186ab2cd5d3c4b31, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  gameNum: 0
+--- !u!114 &114623543160902062
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1378575605140156}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: -765806418, guid: f70555f144d8491a825f0804e09c671c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Material: {fileID: 0}
+  m_Color: {r: 0, g: 0, b: 1, a: 1}
+  m_RaycastTarget: 1
+  m_OnCullStateChanged:
+    m_PersistentCalls:
+      m_Calls: []
+    m_TypeName: UnityEngine.UI.MaskableGraphic+CullStateChangedEvent, UnityEngine.UI,
+      Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
+  m_Sprite: {fileID: 21300000, guid: 8616a47a942990443b868aa93ba691d4, type: 3}
+  m_Type: 0
+  m_PreserveAspect: 0
+  m_FillCenter: 1
+  m_FillMethod: 0
+  m_FillAmount: 1
+  m_FillClockwise: 1
+  m_FillOrigin: 0
 --- !u!114 &114942740301669198
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -125,7 +154,7 @@ MonoBehaviour:
     m_SelectOnDown: {fileID: 0}
     m_SelectOnLeft: {fileID: 0}
     m_SelectOnRight: {fileID: 0}
-  m_Transition: 1
+  m_Transition: 3
   m_Colors:
     m_NormalColor: {r: 1, g: 1, b: 1, a: 1}
     m_HighlightedColor: {r: 0.9607843, g: 0.9607843, b: 0.9607843, a: 1}
@@ -143,7 +172,7 @@ MonoBehaviour:
     m_PressedTrigger: Pressed
     m_DisabledTrigger: Disabled
   m_Interactable: 1
-  m_TargetGraphic: {fileID: 0}
+  m_TargetGraphic: {fileID: 114623543160902062}
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
@@ -198,7 +227,7 @@ RectTransform:
   m_GameObject: {fileID: 1378575605140156}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalScale: {x: 0.65, y: 0.65, z: 1}
   m_Children:
   - {fileID: 224733492807609938}
   m_Father: {fileID: 0}
@@ -207,5 +236,5 @@ RectTransform:
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
   m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 160, y: 30}
+  m_SizeDelta: {x: 320, y: 105}
   m_Pivot: {x: 0.5, y: 0.5}

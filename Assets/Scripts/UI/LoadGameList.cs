@@ -17,7 +17,7 @@ public class LoadGameList : MonoBehaviour {
             GameObject newButton = Instantiate(button);
 
             newButton.transform.parent = canvas.transform;
-            newButton.transform.GetComponent<RectTransform>().anchoredPosition = new Vector2(0, 360 - ((i + 1) * 75));
+            newButton.transform.GetComponent<RectTransform>().anchoredPosition = new Vector2(0, 360 - ((i + 1) * 100));
 
             newButton.GetComponentInChildren<Text>().text = "Game " + (i + 1);
 

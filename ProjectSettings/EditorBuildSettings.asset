@@ -12,6 +12,9 @@ EditorBuildSettings:
     path: Assets/Instructions.unity
     guid: 2f6a3586ad478994481cbc10e0a4e2d6
   - enabled: 1
+    path: Assets/Credits.unity
+    guid: 5f4bbfcdf0f7edc4284e6dbd01162c6d
+  - enabled: 1
     path: Assets/HostGame.unity
     guid: 693b443dc4afbd94d9e0b48c76af6e4f
   - enabled: 1

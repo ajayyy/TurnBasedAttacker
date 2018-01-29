@@ -458,7 +458,7 @@ public class GameController : MonoBehaviour {
 
         int slowProjectileAmount = PlayerPrefs.GetInt("Game" + GameSettings.gameToLoad + "SlowProjectileAmount");
 
-        for (int i = 0; i < blockAmount; i++) {
+        for (int i = 0; i < slowProjectileAmount; i++) {
             GameObject newSlowProjectile = Instantiate(slowProjectile);
 
             float x = PlayerPrefs.GetFloat("Game" + GameSettings.gameToLoad + "SlowProjectile" + i + "X");

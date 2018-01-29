@@ -109,6 +109,9 @@ public class GameController : MonoBehaviour {
     //True when a save game needs to be done when it is usable again
     public bool saveGameQueued = false;
 
+    //The sound that is played every time a turn passes
+    public AudioSource nextTurnSound;
+
     void Awake() {
         if (instance == null) {
             instance = this;
@@ -191,6 +194,8 @@ public class GameController : MonoBehaviour {
             CreatePlayerStatus();
 
         } else {
+
+            //otherwise it is just a normal game, spawn all the pickups and create the player status bar
 
             List<Vector3> pickupPositionsChosen = new List<Vector3>();
 
@@ -302,6 +307,9 @@ public class GameController : MonoBehaviour {
 
 			if (turnPlayerNum >= personAmount) {
 				turnNum++;
+
+                nextTurnSound.Play();
+
 				turnPlayerNum = 0;
 				arrowObject.GetComponent<AnimationScript> ().direction = 90;
 
@@ -346,6 +354,8 @@ public class GameController : MonoBehaviour {
     }
 
     public void LoadGame() {
+        //get all the strings and load the game as if it was that game
+
         gameId = PlayerPrefs.GetString("Game" + GameSettings.gameToLoad + "GameId");
 
         personAmount = PlayerPrefs.GetInt("Game" + GameSettings.gameToLoad + "PersonAmount");
@@ -468,6 +478,7 @@ public class GameController : MonoBehaviour {
 
     public void SaveGame() {
 
+        //this makes it so that the save game is not run while animations are still being played out
         if (!saveGameUsable) {
             saveGameQueued = true;
             return;
@@ -485,6 +496,8 @@ public class GameController : MonoBehaviour {
                 }
             }
         }
+
+        //save all needed data
 
         PlayerPrefs.SetString("Game" + gameIndex + "GameId", gameId);
 

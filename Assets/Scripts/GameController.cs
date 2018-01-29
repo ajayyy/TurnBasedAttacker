@@ -448,7 +448,9 @@ public class GameController : MonoBehaviour {
             float x = PlayerPrefs.GetFloat("Game" + GameSettings.gameToLoad + "Block" + i + "X");
             float y = PlayerPrefs.GetFloat("Game" + GameSettings.gameToLoad + "Block" + i + "Y");
 
-            Vector3 position = new Vector3(x, y);
+            Vector3 position = new Vector3(x - 0.5f, y); //because the spawning animation moves the block 0.5 in the x direction
+
+            newBlock.GetComponent<AnimationScript>().snapToGrid = true; //to make sure it doesn't get unaligned
 
             newBlock.transform.position = position;
 

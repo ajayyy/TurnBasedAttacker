@@ -195,6 +195,8 @@ public class GameController : MonoBehaviour {
 
         } else {
 
+            //otherwise it is just a normal game, spawn all the pickups and create the player status bar
+
             List<Vector3> pickupPositionsChosen = new List<Vector3>();
 
             for (int i = 0; i < (int)(personAmount * 0.25f) + 3; i++) {
@@ -352,6 +354,8 @@ public class GameController : MonoBehaviour {
     }
 
     public void LoadGame() {
+        //get all the strings and load the game as if it was that game
+
         gameId = PlayerPrefs.GetString("Game" + GameSettings.gameToLoad + "GameId");
 
         personAmount = PlayerPrefs.GetInt("Game" + GameSettings.gameToLoad + "PersonAmount");
@@ -474,6 +478,7 @@ public class GameController : MonoBehaviour {
 
     public void SaveGame() {
 
+        //this makes it so that the save game is not run while animations are still being played out
         if (!saveGameUsable) {
             saveGameQueued = true;
             return;
@@ -491,6 +496,8 @@ public class GameController : MonoBehaviour {
                 }
             }
         }
+
+        //save all needed data
 
         PlayerPrefs.SetString("Game" + gameIndex + "GameId", gameId);
 

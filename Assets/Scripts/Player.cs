@@ -70,6 +70,8 @@ public class Player : MonoBehaviour {
     }
 
     void Update () {
+        //uncomment below if you want to skip straight to the scoreboard. Make the number the number of players you have minus one
+
 		//if (playerNum != 15)
 		//	GetComponent<AnimationScript> ().OnDeadAnimationEnded();
 		
@@ -83,7 +85,6 @@ public class Player : MonoBehaviour {
 
         if(stunned && gameController.turnNum - 5 >= turnStunned) {
             stunned = false;
-            //Destroy(stunnedColor);
             gameController.usablePlayers[playerNum] = true;
 
             //setup fade animation
@@ -191,6 +192,7 @@ public class Player : MonoBehaviour {
 
                 }
 
+            //not check if a pickup has been activated
             } else if (blockMode) {
                 ChangeColor(shootColor);
 

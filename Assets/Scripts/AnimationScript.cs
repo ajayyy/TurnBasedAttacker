@@ -16,14 +16,14 @@ public class AnimationScript : MonoBehaviour {
     public float direction = 0; // direction in angles of where the object should move based on the offset
     public Vector3 target = Vector3.zero;
     public GameObject targetObject; //target gameobject if it exists
-    public Color targetColor;
+    public Color targetColor; //target color if this is going to be a color fade animation
     public int type = 0; //0: one unit movement, 1: move to target, 5: fade to color
     public bool snapToGrid = true; //should it snap to the grid (true for game elements, not true for ui elements)
     public bool kill = false; //true if you want it to die after doing the animation
 
-    //local variables
-    Vector3 startPosition;
-    Color startColor;
+    //local variables, set in this class
+    Vector3 startPosition; //start position for moving animations
+    Color startColor; //start color for color changing animations
     bool started = false; //has animating already started or is it the first time
 
     SpriteRenderer spriteRenderer;
@@ -45,10 +45,13 @@ public class AnimationScript : MonoBehaviour {
             }
 
             switch (type) {
-                case 0:
+
+                //depending on the animation type, do something else (there are some duplicates, but these have different end actions, so that is why)
+
+                case 0: //normal movement in 1 direction
                     transform.position = startPosition + MathHelper.DegreeToVector3(direction) * offsetAmount;
                     break;
-                case 1:
+                case 1: //normal movement to a position
                     transform.position = startPosition + MathHelper.DegreeToVector3(direction) * offsetAmount * Vector3.Distance(target, startPosition);
                     break;
                 case 2:
@@ -67,6 +70,7 @@ public class AnimationScript : MonoBehaviour {
         }
     }
 
+    //this is called by a trigger in the animation
     public void OnAnimationEnded() {
         //when the animation ends, set the started to false to make this the new position
         started = false;
@@ -75,12 +79,14 @@ public class AnimationScript : MonoBehaviour {
         if(snapToGrid)
             transform.position = new Vector3(Mathf.Round(transform.position.x), Mathf.Round(transform.position.y));
 
+        //depending on the type of animation, do something different once it is done.
         if (type == 1) {
             gameObject.SetActive(false);
             targetObject.GetComponent<Animator>().SetTrigger("dead");
 
             Player playerScript = targetObject.GetComponent<Player>();
 
+            //deselect every other unit of this player
             foreach (GameObject playerObject in GameController.instance.players) {
                 Player player = playerObject.GetComponent<Player>();
                 if (player.playerNum == playerScript.playerNum) {
@@ -95,6 +101,8 @@ public class AnimationScript : MonoBehaviour {
         if(type == 2) {
             gameObject.SetActive(false);
 
+            //create a new block
+
             GameObject newBlock = Instantiate(GameController.instance.block);
             newBlock.GetComponent<AnimationScript>().direction = direction - 180;
             newBlock.transform.position = new Vector3(MathHelper.Cap(Mathf.RoundToInt(target.x), 11), MathHelper.Cap(Mathf.RoundToInt(target.y), 11));
@@ -104,6 +112,8 @@ public class AnimationScript : MonoBehaviour {
 
         if (type == 3) {
             gameObject.SetActive(false);
+
+            //stun player
 
             Player playerScript = targetObject.GetComponent<Player>();
 
@@ -126,6 +136,8 @@ public class AnimationScript : MonoBehaviour {
             playerScript.stunnedColor.GetComponent<Animator>().SetTrigger("move");
 
             if (playerScript.selected) {
+                //deselect every other unit of this player
+
                 foreach (GameObject playerObject in GameController.instance.players) {
                     Player player = playerObject.GetComponent<Player>();
                     if (player.playerNum == playerScript.playerNum) {
@@ -189,8 +201,6 @@ public class AnimationScript : MonoBehaviour {
 
 				if (GameController.instance.playersDead >= GameController.instance.personAmount - 1) {
 					//the only units left in the players array will be the winner's units
-//					GameController.instance.winner.GetComponent<Text> ().text = "Player " + (GameController.instance.players[0].GetComponent<Player>().playerNum + 1) + " Wins";
-//					GameController.instance.winner.SetActive (true);
 
 					//reverse the list so the first item is the player who is second place
 					GameController.instance.playersDeadList.Reverse();
